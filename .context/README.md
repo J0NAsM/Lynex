@@ -14,7 +14,7 @@ Pensada tanto para personas nuevas como para agentes de IA que trabajen sobre el
 | [05-seo-metadata.md](05-seo-metadata.md) | Metadata, Open Graph, robots, sitemap, manifest, JSON-LD |
 | [06-deployment.md](06-deployment.md) | Variables de entorno, build, Docker, Vercel, CI |
 | [07-conventions.md](07-conventions.md) | Cómo escribir código aquí + trampas conocidas |
-| [08-state.md](08-state.md) | Estado actual del repo, trabajo sin commitear y pendientes |
+| [08-state.md](08-state.md) | Estado actual, validaciones y pendientes externos |
 
 ## Reglas de mantenimiento
 

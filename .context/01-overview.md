@@ -2,54 +2,50 @@
 
 ## Qué es
 
-**Lynex** es una empresa de desarrollo de software a medida. Este repositorio contiene su
-**sitio comercial**: una landing de una sola página más una página legal.
+**Lynex** es un estudio de Asunción que vende dos servicios relacionados:
 
-No es un producto SaaS, no tiene usuarios autenticados, no tiene base de datos.
-Es un sitio de captación: explica qué hace Lynex y recoge consultas por formulario.
+1. sitios web profesionales como puerta de entrada;
+2. sistemas internos a medida cuando la operación ya no escala con planillas y herramientas sueltas.
 
-## Objetivo del sitio
+Este repositorio contiene su sitio comercial. No es un SaaS: no tiene autenticación, usuarios
+ni base de datos. La única operación de servidor propia es el envío del formulario de contacto.
 
-Un único objetivo de conversión: **que un visitante escriba una consulta y la envíe**.
-Todo lo demás (servicios, proceso, FAQ) existe para reducir la fricción hasta ese envío.
+## Objetivo y narrativa
 
-Todos los CTA de la página apuntan al mismo ancla `#contacto`.
+El objetivo es convertir una visita en una conversación de 30 minutos. Si se configura
+WhatsApp, aparece como acceso directo; siempre quedan disponibles formulario y correo.
 
-## Idioma y tono
+La landing cuenta una sola historia con dos ofertas, en este orden:
 
-- Todo el contenido de cara al usuario está en **español** (`<html lang="es">`, `locale: es_ES`).
-- Los comentarios y mensajes de commit también están en español.
-- Tono comercial pero sobrio: sin promesas de cifras, sin testimonios falsos, sin logos de
-  clientes inventados. La sección de "Resultados" es deliberadamente genérica
-  (`.project-placeholder`) porque **todavía no hay casos reales publicables**.
+1. **Hero** — problema central, ubicación y CTA; el panel está rotulado como demo.
+2. **Trust strip** — precio cerrado, entregas quincenales y propiedad del código.
+3. **Servicios** (`#servicios`) — web profesional y sistema operativo a medida.
+4. **Problemas** (`#problemas`) — tres síntomas reconocibles por el cliente.
+5. **Proceso** (`#proceso`) — cuatro pasos desde conversación hasta publicación.
+6. **Garantías** (`#garantias`) — compromisos comerciales sin inventar casos de éxito.
+7. **Nosotros** (`#nosotros`) — equipo pequeño, comunicación directa y criterio honesto.
+8. **FAQ** — precio, plazos, propiedad, cambios, hitos y primera versión pequeña.
+9. **Contacto** (`#contacto`) — formulario, correo, WhatsApp opcional y ubicación.
 
-## Estructura de la narrativa (orden de la landing)
+## Idioma y honestidad comercial
 
-1. **Hero** — propuesta de valor + panel ilustrativo (una maqueta SVG, no datos reales)
-2. **Trust strip** — tres beneficios en una línea
-3. **Servicios** (`#servicios`) — 6 tarjetas
-4. **Soluciones** (`#soluciones`) — banda oscura, 10 dominios de negocio
-5. **Proceso** (`#proceso`) — 6 pasos, de descubrimiento a evolución
-6. **Resultados** (`#resultados`) — compromiso genérico, placeholder para casos reales
-7. **Nosotros** (`#nosotros`) — 3 diferenciales
-8. **Tecnologías** — banda lima con tags de stack
-9. **FAQ** — 6 preguntas, acordeón
-10. **Contacto** (`#contacto`) — formulario
-11. **Footer**
+- La interfaz usa español paraguayo y voseo (`<html lang="es-PY">`, locale `es_PY`).
+- No se muestran testimonios, clientes ni métricas como resultados reales. El dashboard del
+  hero es una demostración visual y así se indica dentro de la propia pieza.
+- Aún no hay casos de clientes publicables. La sección de garantías sustituye temporalmente
+  al portfolio, pero no debe confundirse con evidencia comercial.
+- Las garantías, plazos y condiciones publicados deben coincidir con contratos y operación.
 
-Todo ese contenido vive como **constantes al principio de `src/app/page.tsx`**
-(`services`, `solutions`, `technologies`, `process`, `faqs`). Para editar copy no hace falta
-tocar JSX: se editan esos arrays.
+## Dónde vive el contenido
 
-## Datos de contacto
+- `src/app/page.tsx`: `symptoms`, `steps`, `commitments`, `faqs` y toda la narrativa.
+- `src/lib/site.ts`: datos del negocio, ofertas, precios opcionales y enlaces de contacto.
+- Las variables `NEXT_PUBLIC_*` permiten cambiar datos públicos sin editar componentes,
+  pero requieren reconstruir el sitio.
 
-- Email público: `hola@lynex.dev` por defecto, configurable con
-  `NEXT_PUBLIC_CONTACT_EMAIL` y centralizado en `src/lib/site.ts`.
-- Dominio previsto: `https://lynex.dev`.
+## Qué no existe (intencionalmente)
 
-## Qué NO existe (y es intencional)
-
-- Sin analítica ni cookies de terceros — así lo declara la política de privacidad.
-- Sin CMS: el copy es código.
-- Sin tests automatizados: la red de seguridad es `npm run check` (lint + types + build).
-- Sin blog, sin i18n, sin modo oscuro.
+- Sin analítica ni cookies de marketing.
+- Sin CMS, blog, i18n ni modo oscuro.
+- Sin portfolio hasta contar con casos o demos honestamente identificadas.
+- Sin tests unitarios; la red de seguridad actual es `npm run check` más pruebas de runtime.

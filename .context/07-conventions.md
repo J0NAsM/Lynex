@@ -1,72 +1,59 @@
-# 07 — Convenciones y trampas
+# Convenciones y trampas conocidas
 
-## Convenciones de código
+## Contenido y tono
 
-- **Server Components por defecto.** `"use client"` solo cuando hay estado o eventos, y en el
-  componente más pequeño posible.
-- **El contenido va en constantes `as const`** al principio del archivo, no incrustado en el
-  JSX. Los datos tabulares se modelan como tuplas (`["01", "Título", "Texto", "↗"]`) y se
-  desestructuran en el `.map()`.
-- **Imports con alias `@/`** (`@/lib/site`, `@/components/...`), nunca rutas relativas largas.
-- **Navegación interna con `next/link`** para rutas reales (`/`, `/privacidad`); `<a href="#...">`
-  para anclas dentro de la landing.
-- **Sin comentarios decorativos.** Los pocos que hay explican un porqué no evidente (por
-  ejemplo, el honeypot). Sigue ese criterio.
-- **Todo el texto de cara al usuario, en español**, incluidos `aria-label` y mensajes de error.
-- Los iconos son **caracteres Unicode** (`↗ ⌁ ▦ ◌ ⇄ ✦ ✓`), no una librería de iconos. Siempre
-  con `aria-hidden="true"` cuando son decorativos.
-- CSS: ver el formato obligatorio en [03-design-system.md](03-design-system.md) (una regla por
-  línea, propiedades alfabéticas).
+- Escribí en español de Paraguay y con voseo: `podés`, `contanos`, `elegí`.
+- Lynex vende dos entradas: sitios web profesionales y sistemas a medida.
+- La narrativa parte del problema operativo y termina en una conversación, no en
+  una lista de tecnologías.
+- No inventes clientes, testimonios, métricas ni casos. Mientras no existan, se
+  muestran proceso, garantías y una interfaz marcada como `DEMO OPERATIVA`.
+- Los precios, enlaces y canales opcionales se muestran solo cuando tienen datos
+  reales configurados.
 
-## Trampas conocidas
+## Organización del código
 
-### 1. El proyecto usa CSS plano
-Tailwind no está instalado. Las clases utilitarias no hacen nada; añade reglas a
-`globals.css` siguiendo el sistema existente. Detalle en [03-design-system.md](03-design-system.md).
+- Usá Server Components por defecto. Agregá `"use client"` solo cuando haya estado,
+  efectos o APIs del navegador.
+- Los datos globales y ofertas viven en `src/lib/site.ts`.
+- El contenido editorial de la portada se agrupa en arreglos cercanos a la página:
+  síntomas, pasos, compromisos y preguntas frecuentes.
+- Reutilizá `SectionHeading` y los componentes existentes antes de crear otra
+  abstracción.
+- Mantené el CSS en `src/app/globals.css` con las variables y breakpoints actuales.
 
-### 2. La CSP bloquea cualquier recurso externo
-`connect-src 'self'` y `default-src 'self'` en `next.config.ts`. Analítica, fuentes de CDN,
-iframes de YouTube/Calendly/Maps: todo falla, a menudo sin error visible. Amplía la CSP
-conscientemente o no lo añadas.
+## Seguridad y runtime
 
-### 3. La URL y el email públicos son datos de build
-`site.url` y `site.email` son la fuente única y se configuran con variables `NEXT_PUBLIC_*`.
-Si cambia cualquiera, hay que reconstruir y redesplegar; reiniciar el proceso no basta.
+- No calcules `Date.now()`, números aleatorios ni valores impuros durante el render
+  de React. Inicializalos en un efecto o dentro de un manejador de evento.
+- Escapá siempre `<` como `\\u003c` al serializar JSON-LD dentro de `<script>`.
+- Si agregás recursos de terceros, revisá la Content Security Policy de
+  `next.config.ts`; no la abras de forma general.
+- Validá en el servidor incluso cuando el cliente ya valida.
+- El límite de contactos actual vive en memoria. Funciona por instancia, pero no
+  sustituye un rate limiter compartido cuando haya varias réplicas o tráfico alto.
 
-### 4. Los colores están duplicados fuera del CSS
-`opengraph-image.tsx`, `manifest.ts`, `layout.tsx` (`themeColor`) y `public/icon.svg` no leen
-las variables CSS. Un cambio de paleta son cinco archivos.
+## Configuración
 
-### 5. `npm start` no es `next start`
-Ejecuta la salida standalone. Depende de que `postbuild` haya corrido. Ver
-[06-deployment.md](06-deployment.md).
+- Toda variable `NEXT_PUBLIC_*` se resuelve en el build.
+- Si agregás una variable pública, actualizá también `.env.example`, `README.md`,
+  `Dockerfile` y `.context/06-deployment.md`.
+- Si agregás una ruta indexable, actualizá sitemap, metadata y esta documentación.
+- No guardes secretos, `.env.local`, builds ni artefactos de pruebas visuales.
 
-### 6. Añadir una página son tres pasos, no uno
-Crear `src/app/<ruta>/page.tsx`, **añadirla a `src/app/sitemap.ts`** y, si va en el menú,
-a la lista `links` de `site-navigation.tsx`.
+## Calidad mínima antes de entregar
 
-### 7. `opengraph-image.tsx` no es React normal
-Lo renderiza Satori. Subconjunto de CSS y `display: flex` explícito en todo contenedor con
-hijos. Un `<div>` sin `display` rompe el build.
+```bash
+npm run check
+git diff --check
+```
 
-### 8. El rate limit no sobrevive a múltiples instancias
-`Map` en memoria. Ver [04-contact-flow.md](04-contact-flow.md).
+Después probá como mínimo `/`, `/privacidad`, los assets dinámicos, una ruta 404 y
+los estados 400/403/503 del endpoint de contacto. Un envío 200 real solo se puede
+validar con Resend y un remitente configurados.
 
-### 9. Cambiar variables `NEXT_PUBLIC_*` exige rebuild
-`NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_CONTACT_EMAIL` son variables de build. Reiniciar no basta.
+## Estructura duplicada del workspace
 
-### 10. Hay dos carpetas en el workspace
-`Lynex/` es el proyecto real (este). `lynex-app/` es un `create-next-app` sin tocar. Ver
-[08-state.md](08-state.md).
-
-## Al hacer cambios
-
-1. `npm run check` antes de commitear.
-2. Si tocas validaciones del formulario, **ajusta cliente y servidor a la vez** — los límites
-   (`name` 2–80, `email` ≤254, `message` 20–3000) están duplicados por diseño.
-3. Si cambias env vars, actualiza `.env.example`, el `README.md` y
-   [06-deployment.md](06-deployment.md).
-4. Si tocas rutas, revisa `sitemap.ts` y `robots.ts`.
-5. Prueba en móvil: los breakpoints son 800px y 480px, y el menú hamburguesa solo existe
-   por debajo de 800px.
-6. Actualiza el archivo de `.context/` afectado **en el mismo commit**.
+El repositorio real está en `C:\Proyectos\Personal\Lynex\Lynex`. Existe además
+`C:\Proyectos\Personal\Lynex\lynex-app`, que era un scaffold separado y no forma
+parte de este producto. Confirmá la raíz antes de editar, desplegar o ejecutar Git.

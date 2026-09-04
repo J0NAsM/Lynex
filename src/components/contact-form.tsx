@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 
 type FormState = "idle" | "submitting" | "success" | "error";
@@ -9,6 +9,18 @@ type FormState = "idle" | "submitting" | "success" | "error";
 export function ContactForm() {
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState("");
+  const mountedAt = useRef<number | null>(null);
+  const successHeading = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    mountedAt.current = Date.now();
+  }, []);
+
+  // Al reemplazar el formulario por la confirmación, el foco se perdería en el
+  // body. Lo llevamos al encabezado para no dejar colgado a quien navega con teclado.
+  useEffect(() => {
+    if (state === "success") successHeading.current?.focus();
+  }, [state]);
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,6 +39,7 @@ export function ContactForm() {
           email: data.get("email"),
           message: data.get("message"),
           website: data.get("website"),
+          elapsed: mountedAt.current === null ? undefined : Date.now() - mountedAt.current,
         }),
       });
       const result = (await response.json()) as { message?: string };
@@ -41,7 +54,7 @@ export function ContactForm() {
       setError(
         caught instanceof Error
           ? caught.message
-          : "No pudimos enviar el mensaje. Inténtalo nuevamente.",
+          : "No pudimos enviar el mensaje. Intentá nuevamente.",
       );
       setState("error");
     }
@@ -51,9 +64,16 @@ export function ContactForm() {
     return (
       <div className="contact-form form-success" role="status" aria-live="polite">
         <span aria-hidden="true">✓</span>
-        <h3>Mensaje enviado.</h3>
-        <p>Gracias por escribirnos. Te contactaremos para conocer mejor tu proyecto.</p>
-        <button type="button" className="text-link" onClick={() => setState("idle")}>
+        <h3 ref={successHeading} tabIndex={-1}>Mensaje enviado.</h3>
+        <p>Gracias por escribirnos. Te contactamos para conocer mejor tu proyecto.</p>
+        <button
+          type="button"
+          className="text-link"
+          onClick={() => {
+            mountedAt.current = Date.now();
+            setState("idle");
+          }}
+        >
           Enviar otro mensaje
         </button>
       </div>
@@ -71,7 +91,7 @@ export function ContactForm() {
             name="name"
             minLength={2}
             maxLength={80}
-            placeholder="Nombre y apellidos"
+            placeholder="Nombre y apellido"
           />
         </label>
         <label>
@@ -94,7 +114,7 @@ export function ContactForm() {
           rows={5}
           minLength={20}
           maxLength={3000}
-          placeholder="Cuéntanos brevemente tu proyecto o reto..."
+          placeholder="Contanos brevemente tu proyecto o el problema que querés resolver..."
         />
       </label>
       <label className="form-honeypot" aria-hidden="true">
@@ -103,7 +123,7 @@ export function ContactForm() {
       </label>
       {state === "error" && (
         <p className="form-error" role="alert">
-          {error} También puedes escribirnos directamente a{" "}
+          {error} También podés escribirnos directamente a{" "}
           <a href={`mailto:${site.email}`}>{site.email}</a>.
         </p>
       )}
@@ -116,7 +136,7 @@ export function ContactForm() {
         <span aria-hidden="true">↗</span>
       </button>
       <small>
-        Usaremos tus datos únicamente para responder a tu consulta. Consulta nuestra{" "}
+        Usamos tus datos únicamente para responder a tu consulta. Consultá nuestra{" "}
         <Link href="/privacidad">política de privacidad</Link>.
       </small>
     </form>

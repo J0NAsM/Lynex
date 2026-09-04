@@ -1,29 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   ["#servicios", "Servicios"],
-  ["#soluciones", "Soluciones"],
+  ["#problemas", "Problemas"],
   ["#proceso", "Proceso"],
-  ["#resultados", "Resultados"],
+  ["#garantias", "Garantías"],
   ["#nosotros", "Nosotros"],
 ];
 
 export function SiteNavigation() {
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!open) return;
+
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") setOpen(false);
     }
 
+    function closeOnOutsideClick(event: PointerEvent) {
+      const container = containerRef.current;
+      if (container && !container.contains(event.target as Node)) setOpen(false);
+    }
+
+    function closeOnDesktop() {
+      if (window.innerWidth > 800) setOpen(false);
+    }
+
+    // Con el menú desplegado, el fondo no debe poder desplazarse.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
+    window.addEventListener("resize", closeOnDesktop);
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnDesktop);
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+    };
+  }, [open]);
 
   return (
-    <>
+    <div className="nav-shell" ref={containerRef}>
       <button
         className="menu-toggle"
         type="button"
@@ -50,7 +74,6 @@ export function SiteNavigation() {
           Hablemos <span aria-hidden="true">↗</span>
         </a>
       </nav>
-    </>
+    </div>
   );
 }
-

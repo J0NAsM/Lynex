@@ -18,26 +18,27 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Lynex | Software a medida para negocios que avanzan",
+    default: `Lynex | Webs y sistemas a medida en ${site.city}`,
     template: "%s | Lynex",
   },
   description: site.description,
   applicationName: site.name,
   alternates: { canonical: "/" },
-  icons: { icon: "/icon.svg" },
+  icons: { icon: "/icon.svg", apple: "/apple-icon" },
   manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
-    title: "Lynex | Software a medida",
-    description: "Soluciones digitales que encajan con la forma real de trabajar de tu empresa.",
+    title: "Lynex | Webs y sistemas a medida",
+    description: `Construimos webs y software a medida para empresas de ${site.region}.`,
     url: site.url,
     siteName: site.name,
-    locale: "es_ES",
+    locale: site.locale,
     type: "website",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Lynex, software a medida" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lynex | Software a medida",
+    title: "Lynex | Webs y sistemas a medida",
     description: "Software que trabaja como tu negocio.",
     images: ["/opengraph-image"],
   },
@@ -50,28 +51,64 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const organizationSchema = JSON.stringify({
+  const serviceArea = { "@type": "Country", name: site.region };
+  const businessSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${site.url}/#organization`,
     name: site.name,
     url: site.url,
+    logo: `${site.url}/icon.svg`,
     email: site.email,
-    description: "Desarrollo de software a medida para negocios que avanzan.",
+    ...(site.phone ? { telephone: site.phone } : {}),
+    ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
+    description: site.description,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: site.city,
+      addressCountry: "PY",
+    },
+    areaServed: serviceArea,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Servicios de Lynex",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Sitios web profesionales",
+            serviceType: "Desarrollo de sitios web",
+            areaServed: serviceArea,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Sistemas a medida",
+            serviceType: "Desarrollo de software a medida",
+            areaServed: serviceArea,
+          },
+        },
+      ],
+    },
     contactPoint: {
       "@type": "ContactPoint",
       email: site.email,
       contactType: "sales",
+      areaServed: "PY",
       availableLanguage: "Spanish",
     },
   }).replaceAll("<", "\\u003c");
 
   return (
-    <html lang="es">
+    <html lang="es-PY">
       <body className={`${dmSans.variable} ${spaceGrotesk.variable}`}>
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: organizationSchema }}
+          dangerouslySetInnerHTML={{ __html: businessSchema }}
         />
       </body>
     </html>

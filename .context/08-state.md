@@ -1,70 +1,63 @@
-# 08 — Estado actual
+# Estado del proyecto
 
-> Instantánea del **3 de septiembre de 2026**. Es el archivo que caduca más rápido de
-> `.context/`; verifica con `git status` antes de fiarte de él.
+Instantánea: **4 de septiembre de 2026**.
 
-## Las dos carpetas del workspace
+## Repositorio
 
-```
-C:\Proyectos\Personal\Lynex\
-├── Lynex\        ← EL PROYECTO REAL (repo git, es donde vive este .context)
-└── lynex-app\    ← scaffold de create-next-app sin tocar
-```
+- Ruta activa: `C:\Proyectos\Personal\Lynex\Lynex`.
+- Rama: `main`.
+- Base anterior a esta entrega: `51a98ef` (`2`).
+- Esta instantánea describe la versión terminada que se publica en `main`; usá
+  `git log -1` para consultar el identificador definitivo del commit.
 
-`lynex-app/` contiene solo `src/app/{layout,page,globals.css}` con el contenido por defecto de
-`create-next-app`, el README de plantilla y **no es un repositorio git**. Todo el trabajo real
-está en `Lynex/`.
+No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 
-**Pendiente de decisión:** borrar `lynex-app/` o dejarla. Ahora mismo solo genera confusión
-sobre cuál es el proyecto.
+## Implementado
 
-## Estado de git
+- Portada comercial completa con una narrativa única para vender webs y sistemas.
+- Copy localizado para Paraguay y consistente en voseo.
+- Secciones de problemas, dos ofertas, proceso, garantías, preguntas frecuentes y
+  contacto.
+- Configuración opcional por entorno para WhatsApp, teléfono, LinkedIn y precios.
+- Metadata local, `Organization` + catálogo de `Service`, `FAQPage`, Open Graph
+  actualizado, Apple icon, sitemap y manifest `es-PY`.
+- Formulario con validación, honeypot, control temporal, rate limit, restricción de
+  origen y envío con Resend.
+- Menú móvil accesible, cierre por clic externo, Escape, navegación y resize.
+- Páginas de error, error global y 404 coherentes con la marca.
+- Build standalone, Docker multi-stage, headers de seguridad y CI.
 
-Repositorio: `https://github.com/J0NAsM/Lynex.git`, rama `main`.
+## Validaciones realizadas
 
-Historial: dos commits (`321b5e1 Initial commit`, `b40eaaa 1`).
+En este estado pasaron:
 
-**Hay trabajo sin commitear**, y es casi todo el sitio. Modificados:
+- `npm run lint`;
+- `npm run typecheck`;
+- `npm run build` y el postbuild standalone;
+- rutas `/`, `/privacidad`, `/robots.txt`, `/sitemap.xml`,
+  `/manifest.webmanifest`, `/opengraph-image` y `/apple-icon` con 200;
+- una ruta inexistente con 404;
+- API de contacto: payload inválido 400, envío demasiado rápido 200 silencioso,
+  origen cruzado 403 y configuración Resend ausente 503;
+- revisión visual de portada completa en desktop y móvil, y de la imagen Open
+  Graph.
 
-```
-.gitignore  README.md  next.config.ts  package.json
-src/app/globals.css  src/app/layout.tsx  src/app/page.tsx
-src/app/robots.ts  src/app/sitemap.ts
-```
+El 200 silencioso del envío rápido es intencional para no ayudar a bots. Falta un
+envío real exitoso porque no hay credenciales Resend locales.
 
-Sin seguimiento:
+## Pendientes que requieren datos o servicios externos
 
-```
-.dockerignore  .env.example  .github/  Dockerfile  package-lock.json
-public/  scripts/
-src/app/api/  src/app/manifest.ts  src/app/not-found.tsx
-src/app/opengraph-image.tsx  src/app/privacidad/
-src/components/  src/lib/
-```
+1. Elegir hosting, desplegar y apuntar DNS; `lynex.dev` seguía en parking en la
+   última revisión.
+2. Configurar el correo de `lynex.dev` y verificar SPF/DKIM/remitente en Resend.
+3. Cargar secretos de Resend y probar la recepción de un contacto real.
+4. Completar, si existen, WhatsApp, teléfono, LinkedIn y precios reales.
+5. Reemplazar progresivamente garantías por casos, testimonios y resultados reales
+   cuando Lynex los tenga.
+6. Probar la imagen Docker en un entorno con Docker disponible.
+7. Cambiar el rate limit en memoria por uno distribuido solo si el volumen o la
+   infraestructura de múltiples instancias lo justifican.
+8. Verificar el workflow de GitHub después de cada push a `main`.
 
-Es decir: **el formulario de contacto, el layout, el Dockerfile, el CI y toda la capa de SEO
-todavía no están en el remoto.** Primera tarea recomendada: commitear esto con un mensaje
-descriptivo (`b40eaaa` se llama literalmente "1").
-
-Comprueba que `package-lock.json` entra en el commit — el CI usa `npm ci` y sin el lockfile
-falla.
-
-## Qué está terminado
-
-- Landing completa, responsive y accesible
-- Página de privacidad y 404
-- Formulario de contacto funcional con antispam y rate limit
-- SEO técnico completo (metadata, OG generado, robots, sitemap, manifest, JSON-LD)
-- Cabeceras de seguridad y CSP estricta
-- Build standalone + Dockerfile + workflow de CI
-
-## Pendientes conocidos
-
-| Tema | Detalle |
-|---|---|
-| Commitear el trabajo | Ver arriba; es lo más urgente |
-| Decidir sobre `lynex-app/` | Borrarla o justificar por qué está |
-| Casos reales | La sección "Resultados" es un placeholder genérico a la espera de proyectos publicables |
-| Dominio | `lynex.dev` sigue en parking y sin MX a 2026-09-03; apuntarlo al hosting y configurar correo/SPF/DKIM antes de producción |
-| Rate limit distribuido | Solo si el tráfico lo justifica ([04](04-contact-flow.md)) |
-| Tests | No hay ninguno. `npm run check` es toda la red de seguridad |
+No hay un bloqueo técnico local para generar el sitio. La publicación efectiva y
+el envío de emails dependen de las decisiones y credenciales anteriores.

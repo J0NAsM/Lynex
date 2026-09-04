@@ -1,77 +1,72 @@
-# 05 — SEO y metadata
+# SEO y metadata
 
-## La URL canónica manda
+## Fuente de verdad
 
-`src/lib/site.ts` es la fuente única:
+La URL pública, los datos de contacto y los enlaces opcionales viven en
+`src/lib/site.ts`. La URL se obtiene de `NEXT_PUBLIC_SITE_URL`, se normaliza sin
+barra final y se reutiliza en metadata, canonicales, sitemap y datos estructurados.
 
-```ts
-url: (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://lynex.dev").replace(/\/$/, "")
-```
+La página apunta a búsquedas e intención comercial de Paraguay:
 
-Se normaliza quitando la barra final. De ahí beben `metadataBase`, Open Graph, `robots.txt`,
-`sitemap.xml` y el JSON-LD.
+- idioma HTML: `es-PY`;
+- locale de Open Graph: `es_PY`;
+- título por defecto: `Lynex | Webs y sistemas a medida en Asunción`;
+- propuesta: sitios web profesionales y sistemas a medida para empresas;
+- área de servicio declarada: Paraguay, con domicilio comercial en Asunción.
 
-**`NEXT_PUBLIC_SITE_URL` se inyecta en tiempo de build.** Si la cambias, hay que **volver a
-desplegar**; no basta con reiniciar. En Docker se pasa como `--build-arg`.
+No agregues ciudades, reseñas, clientes, premios o métricas que Lynex todavía no
+pueda demostrar.
 
-## Metadata global — `layout.tsx`
+## Metadata general
 
-- Título con plantilla: `"%s | Lynex"`, y por defecto
-  `"Lynex | Software a medida para negocios que avanzan"`.
-- `alternates.canonical: "/"` (resuelto contra `metadataBase`).
-- Open Graph completo con `locale: "es_ES"`, `type: "website"` e imagen 1200x630.
-- Twitter card `summary_large_image`.
-- `robots: { index: true, follow: true }`.
-- `manifest: "/manifest.webmanifest"`, icono `/icon.svg`.
-- `viewport`: `themeColor: "#132b28"`, `colorScheme: "light"`.
+`src/app/layout.tsx` define:
 
-## JSON-LD
+- `metadataBase` y canonical raíz;
+- plantilla de títulos;
+- descripción, keywords, autores y categoría;
+- Open Graph y Twitter Card;
+- reglas de indexación para buscadores;
+- color del navegador y viewport.
 
-`layout.tsx` inyecta un schema `Organization` (nombre, url, email, `contactPoint` de tipo
-`sales` en español) mediante `dangerouslySetInnerHTML`.
+La política de privacidad sobrescribe su título, descripción y canonical en
+`src/app/privacidad/page.tsx`.
 
-Antes de inyectarlo hace `.replaceAll("<", "\\u003c")` — es la protección contra que un valor
-cierre el `<script>`. Si añades campos al schema, **mantén ese escapado**.
+## Datos estructurados
 
-## Imagen social — `opengraph-image.tsx`
+Se publican dos bloques JSON-LD:
 
-Generada en build con `next/og` (`ImageResponse`), 1200x630 PNG. Es JSX, pero con las
-limitaciones de Satori: solo un subconjunto de CSS, y **todo contenedor con hijos necesita
-`display: flex` explícito**. Si añades un `<div>` sin `display`, la generación falla.
+1. `Organization`, en el layout: identidad, URL, logo, email, teléfono opcional,
+   domicilio, zona atendida y un `OfferCatalog` con dos entidades `Service`.
+2. `FAQPage`, en la portada: las mismas preguntas y respuestas visibles en la
+   sección de preguntas frecuentes.
 
-Los colores están escritos a mano (`#132b28`, `#ff735c`, `#d4f36a`) porque no puede leer las
-variables CSS. Ver la nota de duplicación en [03-design-system.md](03-design-system.md).
+Antes de insertarlos en HTML se escapa `<` con
+`.replaceAll("<", "\\u003c")`. Esta defensa no debe retirarse: evita que datos
+configurables puedan cerrar la etiqueta `<script>`.
 
-Verificación: abrir `/opengraph-image` en el navegador.
+Cada afirmación del schema debe seguir coincidiendo con el contenido visible y
+con la realidad comercial.
 
-## robots.txt
+No uses `ProfessionalService`: Schema.org lo marca como obsoleto y recomienda
+modelar el proveedor y los servicios por separado.
 
-Permite todo excepto `/api/`, declara `sitemap` y `host`. Que `/api/` esté bloqueado es
-intencional: la ruta de contacto no debe indexarse.
+## Imágenes sociales e iconos
 
-## sitemap.xml
+- `src/app/opengraph-image.tsx`: imagen dinámica de 1200 × 630 para Open Graph y
+  Twitter, con la propuesta de webs y sistemas en Paraguay.
+- `src/app/icon.svg`: favicon vectorial.
+- `src/app/apple-icon.tsx`: icono PNG dinámico de 180 × 180 para Apple.
 
-Solo dos URLs, y es correcto — el sitio tiene dos páginas:
+Las imágenes dinámicas usan `ImageResponse`/Satori. Sus contenedores deben
+declarar `display: flex`; Satori no interpreta todo CSS del navegador.
 
-- `/` → `changeFrequency: monthly`, `priority: 1`
-- `/privacidad` → `changeFrequency: yearly`, `priority: 0.2`
+## Archivos para crawlers
 
-**Si añades una página, añádela aquí.** Es el paso que más se olvida.
+- `src/app/robots.ts`: permite rastrear el sitio y enlaza el sitemap.
+- `src/app/sitemap.ts`: incluye `/` y `/privacidad`; la fecha se calcula en el
+  build.
+- `src/app/manifest.ts`: manifiesto en `es-PY`, nombre, descripción, colores e
+  icono.
 
-## manifest.webmanifest
-
-PWA mínima: `display: standalone`, `lang: "es"`, `background_color: #f5f7f3`,
-`theme_color: #132b28`, icono SVG único con `sizes: "any"`.
-
-## Página de privacidad
-
-`/privacidad` tiene su propia `metadata` con `canonical` propio. Su contenido declara que el
-sitio **no usa cookies de analítica ni publicitarias** — si algún día se añade analítica, hay
-que actualizar ese texto y la fecha de "Última actualización" (hoy: 3 de septiembre de 2026).
-
-## Checklist tras un despliegue
-
-- [ ] `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` y `/opengraph-image` responden
-- [ ] La URL canónica del HTML coincide con el dominio final
-- [ ] La vista previa social se ve bien (validador de X/LinkedIn/WhatsApp)
-- [ ] El formulario entrega y el correo no cae en spam (revisar SPF/DKIM en Resend)
+Al crear una ruta pública indexable, agregala al sitemap y decidí explícitamente
+su canonical y metadata.

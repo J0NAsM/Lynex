@@ -14,6 +14,7 @@ const attempts = new Map<string, { count: number; resetAt: number }>();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
 const MAX_TRACKED_KEYS = 500;
+const EMAIL_TIMEOUT_MS = 10_000;
 // Nadie completa nombre, email y 20 caracteres de mensaje en menos de esto.
 const MIN_FILL_MS = 2000;
 
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
     "anonymous";
   if (isRateLimited(key)) {
     return NextResponse.json(
-      { message: "Demasiados intentos. Espera unos minutos y vuelve a intentarlo." },
+      { message: "Demasiados intentos. Esperá unos minutos y volvé a intentarlo." },
       { status: 429 },
     );
   }
@@ -117,7 +118,7 @@ export async function POST(request: NextRequest) {
     message.length > 3000
   ) {
     return NextResponse.json(
-      { message: "Revisa tu nombre, email y mensaje antes de enviarlos." },
+      { message: "Revisá tu nombre, email y mensaje antes de enviarlos." },
       { status: 400 },
     );
   }
@@ -137,26 +138,38 @@ export async function POST(request: NextRequest) {
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      reply_to: email,
-      subject: `Nueva consulta de ${name}`,
-      text: `Nombre: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<h2>Nueva consulta desde ${site.url.replace(/^https?:\/\//, "")}</h2><p><strong>Nombre:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>Mensaje:</strong><br />${safeMessage}</p>`,
-    }),
-  });
+  let response: Response;
+
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "User-Agent": "Lynex Contact Form/1.0",
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        reply_to: email,
+        subject: `Nueva consulta de ${name}`,
+        text: `Nombre: ${name}\nEmail: ${email}\n\n${message}`,
+        html: `<h2>Nueva consulta desde ${site.url.replace(/^https?:\/\//, "")}</h2><p><strong>Nombre:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>Mensaje:</strong><br />${safeMessage}</p>`,
+      }),
+      signal: AbortSignal.timeout(EMAIL_TIMEOUT_MS),
+    });
+  } catch (error) {
+    console.error("Resend request failed", error);
+    return NextResponse.json(
+      { message: "No pudimos enviar el mensaje. Intentá nuevamente." },
+      { status: 502 },
+    );
+  }
 
   if (!response.ok) {
     console.error("Resend rejected contact email", response.status, await response.text());
     return NextResponse.json(
-      { message: "No pudimos enviar el mensaje. Inténtalo nuevamente." },
+      { message: "No pudimos enviar el mensaje. Intentá nuevamente." },
       { status: 502 },
     );
   }

@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Lynex, software a medida para negocios que avanzan";
+export const alt = "Lynex, webs y sistemas a medida en Paraguay";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,9 +26,9 @@ export default function OpenGraphImage() {
             Lynex
           </div>
           <div style={{ display: "flex", fontSize: 68, fontWeight: 700, letterSpacing: "-4px", lineHeight: 1.04, marginTop: 72 }}>
-            Software que trabaja como tu negocio<span style={{ color: "#ff735c" }}>.</span>
+            Webs y sistemas hechos para tu negocio<span style={{ color: "#ff735c" }}>.</span>
           </div>
-          <div style={{ color: "#aac0ba", fontSize: 25, marginTop: 30 }}>Diseño, desarrollo y evolución de soluciones a medida.</div>
+          <div style={{ color: "#aac0ba", fontSize: 25, marginTop: 30 }}>Asunción, Paraguay · Precio y plazo por escrito.</div>
         </div>
         <div style={{ background: "#d4f36a", borderRadius: 999, height: 280, opacity: 0.95, position: "absolute", right: -100, top: -95, width: 280 }} />
         <div style={{ border: "2px solid #ff735c", borderRadius: 999, bottom: -190, height: 430, position: "absolute", right: 55, width: 430 }} />

@@ -21,11 +21,11 @@ export default function PrivacyPage() {
 
         <section>
           <h2>Quién trata tus datos</h2>
-          <p>Lynex es responsable de los datos que envías mediante este sitio. Puedes contactarnos en <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+          <p>Lynex es responsable de los datos que enviás mediante este sitio. Podés contactarnos en <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
         </section>
         <section>
           <h2>Qué datos recopilamos y para qué</h2>
-          <p>Cuando utilizas el formulario recibimos tu nombre, correo electrónico y el contenido de tu consulta. Los usamos exclusivamente para responderte, evaluar tu solicitud y continuar la conversación comercial que hayas iniciado.</p>
+          <p>Cuando usás el formulario recibimos tu nombre, correo electrónico y el contenido de tu consulta. Los usamos exclusivamente para responderte, evaluar tu solicitud y continuar la conversación comercial que hayas iniciado.</p>
         </section>
         <section>
           <h2>Conservación y proveedores</h2>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2>Tus opciones</h2>
-          <p>Puedes pedir acceso, corrección o eliminación de tus datos, o retirar tu consentimiento, escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>. No utilizamos el formulario para suscribirte a comunicaciones de marketing.</p>
+          <p>Podés pedir acceso, corrección o eliminación de tus datos, o retirar tu consentimiento, escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>. No usamos el formulario para suscribirte a comunicaciones de marketing.</p>
         </section>
         <section>
           <h2>Cookies</h2>
@@ -44,4 +44,3 @@ export default function PrivacyPage() {
     </main>
   );
 }
-

@@ -1,43 +1,39 @@
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
 import { SiteNavigation } from "@/components/site-navigation";
-import { site } from "@/lib/site";
+import { offers, site, whatsappLink } from "@/lib/site";
 
-const services = [
-  ["01", "Software a medida", "Procesos digitales que encajan con la forma real de trabajar de tu empresa.", "↗"],
-  ["02", "Web y aplicaciones", "Experiencias web y móviles rápidas, claras y preparadas para crecer.", "⌁"],
-  ["03", "Sistemas empresariales", "Una visión ordenada de ventas, clientes, operaciones y resultados.", "▦"],
-  ["04", "Automatización", "Menos tareas repetitivas. Más tiempo para las decisiones que importan.", "◌"],
-  ["05", "Integraciones y APIs", "Conectamos las herramientas que ya usas para que trabajen como un solo sistema.", "⇄"],
-  ["06", "Evolución y soporte", "Acompañamiento continuo para que tu software nunca se quede atrás.", "＋"],
+// La página es estática, así que el año del pie quedaría congelado en el build.
+// Regenerarla a diario mantiene el copyright correcto sin volver a desplegar.
+export const revalidate = 86400;
+
+const symptoms = [
+  ["01", "No aparecés cuando te buscan", "Alguien escucha tu nombre, te busca en Google y no encuentra nada serio. Esa venta se pierde antes de empezar."],
+  ["02", "La doble carga", "El pedido entra por WhatsApp, alguien lo pasa al Excel, otro al sistema de facturación. Tres veces el mismo dato, tres oportunidades de error."],
+  ["03", "Los números llegan tarde", "Para saber cómo cerró el mes hay que esperar a que alguien arme el reporte a mano. Cuando llega, ya no sirve para decidir."],
 ] as const;
 
-const solutions = [
-  "Ventas", "Inventario", "Facturación", "CRM", "ERP", "Logística", "Pedidos",
-  "Dashboards", "Portales internos", "Apps empresariales",
+const steps = [
+  ["01", "Conversamos", "Media hora para entender qué necesitás. Si vemos que no somos la solución correcta, te lo decimos y te orientamos igual."],
+  ["02", "Propuesta por escrito", "Alcance, precio y fecha cerrados antes de empezar. Sin sorpresas después."],
+  ["03", "Construimos por entregas", "Ves avances cada dos semanas. Nada de esperar meses para ver una caja negra."],
+  ["04", "Publicamos y acompañamos", "Lo dejamos funcionando, capacitamos a tu equipo y seguimos disponibles."],
 ] as const;
 
-const technologies = [
-  "React", "Next.js", "Python", "Java", "Flutter", "PostgreSQL", "APIs REST",
-  "Docker", "Cloud",
-] as const;
-
-const process = [
-  ["01", "Descubrimiento", "Entendemos tu negocio, tus objetivos y el problema que quieres resolver."],
-  ["02", "Análisis", "Convertimos necesidades y procesos en una hoja de ruta clara."],
-  ["03", "Propuesta", "Definimos alcance, prioridades y una inversión transparente."],
-  ["04", "Diseño y desarrollo", "Construimos, validamos contigo y avanzamos por entregas."],
-  ["05", "Implementación", "Ponemos la solución en marcha y acompañamos al equipo."],
-  ["06", "Evolución", "Medimos, mejoramos y sumamos nuevas capacidades cuando haga falta."],
+const commitments = [
+  ["Precio y fecha por escrito", "Antes de escribir la primera línea. Si el alcance cambia, se cotiza aparte y lo aprobás vos."],
+  ["Entregas cada dos semanas", "Ves el avance real, no un informe. Si algo va por mal camino, te enterás a tiempo."],
+  ["El código y los accesos son tuyos", "Al pago final se transfiere todo: repositorio, accesos y documentación. Nunca quedás atado a nosotros."],
+  ["Garantía de 60 días", "Cualquier corrección sobre lo entregado entra sin costo durante los dos primeros meses."],
 ] as const;
 
 const faqs = [
-  ["¿Cuánto cuesta desarrollar un sistema?", "Cada proyecto parte de un problema y un alcance diferente. Después de una primera conversación podemos preparar una propuesta ajustada, con prioridades y fases claras."],
-  ["¿Cuánto tarda?", "El plazo depende de la solución. Trabajamos por entregas para que puedas validar avances y empezar a obtener valor sin esperar a que todo esté terminado."],
-  ["¿Puedo empezar con una versión pequeña?", "Sí. Diseñamos una primera versión enfocada en lo esencial y dejamos una base sólida para incorporar nuevas funciones después."],
-  ["¿Pueden integrarlo con mis sistemas actuales?", "Sí. Analizamos tus herramientas y conectamos los sistemas necesarios mediante APIs o integraciones a medida."],
-  ["¿Qué ocurre después de la implementación?", "Seguimos disponibles para soporte, mantenimiento y evolución. La solución se adapta a tu negocio a medida que cambia."],
-  ["¿El código y los datos serán míos?", "Trabajamos con transparencia. El alcance de la propiedad, accesos y responsabilidades queda definido desde la propuesta."],
+  ["¿Cuánto cuesta?", "Depende del alcance, y preferimos no inventar un número al aire. En la primera conversación te damos una referencia real, y la cifra exacta va por escrito antes de que te comprometas a nada."],
+  ["¿Cuánto tarda?", "Un sitio web está publicado entre 2 y 4 semanas. Una primera versión útil de un sistema, entre 4 y 8 semanas desde el arranque."],
+  ["¿De quién es el código?", "Tuyo. Al pago final se transfiere todo: repositorio, accesos y documentación. Nunca vas a quedar atado a nosotros."],
+  ["¿Qué pasa si necesito cambios después?", "Los vas a necesitar, siempre pasa. Hay garantía de 60 días para correcciones y un abono mensual opcional que incluye horas de mejoras. Los cambios grandes se cotizan aparte, siempre antes de hacerlos."],
+  ["¿Y si el proyecto se complica?", "Se paga por hitos contra entregas aprobadas. Nunca pagás por adelantado algo que todavía no viste funcionando."],
+  ["¿Puedo empezar por algo chico?", "Sí, y suele ser lo mejor. Arrancamos por la parte que más duele, la dejamos funcionando, y desde ahí decidimos qué sigue."],
 ] as const;
 
 function Arrow() {
@@ -45,6 +41,16 @@ function Arrow() {
 }
 
 export default function Home() {
+  const faqSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: answer },
+    })),
+  }).replaceAll("<", "\\u003c");
+
   return (
     <>
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
@@ -58,20 +64,24 @@ export default function Home() {
       <main id="contenido">
         <section className="hero section-wrap" id="inicio" aria-labelledby="hero-title">
           <div className="hero-copy reveal">
-            <p className="eyebrow"><span className="eyebrow-dot" /> Software que trabaja como tu negocio</p>
-            <h1 id="hero-title">La tecnología adecuada para <em>hacer avanzar</em> tu empresa.</h1>
-            <p className="hero-text">Diseñamos y desarrollamos software a medida para ordenar operaciones, automatizar procesos y tomar mejores decisiones.</p>
+            <p className="eyebrow"><span className="eyebrow-dot" /> {site.city}, {site.region}</p>
+            <h1 id="hero-title">Tu negocio creció. Tus <em>herramientas</em> no.</h1>
+            <p className="hero-text">Construimos la web y el sistema que tu empresa necesita. Sin plantillas genéricas, sin proyectos eternos y con el precio cerrado antes de empezar.</p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#contacto">Cuéntanos qué necesitas <Arrow /></a>
-              <a className="text-link" href="#servicios">Explorar servicios <Arrow /></a>
+              <a className="button button-dark" href="#servicios">Ver qué hacemos <Arrow /></a>
+              {whatsappLink ? (
+                <a className="text-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp <Arrow /></a>
+              ) : (
+                <a className="text-link" href="#contacto">Contanos qué necesitás <Arrow /></a>
+              )}
             </div>
-            <div className="hero-note"><span aria-hidden="true">✦</span> Desde la primera conversación hasta la evolución del sistema</div>
+            <div className="hero-note"><span aria-hidden="true">✦</span> Primera conversación de 30 minutos, sin compromiso</div>
           </div>
 
           <div className="hero-visual reveal-delay" aria-label="Panel de control ilustrativo de una solución empresarial" role="img">
             <div className="visual-top">
               <span className="window-dots" aria-hidden="true"><i /><i /><i /></span>
-              <span className="visual-label">LYNEX / OPERACIONES</span>
+              <span className="visual-label">LYNEX / DEMO OPERATIVA</span>
               <span className="visual-status"><b /> Activo</span>
             </div>
             <div className="visual-content">
@@ -100,41 +110,54 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="trust-strip" aria-label="Beneficios">
+        <section className="trust-strip" aria-label="Lo que incluye todo proyecto">
           <div className="section-wrap trust-inner">
-            <span>Una solución bien diseñada se nota en todo</span>
-            <div><span>Más claridad</span><span>Menos fricción</span><span>Mejores decisiones</span></div>
+            <span>Lo que te llevás en todos los casos</span>
+            <div><span>Precio cerrado</span><span>Entregas cada 2 semanas</span><span>El código es tuyo</span></div>
           </div>
         </section>
 
-        <section className="section-wrap section-block" id="servicios" aria-labelledby="services-title">
+        <section className="section-wrap section-block" id="servicios" aria-labelledby="offers-title">
           <div className="section-intro">
-            <div><p className="eyebrow">Lo que hacemos</p><h2 id="services-title">Software pensado para <em>resolver</em>, no para complicar.</h2></div>
-            <p>Combinamos estrategia, diseño y tecnología para convertir procesos complejos en herramientas que tu equipo disfruta usar.</p>
+            <div><p className="eyebrow">Dos formas de empezar</p><h2 id="offers-title">Elegí por dónde te <em>duele</em> más.</h2></div>
+            <p>Podés empezar por la web y avanzar hacia un sistema cuando la operación lo necesite. No hace falta decidirlo todo hoy.</p>
           </div>
-          <div className="service-grid">
-            {services.map(([number, title, text, icon]) => (
-              <article className="service-card" key={number}>
-                <div className="service-top"><span>{number}</span><b aria-hidden="true">{icon}</b></div>
-                <h3>{title}</h3><p>{text}</p>
-                <a href="#contacto" aria-label={`Conocer más sobre ${title}`}>Saber más <Arrow /></a>
+          <div className="offer-grid">
+            {offers.map((offer) => (
+              <article className="offer-card" key={offer.id} aria-labelledby={`offer-${offer.id}`}>
+                <p className="eyebrow">{offer.eyebrow}</p>
+                <h3 id={`offer-${offer.id}`}>{offer.title}</h3>
+                <p className="offer-text">{offer.text}</p>
+                <ul className="offer-includes">
+                  {offer.includes.map((item) => (
+                    <li key={item}><span aria-hidden="true">✓</span>{item}</li>
+                  ))}
+                </ul>
+                <dl className="offer-meta">
+                  {offer.from && (
+                    <div><dt>Desde</dt><dd>{offer.from}</dd></div>
+                  )}
+                  <div><dt>Plazo</dt><dd>{offer.time}</dd></div>
+                </dl>
+                <a className="button button-dark offer-cta" href="#contacto">{offer.cta} <Arrow /></a>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="dark-band" id="soluciones" aria-labelledby="solutions-title">
-          <div className="section-wrap solutions-layout">
+        <section className="dark-band" id="problemas" aria-labelledby="symptoms-title">
+          <div className="section-wrap symptoms-layout">
             <div>
-              <p className="eyebrow eyebrow-light">Un sistema, a tu medida</p>
-              <h2 id="solutions-title">Del problema cotidiano a una solución que <em>encaja.</em></h2>
-              <p className="dark-copy">No partimos de un catálogo cerrado. Observamos cómo funciona tu empresa y construimos las piezas que realmente necesitas.</p>
-              <a className="button button-light" href="#contacto">Hablemos de tu proyecto <Arrow /></a>
+              <p className="eyebrow eyebrow-light">¿Esto te suena?</p>
+              <h2 id="symptoms-title">Si reconocés alguno, ya sabemos por dónde <em>empezar.</em></h2>
+              <p className="dark-copy">No hace falta que tengas todo claro antes de escribirnos. Parte de nuestro trabajo es ayudarte a ordenar el problema.</p>
+              <a className="button button-light" href="#contacto">Hablemos de tu caso <Arrow /></a>
             </div>
-            <ol className="solution-list">
-              {solutions.map((item, index) => (
-                <li key={item} className={index === 0 ? "solution active" : "solution"}>
-                  <span className="solution-number">{String(index + 1).padStart(2, "0")}</span><span>{item}</span><Arrow />
+            <ol className="symptom-list">
+              {symptoms.map(([number, title, text]) => (
+                <li key={number}>
+                  <span className="symptom-number">{number}</span>
+                  <div><strong>{title}</strong><p>{text}</p></div>
                 </li>
               ))}
             </ol>
@@ -143,66 +166,47 @@ export default function Home() {
 
         <section className="section-wrap section-block process-section" id="proceso" aria-labelledby="process-title">
           <div className="section-intro">
-            <div><p className="eyebrow">Cómo trabajamos</p><h2 id="process-title">Claridad en cada <em>paso.</em></h2></div>
-            <p>Un proceso cercano y transparente para que sepas qué estamos haciendo, por qué y qué viene después.</p>
+            <div><p className="eyebrow">Cómo trabajamos</p><h2 id="process-title">Sin sorpresas de precio ni de <em>fecha.</em></h2></div>
+            <p>Un proceso corto y transparente. Sabés qué estamos haciendo, por qué y qué viene después.</p>
           </div>
-          <ol className="process-grid">
-            {process.map(([number, title, text]) => (
+          <ol className="process-grid process-grid-four">
+            {steps.map(([number, title, text]) => (
               <li className="process-step" key={number}><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div></li>
             ))}
           </ol>
         </section>
 
-        <section className="projects-band" id="resultados" aria-labelledby="results-title">
+        <section className="projects-band" id="garantias" aria-labelledby="commitments-title">
           <div className="section-wrap">
             <div className="section-intro project-intro">
-              <div><p className="eyebrow">Resultados</p><h2 id="results-title">Tecnología con un propósito <em>concreto.</em></h2></div>
-              <p>Cada decisión técnica debe traducirse en una mejora que tu equipo pueda ver, usar y medir.</p>
+              <div><p className="eyebrow">Nuestro compromiso</p><h2 id="commitments-title">Lo que te garantizamos por <em>escrito.</em></h2></div>
+              <p>Todavía no publicamos casos de clientes. Mientras tanto, esto es lo que firmamos con cada proyecto.</p>
             </div>
-            <div className="project-placeholder">
-              <div className="project-art">
-                <span>DE LA FRICCIÓN<br /><b>AL FLUJO</b></span>
-                <div className="art-lines" aria-hidden="true"><i /><i /><i /></div>
-              </div>
-              <div className="project-info">
-                <span className="tag">NUESTRO COMPROMISO</span>
-                <h3>Software que mejora la operación</h3>
-                <ul className="outcome-list">
-                  <li><strong>Visibilidad</strong><span>Información centralizada para decidir con contexto.</span></li>
-                  <li><strong>Eficiencia</strong><span>Menos tareas manuales y menos margen de error.</span></li>
-                  <li><strong>Escalabilidad</strong><span>Una base mantenible que crece con el negocio.</span></li>
-                </ul>
-                <a className="text-link" href="#contacto">Cuéntanos tu reto <Arrow /></a>
-              </div>
-            </div>
+            <ul className="commitment-grid">
+              {commitments.map(([title, text]) => (
+                <li key={title}><strong>{title}</strong><span>{text}</span></li>
+              ))}
+            </ul>
           </div>
         </section>
 
         <section className="section-wrap section-block why-section" id="nosotros" aria-labelledby="about-title">
           <div className="why-copy">
             <p className="eyebrow">Por qué Lynex</p>
-            <h2 id="about-title">Un socio tecnológico que habla tu <em>idioma.</em></h2>
-            <p>La tecnología es nuestra herramienta. Tu negocio, el punto de partida. Nos implicamos para que la solución sea útil hoy y sostenible mañana.</p>
-            <a className="text-link" href="#contacto">Conoce nuestra forma de trabajar <Arrow /></a>
+            <h2 id="about-title">Hablás con quien <em>construye.</em></h2>
+            <p>Somos un equipo chico en {site.city}. No vas a explicar tu problema tres veces ni a esperar que un intermediario te traduzca. La misma persona que entiende tu negocio es la que escribe el código.</p>
+            <a className="text-link" href="#contacto">Escribinos <Arrow /></a>
           </div>
           <div className="why-list">
-            <div><span>01</span><strong>Diseñado para tu negocio</strong><p>No adaptas tu forma de trabajar a un producto. El producto se adapta a ti.</p></div>
-            <div><span>02</span><strong>Comunicación directa</strong><p>Hablas con las personas que conocen tu proyecto y toman las decisiones.</p></div>
-            <div><span>03</span><strong>Una base para crecer</strong><p>Construimos soluciones claras, mantenibles y preparadas para la siguiente etapa.</p></div>
-          </div>
-        </section>
-
-        <section className="tech-strip" aria-labelledby="technology-title">
-          <div className="section-wrap tech-inner">
-            <p className="eyebrow">La tecnología, en su lugar</p>
-            <div className="tech-copy"><h2 id="technology-title">Herramientas sólidas. <em>Resultados claros.</em></h2><p>Elegimos la tecnología que mejor responde a tu contexto. Nunca al revés.</p></div>
-            <div className="tech-tags">{technologies.map((tech) => <span key={tech}>{tech}</span>)}</div>
+            <div><span>01</span><strong>Hecho para tu negocio</strong><p>No adaptás tu forma de trabajar a un producto. El producto se adapta a vos.</p></div>
+            <div><span>02</span><strong>Te decimos que no</strong><p>Si lo que necesitás se resuelve con una herramienta que ya existe, te lo decimos aunque perdamos el proyecto.</p></div>
+            <div><span>03</span><strong>Una base para crecer</strong><p>Construimos soluciones claras y mantenibles, preparadas para la siguiente etapa.</p></div>
           </div>
         </section>
 
         <section className="section-wrap faq-section" aria-labelledby="faq-title">
           <div className="section-intro">
-            <div><p className="eyebrow">Preguntas frecuentes</p><h2 id="faq-title">Lo que quieres saber <em>antes de empezar.</em></h2></div>
+            <div><p className="eyebrow">Preguntas frecuentes</p><h2 id="faq-title">Lo que querés saber <em>antes de empezar.</em></h2></div>
             <p>Una primera conversación no te compromete a nada. Solo sirve para entender si podemos ayudarte.</p>
           </div>
           <FaqList items={faqs} />
@@ -211,10 +215,14 @@ export default function Home() {
         <section className="contact-section" id="contacto" aria-labelledby="contact-title">
           <div className="section-wrap contact-layout">
             <div>
-              <p className="eyebrow eyebrow-light">¿Tienes un reto?</p>
-              <h2 id="contact-title">Hagamos que tu próximo paso sea <em>más claro.</em></h2>
-              <p>Cuéntanos qué necesitas. Te responderemos para concertar una primera conversación.</p>
+              <p className="eyebrow eyebrow-light">Empecemos por entender el problema</p>
+              <h2 id="contact-title">Una conversación de 30 minutos, sin <em>compromiso.</em></h2>
+              <p>Contanos qué necesitás. Si vemos que no somos la solución correcta, te lo decimos y te orientamos igual.</p>
               <div className="contact-detail"><span aria-hidden="true">✦</span><a href={`mailto:${site.email}`}>{site.email}</a></div>
+              {whatsappLink && (
+                <div className="contact-detail"><span aria-hidden="true">✆</span><a href={whatsappLink} target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp</a></div>
+              )}
+              <p className="contact-place">{site.city}, {site.region}</p>
             </div>
             <ContactForm />
           </div>
@@ -224,11 +232,18 @@ export default function Home() {
       <footer className="site-footer">
         <div className="section-wrap footer-inner">
           <a className="brand" href="#inicio" aria-label="Lynex, volver al inicio"><span className="brand-mark" aria-hidden="true">L</span><span>Lynex</span></a>
-          <span>Software a medida para negocios que avanzan.</span>
-          <div><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a><a href="/privacidad">Privacidad</a></div>
+          <span>Webs y sistemas a medida. {site.city}, {site.region}.</span>
+          <div>
+            <a href="#servicios">Servicios</a>
+            <a href="#contacto">Contacto</a>
+            {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+            <a href="/privacidad">Privacidad</a>
+          </div>
           <small>© {new Date().getFullYear()} Lynex. Todos los derechos reservados.</small>
         </div>
       </footer>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
     </>
   );
 }

@@ -1,89 +1,87 @@
-# 06 — Build y despliegue
+# Build y despliegue
 
-## Variables de entorno
+## Requisitos
 
-| Variable | Obligatoria | Momento | Para qué |
-|---|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | Recomendada | **Build** | Canonical, OG, sitemap, robots. Sin barra final. Por defecto `https://lynex.dev` |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Recomendada | **Build** | Email público y enlace alternativo. Por defecto `hola@lynex.dev` |
-| `RESEND_API_KEY` | Solo para el formulario | Runtime | Clave de la API de Resend |
-| `CONTACT_TO_EMAIL` | Solo para el formulario | Runtime | Buzón que recibe las consultas |
-| `CONTACT_FROM_EMAIL` | Solo para el formulario | Runtime | Remitente en dominio verificado: `Lynex <contacto@dominio.com>` |
+- Node.js `>=20.9.0` según `package.json`.
+- Node 22 recomendado y fijado en `.nvmrc` y en la imagen Docker.
+- Instalación reproducible con `npm ci`.
 
-Reglas duras:
+## Variables públicas de build
 
-- **Nunca** pongas `NEXT_PUBLIC_` delante de `RESEND_API_KEY`: la publicarías en el navegador.
-- Las dos variables `NEXT_PUBLIC_*` se congelan en el build → cambiarlas exige **redesplegar**.
-- Las tres de email son de runtime → basta reiniciar el proceso.
-- Sin las tres de email el sitio **compila y sirve igual**; solo el formulario devuelve `503`.
+Las variables `NEXT_PUBLIC_*` quedan embebidas en el bundle durante el build.
+Cambiar una requiere volver a construir y desplegar.
 
-Plantilla en `.env.example`. En local: `copy .env.example .env.local`.
+| Variable | Obligatoria | Uso |
+|---|---:|---|
+| `NEXT_PUBLIC_SITE_URL` | sí | URL canónica, schema, robots y sitemap |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | sí | email visible y destino de enlaces `mailto:` |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | no | número en dígitos para generar `wa.me` |
+| `NEXT_PUBLIC_CONTACT_PHONE` | no | teléfono visible y schema local |
+| `NEXT_PUBLIC_LINKEDIN_URL` | no | enlace del pie de página |
+| `NEXT_PUBLIC_WEB_PRICE_FROM` | no | precio inicial visible de sitios web |
+| `NEXT_PUBLIC_SYSTEM_PRICE_FROM` | no | precio inicial visible de sistemas |
 
-## Scripts npm
+Los campos opcionales se ocultan cuando están vacíos. No uses valores de relleno
+en producción.
 
-| Script | Qué hace |
+## Variables privadas de runtime
+
+| Variable | Uso |
 |---|---|
-| `npm run dev` | Servidor de desarrollo en `:3000` |
-| `npm run build` | Build de Next + `postbuild` |
-| `npm run postbuild` | `scripts/prepare-standalone.mjs` (automático tras `build`) |
-| `npm start` | `node .next/standalone/server.js` — **no** es `next start` |
-| `npm run lint` | ESLint (config flat, `eslint-config-next` core-web-vitals + TS) |
-| `npm run typecheck` | `next typegen && tsc --noEmit` |
-| `npm run check` | lint + typecheck + build — **lo mismo que valida CI** |
+| `RESEND_API_KEY` | autentica el envío con Resend |
+| `CONTACT_TO_EMAIL` | recibe los contactos; cae al email público si falta |
+| `CONTACT_FROM_EMAIL` | remitente de un dominio verificado en Resend |
 
-Ejecuta `npm run check` antes de abrir un PR; evita el 100% de los fallos de CI.
+Nunca expongas estas tres como `NEXT_PUBLIC_*` ni las incluyas en commits.
+`.env.example` documenta el formato y `.env.local` está ignorado por Git.
 
-## Por qué existe `prepare-standalone.mjs`
+## Comandos de calidad
 
-`output: "standalone"` genera `.next/standalone/server.js` con solo las dependencias que hacen
-falta, pero **Next no copia `public/` ni `.next/static/`** dentro de esa carpeta. El script de
-postbuild los copia (borrando el destino antes, para no dejar archivos huérfanos entre builds).
-
-Sin ese paso, `npm start` sirve la app **sin CSS ni imágenes**. Si ves el sitio "desnudo" tras
-un build, es esto. El script lanza un error explícito si no encuentra la salida standalone.
+```bash
+npm run dev        # desarrollo
+npm run lint       # ESLint
+npm run typecheck  # tipos de rutas + TypeScript
+npm run build      # build y preparación standalone
+npm run check      # lint + typecheck + build, igual que CI
+npm run start      # servidor standalone ya construido
+```
 
 ## Vercel
 
-1. Importar el repo (`github.com/J0NAsM/Lynex`); Vercel detecta Next.js solo.
-2. Añadir las cinco variables en **Project Settings → Environment Variables**.
-3. Desplegar.
-4. Asociar el dominio y confirmar que `NEXT_PUBLIC_SITE_URL` coincide con la URL canónica;
-   **redesplegar** si la cambias.
-5. Enviar un mensaje real desde el formulario y verificar la entrega en Resend.
-
-Nota: en serverless, el rate limit en memoria es por instancia — ver
-[04-contact-flow.md](04-contact-flow.md).
+1. Importar este repositorio y mantener la raíz en `Lynex` si el proveedor parte
+   de la carpeta superior.
+2. Usar Node 22 y los comandos detectados de Next.js.
+3. Cargar todas las variables necesarias en Production y Preview.
+4. Verificar el dominio y después hacer un redeploy para que metadata y sitemap
+   incorporen la URL definitiva.
 
 ## Docker
 
-Build multi-etapa (`deps` → `builder` → `runner`) sobre `node:22-alpine`:
+El `Dockerfile` genera una imagen multi-stage, standalone y no root. Las siete
+variables públicas están declaradas como argumentos del build. Ejemplo mínimo:
 
 ```bash
 docker build \
   --build-arg NEXT_PUBLIC_SITE_URL=https://lynex.dev \
   --build-arg NEXT_PUBLIC_CONTACT_EMAIL=hola@lynex.dev \
-  -t lynex-web .
+  -t lynex .
 
 docker run --rm -p 3000:3000 \
-  -e RESEND_API_KEY=tu_clave \
+  -e RESEND_API_KEY=re_xxx \
   -e CONTACT_TO_EMAIL=hola@lynex.dev \
-  -e "CONTACT_FROM_EMAIL=Lynex <contacto@lynex.dev>" \
-  lynex-web
+  -e "CONTACT_FROM_EMAIL=Lynex <contacto@dominio-verificado.com>" \
+  lynex
 ```
 
-Puntos a tener en cuenta:
+Agregá `--build-arg` para WhatsApp, teléfono, LinkedIn o precios si se publican.
 
-- La URL y el email públicos son **`--build-arg`**, no `-e`. Pasarlos como variables de runtime no tiene efecto.
-- La imagen final corre como usuario sin privilegios (`nextjs`, uid 1001).
-- `HOSTNAME=0.0.0.0` y `PORT=3000` ya vienen fijados; cambia `PORT` si necesitas otro.
-- Telemetría de Next desactivada (`NEXT_TELEMETRY_DISABLED=1`).
-- **En producción, pon HTTPS por delante del contenedor.** La cabecera HSTS ya se envía.
-- `.dockerignore` excluye `.git`, `.github`, `.next`, `node_modules` y todos los `.env*`
-  salvo `.env.example`.
+## Bloqueos externos antes de publicar
 
-## CI — `.github/workflows/ci.yml`
-
-Workflow "Calidad", en push a `main` y en cada PR. Node 22, caché de npm,
-`npm ci` → `lint` → `typecheck` → `build`. Permisos reducidos a `contents: read`.
-
-No hay job de despliegue: el deploy lo gestiona Vercel (o el pipeline de Docker que se monte).
+- `lynex.dev` estaba resolviendo a una página de parking al revisar el 3 de
+  septiembre de 2026; hay que apuntar DNS al hosting definitivo.
+- El dominio no tenía MX visible en esa revisión. Configurá el proveedor de correo
+  antes de depender de `hola@lynex.dev`.
+- Verificá el dominio remitente en Resend y publicá sus registros SPF/DKIM.
+- Hacé un envío real del formulario desde el dominio final.
+- La imagen Docker no se probó localmente porque Docker CLI no estaba instalado;
+  el build standalone de Next sí fue probado.

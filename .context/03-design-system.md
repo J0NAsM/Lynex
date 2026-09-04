@@ -1,73 +1,51 @@
 # 03 — Sistema de diseño
 
-Todo el CSS vive en un único archivo: `src/app/globals.css`.
+Todo el estilo vive en `src/app/globals.css`. El proyecto usa CSS plano; Tailwind y su plugin
+de PostCSS fueron retirados porque no se utilizaban.
 
-## CSS plano, sin framework
+## Tokens
 
-Tailwind y su plugin de PostCSS fueron retirados porque no existían clases utilitarias en el
-sitio. Los estilos se escriben directamente en `globals.css`; si se incorpora un framework
-en el futuro, debe ser una decisión explícita y acompañada por la configuración necesaria.
-
-## Tokens de color (`:root`)
-
-| Variable | Valor | Uso |
+| Variable | Valor | Función |
 |---|---|---|
-| `--ink` | `#14211f` | Texto principal, botón oscuro |
-| `--muted` | `#65716d` | Texto secundario |
-| `--paper` | `#f5f7f3` | Fondo del sitio |
-| `--line` | `#d9e0da` | Bordes y separadores |
-| `--lime` | `#d4f36a` | Acento vivo: botón claro, banda de tecnologías, sombra dura |
-| `--coral` | `#ff735c` | Acento cálido: `<em>` en titulares, flechas, focus ring |
-| `--teal` | `#0c6b62` | Eyebrows, sección de contacto, hero visual |
-| `--deep` | `#132b28` | Bandas oscuras y footer, `theme-color` |
+| `--ink` | `#14211f` | texto principal y botones oscuros |
+| `--muted` | `#65716d` | texto secundario |
+| `--paper` | `#f5f7f3` | fondo general |
+| `--line` | `#d9e0da` | bordes y separadores |
+| `--lime` | `#d4f36a` | CTA claro, estados y sombra del hero |
+| `--coral` | `#ff735c` | énfasis, flechas y foco |
+| `--teal` | `#0c6b62` | sección de contacto y dashboard |
+| `--deep` | `#132b28` | bandas oscuras y footer |
 
-Estos valores están **duplicados a mano** en tres sitios que no leen el CSS:
-`opengraph-image.tsx`, `manifest.ts` y `layout.tsx` (`viewport.themeColor`), más
-`public/icon.svg`. Si cambias la paleta, cámbialos también ahí.
+Los colores se duplican donde CSS no está disponible: `layout.tsx`, `manifest.ts`,
+`opengraph-image.tsx`, `apple-icon.tsx` y `public/icon.svg`. Un cambio de paleta debe revisar
+todos esos archivos.
 
-## Tipografía
+## Tipografía y composición
 
-Dos fuentes de Google cargadas con `next/font` en `layout.tsx` y expuestas como variables:
+- `--font-body`: DM Sans.
+- `--font-display`: Space Grotesk.
+- Titulares con tracking negativo y `clamp()`; geometría recta y casi sin radios.
+- La sombra lima del dashboard es la firma visual principal.
+- El orden del CSS acompaña la página: base → hero → trust → ofertas → problemas → proceso →
+  garantías → nosotros → FAQ → contacto → footer → legales/error → estilos añadidos.
 
-- `--font-body` → **DM Sans**, en `body`.
-- `--font-display` → **Space Grotesk**, en `h1/h2/h3`, `.brand`, métricas y elementos destacados.
+## Componentes comerciales nuevos
 
-Los titulares usan `clamp()` y `letter-spacing` muy negativo (`-.07em`) — es parte de la
-identidad, no un accidente.
+- `.offer-grid` / `.offer-card`: dos ofertas con lista, precio opcional y plazo.
+- `.symptoms-layout` / `.symptom-list`: banda oscura de problemas.
+- `.process-grid-four`: cuatro pasos en escritorio.
+- `.commitment-grid`: garantías en dos columnas.
+- `.contact-place`: señal local bajo los medios de contacto.
 
-## Convenciones de escritura del CSS
+## Responsive y accesibilidad
 
-- **Una regla por línea, propiedades en orden alfabético.** El archivo es denso a propósito;
-  respeta el formato al añadir código.
-- Las clases se agrupan por sección de la página siguiendo el orden de `page.tsx`
-  (hero → trust → servicios → soluciones → proceso → resultados → nosotros → tech → faq →
-  contacto → footer → páginas legales/error).
-- Layout con **CSS Grid y Flexbox**, sin framework.
-- `border-radius: 0` casi en todas partes: la estética es de bordes rectos, con la sombra
-  dura del hero (`box-shadow: 20px 20px 0 var(--lime)`) como firma visual.
+- `800px`: menú hamburguesa, layouts de dos columnas pasan a una y proceso a dos.
+- `480px`: proceso a una columna, formulario apilado y ajustes del dashboard.
+- `prefers-reduced-motion`: reduce animaciones y desactiva scroll suave.
+- Hay skip link, foco visible, áreas táctiles de 44px, encabezados asociados a secciones,
+  iconos decorativos ocultos y acordeón con estado ARIA.
+- Al confirmar el formulario, el foco pasa al encabezado de éxito para no perder a quien
+  navega con teclado.
 
-## Breakpoints
-
-Solo dos, mobile-last (escritorio primero):
-
-- `@media (max-width: 800px)` — el grande: nav se convierte en menú hamburguesa desplegable,
-  grids de 3 columnas pasan a 2 o 1, se reduce el padding vertical de 130px a 80px.
-- `@media (max-width: 480px)` — ajustes finos de móvil.
-- `@media (prefers-reduced-motion: reduce)` — anula animaciones y `scroll-behavior: smooth`.
-
-## Accesibilidad (ya implementada, no la rompas)
-
-- `.skip-link` "Saltar al contenido" → `#contenido`.
-- `:focus-visible` con outline coral de 3px y `outline-offset: 4px`.
-- Cada `<section>` con `id` tiene `aria-labelledby` apuntando a su titular.
-- El menú móvil usa `aria-expanded` / `aria-controls`; el acordeón de FAQ también, con
-  paneles ocultos vía atributo `hidden`.
-- Botón hamburguesa con área táctil mínima de 44x44.
-- Los iconos decorativos llevan `aria-hidden="true"`.
-- El decorado del hero es un `role="img"` con `aria-label` descriptivo, porque las métricas
-  que muestra son ilustrativas.
-
-## Animación
-
-Mínima y solo de entrada: `.reveal` y `.reveal-delay` aplican un `fade-up` con
-`animation-fill-mode: both`. No hay librería de animación ni scroll-driven effects.
+El dashboard contiene números ilustrativos, no resultados de clientes; la etiqueta visible
+`LYNEX / DEMO OPERATIVA` no debe eliminarse mientras esos datos no sean reales.
