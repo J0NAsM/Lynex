@@ -5,6 +5,7 @@ const configuredPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE?.trim();
 const configuredLinkedin = process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim();
 const configuredWebPrice = process.env.NEXT_PUBLIC_WEB_PRICE_FROM?.trim();
 const configuredSystemPrice = process.env.NEXT_PUBLIC_SYSTEM_PRICE_FROM?.trim();
+const configuredIntakeApiUrl = process.env.NEXT_PUBLIC_INTAKE_API_URL?.trim();
 const staticHosting = process.env.NEXT_PUBLIC_STATIC_HOSTING === "true";
 
 function publicHttpUrl(value: string | undefined) {
@@ -43,6 +44,8 @@ export const site = {
     }
   })(),
   staticHosting,
+  intakeApiUrl:
+    publicHttpUrl(configuredIntakeApiUrl) || (staticHosting ? "" : "/api/intake"),
 
   whatsapp: configuredWhatsapp || "595986914726",
   phone: configuredPhone || "+595 986 914 726",

@@ -225,9 +225,9 @@ export default function Home() {
         <section className="contact-section" id="contacto" aria-labelledby="contact-title">
           <div className="section-wrap contact-layout">
             <div>
-              <p className="eyebrow eyebrow-light">Empecemos por entender el problema</p>
-              <h2 id="contact-title">Una conversación de 30 minutos, sin <em>compromiso.</em></h2>
-              <p>Contanos qué necesitás. Si vemos que no somos la solución correcta, te lo decimos y te orientamos igual.</p>
+              <p className="eyebrow eyebrow-light">Diagnóstico inicial</p>
+              <h2 id="contact-title">Contanos el problema. Nosotros ordenamos el <em>camino.</em></h2>
+              <p>El recorrido se adapta a lo que ya sabés. Un caso simple toma pocos minutos y podés dejar tus respuestas guardadas para continuar después.</p>
               <div className="contact-detail"><span aria-hidden="true">✦</span><a href={`mailto:${site.email}`}>{site.email}</a></div>
               {phoneLink && (
                 <div className="contact-detail"><span aria-hidden="true">✆</span><a href={phoneLink}>Llamar al {site.phone}</a></div>

@@ -47,6 +47,19 @@ const requiredFragments = [
   "Según el sistema y el plan",
 ];
 
+if (process.env.NEXT_PUBLIC_INTAKE_API_URL?.trim()) {
+  requiredFragments.push(
+    "¿En qué etapa está tu idea?",
+    "Diagnóstico Lynex",
+    "Tus respuestas se guardan automáticamente",
+  );
+} else {
+  requiredFragments.push(
+    "Contacto directo",
+    "El diagnóstico guiado se habilita únicamente cuando su envío seguro está conectado.",
+  );
+}
+
 for (const fragment of requiredFragments) {
   if (!index.includes(fragment)) {
     throw new Error(`El índice exportado no contiene: ${fragment}`);

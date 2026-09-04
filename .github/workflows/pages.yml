@@ -24,6 +24,7 @@ jobs:
       NEXT_PUBLIC_CONTACT_EMAIL: martinezlynex@gmail.com
       NEXT_PUBLIC_WHATSAPP_NUMBER: "595986914726"
       NEXT_PUBLIC_CONTACT_PHONE: "+595 986 914 726"
+      NEXT_PUBLIC_INTAKE_API_URL: ${{ vars.INTAKE_API_URL }}
     steps:
       - name: Descargar código
         uses: actions/checkout@v6
@@ -37,7 +38,7 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
       - name: Preparar versión estática
-        run: mv src/app/api/contact/route.ts src/app/api/contact/route.ts.disabled
+        run: find src/app/api -name route.ts -exec sh -c 'mv "$1" "$1.disabled"' _ {} \;
       - name: Construir sitio web
         run: npm run build
       - name: Verificar el índice publicado
