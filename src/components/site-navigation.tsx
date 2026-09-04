@@ -72,7 +72,7 @@ export function SiteNavigation() {
           </a>
         ))}
         <a className="nav-cta" href="#contacto" onClick={() => setOpen(false)}>
-          Hablemos <span aria-hidden="true">↗</span>
+          Realizar pedido <span aria-hidden="true">↗</span>
         </a>
       </nav>
     </div>

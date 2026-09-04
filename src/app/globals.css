@@ -58,10 +58,11 @@ h1, h2, h3, p { margin-top: 0; } h1, h2, h3 { font-family: var(--font-display), 
 .symptom-list { border-top: 1px solid #263750; list-style: none; margin: 0; padding: 0; } .symptom-list li { border-bottom: 1px solid #263750; display: grid; gap: 18px; grid-template-columns: 34px 1fr; padding: 22px 0; } .symptom-number { color: var(--lime); font-size: 11px; } .symptom-list strong { color: white; display: block; font-family: var(--font-display), sans-serif; font-size: 19px; letter-spacing: -.04em; } .symptom-list p { color: #9aabc2; font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
 .commitment-grid { display: grid; gap: 1px; grid-template-columns: repeat(2, 1fr); list-style: none; margin: 0; padding: 0; } .commitment-grid li { background: white; display: grid; gap: 8px; outline: 1px solid var(--line); padding: 26px 28px; } .commitment-grid strong { font-family: var(--font-display), sans-serif; font-size: 18px; letter-spacing: -.04em; } .commitment-grid span { color: var(--muted); font-size: 13px; line-height: 1.6; }
 .contact-place { color: #8ca0bc; font-size: 12px; margin-top: 26px; } .contact-detail + .contact-detail { margin-top: 14px; } .error-page .hero-actions { margin-top: 0; }
+.section-action { align-items: center; display: flex; gap: 22px; justify-content: flex-end; margin-top: 34px; } .section-action > span { color: var(--muted); font-size: 11px; line-height: 1.5; max-width: 230px; } .faq-action { margin-left: auto; max-width: 760px; }
 @media (min-width: 801px) { .process-grid-four { grid-template-columns: repeat(4, 1fr); } .process-grid-four .process-step:nth-child(3n+2), .process-grid-four .process-step:nth-child(3n+3) { border-left: 0; padding-left: 0; } .process-grid-four .process-step:not(:first-child) { border-left: 1px solid var(--line); padding-left: 25px; } }
 @media (max-width: 800px) { .offer-grid, .commitment-grid { grid-template-columns: 1fr; } .symptoms-layout { gap: 55px; grid-template-columns: 1fr; padding-bottom: 80px; padding-top: 80px; } .offer-card { padding: 26px 22px 28px; } }
 
-/* Asistente de diagnóstico */
+/* Configurador de pedidos */
 .contact-layout { align-items: start; gap: clamp(42px, 6vw, 82px); grid-template-columns: minmax(260px, .68fr) minmax(520px, 1.32fr); }
 .intake-shell { background: #fff; box-shadow: 0 24px 70px rgba(2, 10, 24, .22); color: var(--ink); min-height: 650px; padding: clamp(24px, 4vw, 42px); position: relative; }
 .intake-progress-head { color: #67788e; display: flex; font-size: 10px; font-weight: 700; justify-content: space-between; letter-spacing: .12em; margin-bottom: 10px; text-transform: uppercase; }
@@ -160,4 +161,5 @@ h1, h2, h3, p { margin-top: 0; } h1, h2, h3 { font-family: var(--font-display), 
   .intake-step h3, .intake-success h3 { font-size: 27px; }
   .intake-actions { gap: 10px; }
   .intake-actions .button { font-size: 11px; gap: 10px; padding: 13px 12px; }
+  .section-action { align-items: flex-start; flex-direction: column; }
 }

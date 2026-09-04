@@ -80,7 +80,7 @@ export const offers = [
     ],
     monthlyPrice: configuredWebPrice || "Según el servicio contratado",
     time: "Activación inicial en 2 a 4 semanas",
-    cta: "Quiero conocer mi plan",
+    cta: "Pedir este servicio",
   },
   {
     id: "sistema",
@@ -95,6 +95,6 @@ export const offers = [
     ],
     monthlyPrice: configuredSystemPrice || "Según el sistema y el plan",
     time: "Activación según sistema y configuración",
-    cta: "Quiero conocer los sistemas",
+    cta: "Pedir un sistema",
   },
 ] as const;

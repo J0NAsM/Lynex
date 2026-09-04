@@ -1,0 +1,395 @@
+.splash {
+  --intro-bg-1: #020813;
+  --intro-bg-2: #06162b;
+  --intro-bg-3: #0b294d;
+  --intro-silver-a: #ffffff;
+  --intro-silver-b: #e7ebef;
+  --intro-silver-c: #b9c0c8;
+  align-items: center;
+  animation: fallback-dismiss 0.01s linear 6s forwards;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      var(--intro-bg-3) 0%,
+      var(--intro-bg-2) 42%,
+      var(--intro-bg-1) 78%,
+      #01040a 100%
+    );
+  display: grid;
+  inset: 0;
+  isolation: isolate;
+  justify-items: center;
+  opacity: 1;
+  overflow: hidden;
+  position: fixed;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0.85s;
+  visibility: visible;
+  z-index: 10000;
+}
+
+.splash::before {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 40px 40px;
+  content: "";
+  inset: 0;
+  mask-image: radial-gradient(circle at center, #000 15%, transparent 76%);
+  opacity: 0.35;
+  pointer-events: none;
+  position: absolute;
+  -webkit-mask-image: radial-gradient(circle at center, #000 15%, transparent 76%);
+}
+
+.leaving {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.viewport {
+  aspect-ratio: 900 / 260;
+  position: relative;
+  width: min(94vw, 900px);
+}
+
+.stage {
+  height: 260px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+  width: 900px;
+}
+
+.piece {
+  animation:
+    assemble 0.92s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s) forwards,
+    settle-glow 4.5s ease-in-out calc(var(--delay, 0s) + 1.3s) infinite;
+  background:
+    linear-gradient(
+      135deg,
+      var(--intro-silver-a) 0%,
+      var(--intro-silver-b) 28%,
+      #ffffff 50%,
+      #d7dce2 70%,
+      var(--intro-silver-c) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -1px 0 rgba(25, 40, 58, 0.2);
+  filter:
+    blur(8px)
+    brightness(1.55)
+    drop-shadow(0 0 16px rgba(160, 215, 255, 0.5));
+  opacity: 0;
+  transform: translate(var(--from-x, 0), var(--from-y, 0)) scale(0.55);
+  transform-origin: center;
+  z-index: 2;
+}
+
+.piece::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.04) 42%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.scan {
+  animation: scan-logo 1.25s ease-in-out 1.75s forwards;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(215, 240, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.03) 80%,
+    transparent 100%
+  );
+  filter: blur(8px);
+  height: 150px;
+  left: -120px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 52px;
+  transform: skewX(-16deg);
+  width: 105px;
+  z-index: 5;
+}
+
+.ambient {
+  animation: ambient-in 1.8s ease 1.2s forwards;
+  background: radial-gradient(ellipse at center, rgba(99, 174, 240, 0.11), transparent 70%);
+  border-radius: 50%;
+  filter: blur(24px);
+  height: 190px;
+  left: 110px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 35px;
+  width: 650px;
+  z-index: 0;
+}
+
+.lVertical {
+  --delay: 0s;
+  --from-x: -42px;
+  --from-y: 28px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 120px;
+  left: 165px;
+  position: absolute;
+  top: 69px;
+  width: 18px;
+}
+
+.lBase {
+  --delay: 0.08s;
+  --from-x: -24px;
+  --from-y: 38px;
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+  height: 18px;
+  left: 166px;
+  position: absolute;
+  top: 172px;
+  width: 82px;
+}
+
+.yLeft {
+  --delay: 0.19s;
+  --from-x: -34px;
+  --from-y: -36px;
+  clip-path: polygon(0 0, 35.89% 3.04%, 100% 86%, 76% 100%);
+  height: 60px;
+  left: 246px;
+  position: absolute;
+  top: 72px;
+  width: 58px;
+}
+
+.yRight {
+  --delay: 0.27s;
+  --from-x: 34px;
+  --from-y: -36px;
+  clip-path: polygon(64.73% 0, 100% 0, 24% 100%, 0 86%);
+  height: 60px;
+  left: 292px;
+  position: absolute;
+  top: 72px;
+  width: 58px;
+}
+
+.yStem {
+  --delay: 0.35s;
+  --from-x: 0;
+  --from-y: 42px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 68px;
+  left: 290px;
+  position: absolute;
+  top: 125px;
+  width: 18px;
+}
+
+.nLeft {
+  --delay: 0.47s;
+  --from-x: -34px;
+  --from-y: 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 120px;
+  left: 378px;
+  position: absolute;
+  top: 72px;
+  width: 18px;
+}
+
+.nDiagonal {
+  --delay: 0.55s;
+  --from-x: 0;
+  --from-y: -38px;
+  clip-path: polygon(0 0, 20% 0, 100% 100%, 80% 100%);
+  height: 120px;
+  left: 382px;
+  position: absolute;
+  top: 72px;
+  width: 88px;
+}
+
+.nRight {
+  --delay: 0.63s;
+  --from-x: 34px;
+  --from-y: 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 120px;
+  left: 452px;
+  position: absolute;
+  top: 72px;
+  width: 18px;
+}
+
+.eTop {
+  --delay: 0.75s;
+  --from-x: -42px;
+  --from-y: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 18px;
+  left: 500px;
+  position: absolute;
+  top: 70px;
+  width: 104px;
+}
+
+.eMiddle {
+  --delay: 0.83s;
+  --from-x: 42px;
+  --from-y: 0;
+  clip-path: polygon(0 0, 100% 0, 100.09% 101.53%, 0 100%);
+  height: 18px;
+  left: 500px;
+  position: absolute;
+  top: 121px;
+  width: 104px;
+}
+
+.eBottom {
+  --delay: 0.91s;
+  --from-x: -42px;
+  --from-y: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  height: 18px;
+  left: 500px;
+  position: absolute;
+  top: 172px;
+  width: 104px;
+}
+
+.xDown {
+  --delay: 1.03s;
+  --from-x: -38px;
+  --from-y: -34px;
+  clip-path: polygon(0 0, 20.13% -1.32%, 102.12% 103.96%, 77.07% 104.66%);
+  height: 117.27px;
+  left: 626px;
+  position: absolute;
+  top: 72px;
+  width: 94.36px;
+}
+
+.xUp {
+  --delay: 1.11s;
+  --from-x: 38px;
+  --from-y: 34px;
+  clip-path: polygon(77.55% -3.86%, 100% 0, 21.76% 99.93%, 0 100%);
+  height: 120px;
+  left: 630px;
+  position: absolute;
+  top: 74.82px;
+  width: 94.36px;
+}
+
+@keyframes assemble {
+  0% {
+    filter:
+      blur(9px)
+      brightness(1.75)
+      drop-shadow(0 0 26px rgba(160, 215, 255, 0.72));
+    opacity: 0;
+    transform: translate(var(--from-x, 0), var(--from-y, 0)) scale(0.55);
+  }
+
+  38% {
+    opacity: 1;
+  }
+
+  74% {
+    filter:
+      blur(0)
+      brightness(1.18)
+      drop-shadow(0 0 18px rgba(160, 215, 255, 0.42));
+    opacity: 1;
+    transform: translate(0, 0) scale(1.045);
+  }
+
+  100% {
+    filter:
+      blur(0)
+      brightness(1)
+      drop-shadow(0 0 8px rgba(160, 215, 255, 0.18));
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes settle-glow {
+  0%,
+  100% {
+    filter:
+      blur(0)
+      brightness(1)
+      drop-shadow(0 0 7px rgba(160, 215, 255, 0.16));
+  }
+
+  50% {
+    filter:
+      blur(0)
+      brightness(1.04)
+      drop-shadow(0 0 12px rgba(160, 215, 255, 0.27));
+  }
+}
+
+@keyframes scan-logo {
+  0% {
+    left: -120px;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.75;
+  }
+
+  100% {
+    left: 900px;
+    opacity: 0;
+  }
+}
+
+@keyframes ambient-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fallback-dismiss {
+  to {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash {
+    animation-delay: 0.1s !important;
+  }
+
+  .piece,
+  .scan,
+  .ambient {
+    animation: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1) !important;
+  }
+}

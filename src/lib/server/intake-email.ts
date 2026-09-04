@@ -154,7 +154,7 @@ export function buildIntakeEmail(intake: StoredIntake) {
   <div class="hero"><div class="kicker">Nueva solicitud · ${escapeHtml(intake.id)}</div><h1>${escapeHtml(name)} necesita ${escapeHtml(classification.projectType.toLowerCase())}</h1><p>${escapeHtml(problem)}</p>
     <div class="quick"><div><b>Tipo</b><span>${escapeHtml(classification.projectType)}</span></div><div><b>Prioridad</b><span>${escapeHtml(classification.priority)}</span></div><div><b>Plazo</b><span>${escapeHtml(deadline)}</span></div><div><b>Contacto</b><span>${escapeHtml(contactMethod)}</span></div></div>
   </div><div class="content">${sections}</div>
-  <footer class="footer">Solicitud recibida por el diagnóstico de Lynex. La información se presenta en lenguaje natural para facilitar su revisión por cualquier integrante del equipo.</footer>
+  <footer class="footer">Pedido recibido mediante el configurador de servicios de Lynex. La información se presenta en lenguaje natural para facilitar su revisión por cualquier integrante del equipo.</footer>
 </main></div></body></html>`;
 
   const textSections = [

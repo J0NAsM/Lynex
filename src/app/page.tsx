@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
+import { IntroSplash } from "@/components/intro-splash";
 import { SiteNavigation } from "@/components/site-navigation";
 import { offers, phoneLink, site, whatsappLink } from "@/lib/site";
 
@@ -13,8 +14,8 @@ const symptoms = [
 ] as const;
 
 const steps = [
-  ["01", "Conocemos tu necesidad", "Media hora para entender cómo trabajás y qué problema querés resolver."],
-  ["02", "Te mostramos la opción adecuada", "Elegís el sistema o servicio Lynex y el plan que corresponde a tu operación."],
+  ["01", "Realizás tu pedido", "Elegís qué necesitás y nos contás cómo trabajás mediante un recorrido guiado."],
+  ["02", "Revisamos tu necesidad", "Analizamos el pedido y te mostramos el sistema, servicio y plan adecuados."],
   ["03", "Preparamos la activación", "Configuramos usuarios, opciones disponibles y datos iniciales según el servicio contratado."],
   ["04", "Activamos y acompañamos", "Tu equipo empieza a usarlo con capacitación, soporte y actualizaciones continuas."],
 ] as const;
@@ -52,6 +53,7 @@ export default function Home() {
 
   return (
     <>
+      <IntroSplash />
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Lynex, inicio">
@@ -68,12 +70,8 @@ export default function Home() {
             <h1 id="hero-title">Tu negocio creció. Tus <em>herramientas</em> no.</h1>
             <p className="hero-text">Elegí el sistema Lynex que necesita tu empresa y usalo mediante una suscripción mensual. Nosotros nos ocupamos de mantenerlo, actualizarlo y acompañar a tu equipo.</p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#servicios">Ver qué hacemos <Arrow /></a>
-              {whatsappLink ? (
-                <a className="text-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp <Arrow /></a>
-              ) : (
-                <a className="text-link" href="#contacto">Contanos qué necesitás <Arrow /></a>
-              )}
+              <a className="button button-dark" href="#contacto">Realizar pedido <Arrow /></a>
+              <a className="text-link" href="#servicios">Ver opciones <Arrow /></a>
             </div>
             <div className="hero-note"><span aria-hidden="true">✦</span> Primera conversación de 30 minutos, sin compromiso</div>
           </div>
@@ -161,7 +159,7 @@ export default function Home() {
               <p className="eyebrow eyebrow-light">¿Esto te suena?</p>
               <h2 id="symptoms-title">Si reconocés alguno, ya sabemos por dónde <em>empezar.</em></h2>
               <p className="dark-copy">No hace falta que tengas todo claro antes de escribirnos. Parte de nuestro trabajo es ayudarte a ordenar el problema.</p>
-              <a className="button button-light" href="#contacto">Hablemos de tu caso <Arrow /></a>
+              <a className="button button-light" href="#contacto">Pedir una solución <Arrow /></a>
             </div>
             <ol className="symptom-list">
               {symptoms.map(([number, title, text]) => (
@@ -184,6 +182,10 @@ export default function Home() {
               <li className="process-step" key={number}><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div></li>
             ))}
           </ol>
+          <div className="section-action">
+            <a className="button button-dark" href="#contacto">Realizar mi pedido <Arrow /></a>
+            <span>Te ayudamos a definirlo antes de confirmar el plan.</span>
+          </div>
         </section>
 
         <section className="projects-band" id="garantias" aria-labelledby="commitments-title">
@@ -205,7 +207,7 @@ export default function Home() {
             <p className="eyebrow">Por qué Lynex</p>
             <h2 id="about-title">Hablás con el equipo del <em>producto.</em></h2>
             <p>Somos un equipo chico en {site.city}. Conocemos los sistemas que ofrecemos y te ayudamos a elegir, activar y aprovechar el que mejor responda a tu necesidad.</p>
-            <a className="text-link" href="#contacto">Escribinos <Arrow /></a>
+            <a className="text-link" href="#contacto">Realizar pedido <Arrow /></a>
           </div>
           <div className="why-list">
             <div><span>01</span><strong>El plan adecuado</strong><p>Te mostramos qué sistema y qué nivel de servicio corresponden a tu situación actual.</p></div>
@@ -220,14 +222,18 @@ export default function Home() {
             <p>Una primera conversación no te compromete a nada. Solo sirve para entender si podemos ayudarte.</p>
           </div>
           <FaqList items={faqs} />
+          <div className="section-action faq-action">
+            <a className="button button-dark" href="#contacto">Empezar mi pedido <Arrow /></a>
+            <span>Podés guardarlo y continuar más tarde.</span>
+          </div>
         </section>
 
         <section className="contact-section" id="contacto" aria-labelledby="contact-title">
           <div className="section-wrap contact-layout">
             <div>
-              <p className="eyebrow eyebrow-light">Diagnóstico inicial</p>
-              <h2 id="contact-title">Contanos el problema. Nosotros ordenamos el <em>camino.</em></h2>
-              <p>El recorrido se adapta a lo que ya sabés. Un caso simple toma pocos minutos y podés dejar tus respuestas guardadas para continuar después.</p>
+              <p className="eyebrow eyebrow-light">Pedido de servicio</p>
+              <h2 id="contact-title">Armá tu pedido. Nosotros definimos el <em>camino.</em></h2>
+              <p>Configurá tu solicitud paso a paso según lo que necesita tu negocio. Podés guardarla, continuar después y revisarla completa antes de enviarla. El pedido inicial no genera ningún cobro.</p>
               <div className="contact-detail"><span aria-hidden="true">✦</span><a href={`mailto:${site.email}`}>{site.email}</a></div>
               {phoneLink && (
                 <div className="contact-detail"><span aria-hidden="true">✆</span><a href={phoneLink}>Llamar al {site.phone}</a></div>
@@ -253,7 +259,7 @@ export default function Home() {
             <a href="#servicios">Servicios</a>
             <a href="#proceso">Proceso</a>
             <a href="#preguntas">Preguntas</a>
-            <a href="#contacto">Contacto</a>
+            <a href="#contacto">Realizar pedido</a>
             {phoneLink && <a href={phoneLink}>Llamar</a>}
             {whatsappLink && <a href={whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
             {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}

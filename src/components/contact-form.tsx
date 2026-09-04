@@ -53,7 +53,7 @@ const sharedFinish: Step[] = [
   { id: "budget", kind: "single", title: "¿Tenés definido un rango de inversión?", help: "No hace falta definir una cifra ahora. Los rangos se ajustarán cuando Lynex publique sus planes.", choices: budgets },
   textStep("successOutcome", "¿Cómo sabrías que esto fue un éxito?", "Por ejemplo: reducir tareas manuales, atender más clientes, evitar errores o centralizar la información.", "El proyecto sería un éxito si…"),
   { id: "contact", kind: "contact", title: "¿Cómo podemos contactarte?", help: "Pedimos estos datos recién ahora, después de entender tu necesidad." },
-  { id: "review", kind: "review", title: "Revisá tu diagnóstico", help: "Podés volver a cualquier paso antes de enviarlo." },
+  { id: "review", kind: "review", title: "Confirmá tu pedido", help: "Revisá los datos y volvé a cualquier paso si necesitás cambiar algo." },
 ];
 
 function detailedSteps(isReplacement: boolean): Step[] {
@@ -116,7 +116,7 @@ function feasibilitySteps(): Step[] {
 }
 
 function getSteps(answers: IntakeAnswers): Step[] {
-  const first: Step = { id: "ideaStage", kind: "single", title: "¿En qué etapa está tu idea?", help: "Tu respuesta adapta el resto del diagnóstico para preguntarte solo lo necesario.", choices: ideaStages };
+  const first: Step = { id: "ideaStage", kind: "single", title: "¿Qué querés pedirle a Lynex?", help: "Elegí el punto de partida que mejor describe tu necesidad. Con eso armaremos un pedido a tu medida.", choices: ideaStages };
   const stage = answerText(answers, "ideaStage");
   if (stage === "clear") return [first, ...detailedSteps(false)];
   if (stage === "replace") return [first, ...detailedSteps(true)];
@@ -139,16 +139,16 @@ export function ContactForm() {
 }
 
 function StaticContact() {
-  const subject = encodeURIComponent("Consulta desde la web de Lynex");
+  const subject = encodeURIComponent("Pedido de servicio desde la web de Lynex");
   return <div className="contact-form static-contact">
-    <p className="eyebrow">Contacto directo</p>
-    <h3>Contanos qué querés mejorar.</h3>
-    <p>Elegí correo o WhatsApp y explicanos tu necesidad con tus palabras. Te respondemos para ordenar el siguiente paso.</p>
+    <p className="eyebrow">Pedido de servicio</p>
+    <h3>Pedí la solución que necesitás.</h3>
+    <p>Enviá tu pedido por correo o WhatsApp. Te ayudaremos a definir el sistema y el plan adecuados antes de confirmar cualquier contratación.</p>
     <div className="static-contact-actions">
-      <a className="button button-dark" href={`mailto:${site.email}?subject=${subject}`}>Escribir por correo <span aria-hidden="true">↗</span></a>
-      {whatsappLink && <a className="button button-outline" href={whatsappLink} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <span aria-hidden="true">↗</span></a>}
+      <a className="button button-dark" href={`mailto:${site.email}?subject=${subject}`}>Realizar pedido por correo <span aria-hidden="true">↗</span></a>
+      {whatsappLink && <a className="button button-outline" href={whatsappLink} target="_blank" rel="noopener noreferrer">Realizar pedido por WhatsApp <span aria-hidden="true">↗</span></a>}
     </div>
-    <small>El diagnóstico guiado se habilita únicamente cuando su envío seguro está conectado.</small>
+    <small>El configurador de pedidos se habilita cuando su envío seguro está conectado.</small>
   </div>;
 }
 
@@ -243,7 +243,7 @@ function IntakeWizard() {
     const validation = validateStep(step);
     if (validation) { setStepError(validation); return; }
     if (!site.intakeApiUrl) {
-      setState("error"); setError("El envío seguro todavía no está conectado al servidor de Lynex. Tu diagnóstico sigue guardado en este dispositivo."); return;
+      setState("error"); setError("El envío seguro todavía no está conectado al servidor de Lynex. Tu pedido sigue guardado en este dispositivo."); return;
     }
     setState("submitting"); setError("");
     const body = new FormData();
@@ -263,23 +263,23 @@ function IntakeWizard() {
 
   if (state === "success" && summary) {
     return <div className="intake-shell intake-success" role="status" aria-live="polite">
-      <span className="success-mark" aria-hidden="true">✓</span><p className="eyebrow">Idea recibida · {requestId}</p>
-      <h3 ref={headingRef} tabIndex={-1}>Ya tenemos un primer mapa de tu necesidad.</h3>
-      <p>Revisaremos la información para entender el alcance y proponerte el sistema Lynex y el plan que mejor encajen.</p>
+      <span className="success-mark" aria-hidden="true">✓</span><p className="eyebrow">Pedido recibido · {requestId}</p>
+      <h3 ref={headingRef} tabIndex={-1}>Tu pedido ya está en manos de Lynex.</h3>
+      <p>Revisaremos la información y nos pondremos en contacto para confirmar el sistema, el plan y los próximos pasos. Enviar este pedido no genera ningún cobro.</p>
       <dl className="intake-summary-grid">
         <div><dt>Necesidad</dt><dd>{summary.projectType}</dd></div><div><dt>Problema principal</dt><dd>{summary.problem}</dd></div>
         <div><dt>Usuarios</dt><dd>{summary.users}</dd></div><div><dt>Plataformas</dt><dd>{summary.platforms}</dd></div>
         <div><dt>Prioridad</dt><dd>{summary.priority}</dd></div><div><dt>Estado</dt><dd>{summary.stage}</dd></div>
       </dl>
-      <button type="button" className="button button-light" onClick={() => { setAnswers({ priorities: priorities.map((item) => item.value) }); setFiles([]); setStepIndex(0); setSummary(null); setState("idle"); mountedAt.current = Date.now(); }}>Enviar otra solicitud <span aria-hidden="true">↗</span></button>
+      <button type="button" className="button button-light" onClick={() => { setAnswers({ priorities: priorities.map((item) => item.value) }); setFiles([]); setStepIndex(0); setSummary(null); setState("idle"); mountedAt.current = Date.now(); }}>Realizar otro pedido <span aria-hidden="true">↗</span></button>
     </div>;
   }
 
   return <form className="intake-shell" onSubmit={submitForm} noValidate>
-    <div className="intake-progress-head"><span>Diagnóstico Lynex</span><span>Paso {safeIndex + 1}{steps.length > 1 ? ` de ${steps.length}` : ""}</span></div>
+    <div className="intake-progress-head"><span>Pedido de servicio Lynex</span><span>Paso {safeIndex + 1}{steps.length > 1 ? ` de ${steps.length}` : ""}</span></div>
     <div className="intake-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} aria-label={`${progress}% completado`}><span style={{ width: `${progress}%` }} /></div>
     <section className={`intake-step intake-step-${direction}`} key={step.id} aria-labelledby={`step-${step.id}`}>
-      <p className="eyebrow">{progress}% completado</p><h3 id={`step-${step.id}`} ref={headingRef} tabIndex={-1}>{step.title}</h3>{step.help && <p className="intake-help">{step.help}</p>}
+      <p className="eyebrow">Pedido {progress}% preparado</p><h3 id={`step-${step.id}`} ref={headingRef} tabIndex={-1}>{step.title}</h3>{step.help && <p className="intake-help">{step.help}</p>}
       {(step.kind === "single" || step.kind === "multi") && step.choices && <ChoiceGrid options={step.choices} selected={answerList(answers, step.id)} multiple={step.kind === "multi"} onChoose={(value) => step.kind === "multi" ? toggleAnswer(step.id, value) : setAnswer(step.id, value)} />}
       {(step.kind === "text" || step.kind === "textarea") && <label className="intake-field"><span className="sr-only">{step.title}</span>{step.kind === "textarea" ? <textarea value={answerText(answers, step.id)} onChange={(event) => setAnswer(step.id, event.target.value)} rows={7} maxLength={5000} placeholder={step.placeholder} autoFocus /> : <input value={answerText(answers, step.id)} onChange={(event) => setAnswer(step.id, event.target.value)} maxLength={500} placeholder={step.placeholder} autoFocus />}<small>{answerText(answers, step.id).length} caracteres</small></label>}
       {step.kind === "users" && <div className="intake-stack"><ChoiceGrid options={userGroups} selected={answerList(answers, "userGroups")} multiple onChoose={(value) => toggleAnswer("userGroups", value)} /><fieldset className="intake-subquestion"><legend>¿Cuántas personas aproximadamente?</legend><ChoiceGrid options={userCounts} selected={answerList(answers, "userCount")} onChoose={(value) => setAnswer("userCount", value)} compact /></fieldset></div>}
@@ -295,8 +295,8 @@ function IntakeWizard() {
       {step.kind === "review" && <Review answers={answers} files={files} onEdit={(id) => { const index = steps.findIndex((item) => item.id === id); if (index >= 0) { setDirection("back"); setStepIndex(index); } }} />}
     </section>
     {(stepError || error) && <p className="form-error" role="alert">{stepError || error}{error && whatsappLink && <> También podés <a href={whatsappLink} target="_blank" rel="noopener noreferrer">hablarnos por WhatsApp</a>.</>}</p>}
-    <div className="intake-actions"><button type="button" className="button intake-back" onClick={goBack} disabled={safeIndex === 0 || state === "submitting"}>← Atrás</button>{step.kind === "review" ? <button type="submit" className="button button-light" disabled={state === "submitting"}>{state === "submitting" ? "Registrando…" : "Enviar diagnóstico"}<span aria-hidden="true">↗</span></button> : <button type="button" className="button button-light" onClick={goNext}>Continuar <span aria-hidden="true">→</span></button>}</div>
-    <p className="autosave-note"><span aria-hidden="true">✓</span> Tus respuestas se guardan automáticamente en este dispositivo.</p>
+    <div className="intake-actions"><button type="button" className="button intake-back" onClick={goBack} disabled={safeIndex === 0 || state === "submitting"}>← Atrás</button>{step.kind === "review" ? <button type="submit" className="button button-light" disabled={state === "submitting"}>{state === "submitting" ? "Enviando pedido…" : "Enviar pedido a Lynex"}<span aria-hidden="true">↗</span></button> : <button type="button" className="button button-light" onClick={goNext}>Agregar y continuar <span aria-hidden="true">→</span></button>}</div>
+    <p className="autosave-note"><span aria-hidden="true">✓</span> Tu pedido se guarda automáticamente en este dispositivo.</p>
     <small className="privacy-note">Usamos tus datos únicamente para analizar y responder tu solicitud. Consultá nuestra <Link href="/privacidad">política de privacidad</Link>.</small>
   </form>;
 }

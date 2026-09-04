@@ -49,14 +49,14 @@ const requiredFragments = [
 
 if (process.env.NEXT_PUBLIC_INTAKE_API_URL?.trim()) {
   requiredFragments.push(
-    "¿En qué etapa está tu idea?",
-    "Diagnóstico Lynex",
-    "Tus respuestas se guardan automáticamente",
+    "¿Qué querés pedirle a Lynex?",
+    "Pedido de servicio Lynex",
+    "Tu pedido se guarda automáticamente",
   );
 } else {
   requiredFragments.push(
-    "Contacto directo",
-    "El diagnóstico guiado se habilita únicamente cuando su envío seguro está conectado.",
+    "Pedido de servicio",
+    "El configurador de pedidos se habilita cuando su envío seguro está conectado.",
   );
 }
 

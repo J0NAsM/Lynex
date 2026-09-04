@@ -8,11 +8,11 @@ export type Choice = {
 };
 
 export const ideaStages: Choice[] = [
-  { value: "clear", label: "Tengo bastante claro qué sistema quiero", description: "Ya puedo describir la solución y sus funciones principales." },
-  { value: "general", label: "Tengo una idea general", description: "Necesito ayuda para ordenarla y definirla." },
-  { value: "problem", label: "Tengo un problema o proceso que quiero mejorar", description: "Todavía no sé qué sistema necesito." },
+  { value: "clear", label: "Ya sé qué sistema quiero pedir", description: "Puedo describir la solución y sus funciones principales." },
+  { value: "general", label: "Quiero pedir una solución, pero necesito orientación", description: "Tengo una idea general y quiero que Lynex me ayude a definirla." },
+  { value: "problem", label: "Quiero resolver un problema de mi negocio", description: "Todavía no sé qué sistema necesito." },
   { value: "replace", label: "Quiero reemplazar un sistema que ya utilizo", description: "Busco conservar lo útil y mejorar lo que hoy me limita." },
-  { value: "feasibility", label: "Solo quiero consultar si una idea es posible", description: "Quiero una primera evaluación antes de avanzar." },
+  { value: "feasibility", label: "Primero quiero confirmar si mi pedido es posible", description: "Necesito una evaluación inicial antes de avanzar." },
 ];
 
 export const systemTypes: Choice[] = [
