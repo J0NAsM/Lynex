@@ -9,6 +9,7 @@
     "start": "node .next/standalone/server.js",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
+    "verify:pages": "node scripts/verify-pages.mjs",
     "check": "npm run lint && npm run typecheck && npm run build"
   },
   "engines": {

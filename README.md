@@ -1,6 +1,6 @@
 # Lynex
 
-Sitio comercial de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
+Sitio comercial de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, identidad visual provisional, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
 
 **Sitio publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
 
@@ -41,9 +41,15 @@ Sin las tres variables de correo, el sitio compila y funciona, pero el formulari
 
 ## Publicación automática en GitHub Pages
 
-Cada push a `main` ejecuta `.github/workflows/pages.yml`, genera una exportación estática con el prefijo `/Lynex` y la publica en GitHub Pages. Como Pages no ejecuta Node.js ni rutas `POST`, esta versión muestra un contacto directo por `mailto:` y no intenta llamar a `/api/contact`.
+Cada push a `main` ejecuta `.github/workflows/pages.yml`, genera `out/index.html` con el prefijo `/Lynex` y lo publica en GitHub Pages. La portada enlaza Servicios, Problemas, Proceso, Garantías, Nosotros, Preguntas, Contacto y la política de privacidad. Antes de subirla, el workflow comprueba que el índice, esas secciones, sus enlaces y los recursos de marca realmente existan.
 
-El workflow define internamente `GITHUB_PAGES=true` y `NEXT_PUBLIC_STATIC_HOSTING=true`, desactiva la ruta del servidor únicamente dentro del runner y sube la carpeta `out`. No hace falta commitear archivos generados.
+Como Pages no ejecuta Node.js ni rutas `POST`, esta versión muestra un contacto directo por `mailto:` y no intenta llamar a `/api/contact`.
+
+El workflow define internamente `GITHUB_PAGES=true` y `NEXT_PUBLIC_STATIC_HOSTING=true`, desactiva la ruta del servidor únicamente dentro del runner y sube la carpeta `out`. No hace falta commitear archivos generados. La fuente del índice es `src/app/page.tsx`; Next.js produce el `index.html` final durante el build.
+
+## Identidad visual provisional
+
+`public/lynex-wordmark.svg` conserva la pieza horizontal azul oscuro y plateada usada cuando aparece solo el nombre de la empresa. `src/components/brand-wordmark.tsx` contiene la versión compacta y reutilizable de cabecera, pie y páginas internas. Ambas representan un wordmark provisional y pueden sustituirse cuando exista el logo definitivo.
 
 ## Publicar en Vercel
 

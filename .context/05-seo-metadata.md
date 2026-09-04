@@ -56,6 +56,7 @@ modelar el proveedor y los servicios por separado.
   Twitter, con la propuesta de webs y sistemas en Paraguay.
 - `src/app/icon.svg`: favicon vectorial.
 - `src/app/apple-icon.tsx`: icono PNG dinámico de 180 × 180 para Apple.
+- `public/lynex-wordmark.svg`: imagen de identidad provisional usada también como `logo` de la organización.
 
 En GitHub Pages, el postbuild copia las dos rutas generadas a nombres `.png` y la
 metadata usa esas URLs. Esto evita que el host estático las entregue como

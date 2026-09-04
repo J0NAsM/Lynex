@@ -15,6 +15,8 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 ## Implementado
 
 - Portada comercial completa con una narrativa única para vender webs y sistemas.
+- Wordmark provisional plateado sobre azul oscuro integrado en hero, cabecera, pie, metadata e imagen social.
+- Paleta visual alineada con la referencia de marca y contenido visible desde el primer fotograma.
 - Copy localizado para Paraguay y consistente en voseo.
 - Secciones de problemas, dos ofertas, proceso, garantías, preguntas frecuentes y
   contacto.
@@ -27,6 +29,7 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 - Páginas de error, error global y 404 coherentes con la marca.
 - Build standalone, Docker multi-stage, headers de seguridad y CI.
 - Exportación estática con `basePath` y despliegue automático en GitHub Pages.
+- Verificación automática de `out/index.html`, anclas, rutas y recursos antes de publicar Pages.
 
 ## Validaciones realizadas
 

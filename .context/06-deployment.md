@@ -67,6 +67,11 @@ se elimina del repositorio y continúa disponible para despliegues con servidor.
 `.nojekyll` para que GitHub no ignore `_next`. También crea las copias `.png` de
 las imágenes dinámicas para que Pages responda con el tipo de contenido correcto.
 
+Después del build, `scripts/verify-pages.mjs` valida que `out/index.html` tenga un
+tamaño consistente con la portada completa, que incluya todas las secciones y enlaces,
+que use recursos bajo `/Lynex` y que existan privacidad, 404 y el wordmark. El artefacto
+no se publica si alguna comprobación falla.
+
 ## Vercel
 
 1. Importar este repositorio y mantener la raíz en `Lynex` si el proveedor parte

@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#132b28",
+  themeColor: "#030d1d",
   colorScheme: "light",
 };
 
@@ -62,7 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     "@id": `${site.url}/#organization`,
     name: site.name,
     url: site.url,
-    logo: `${site.url}/icon.svg`,
+    logo: `${site.url}/lynex-wordmark.svg`,
     email: site.email,
     ...(site.phone ? { telephone: site.phone } : {}),
     ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),

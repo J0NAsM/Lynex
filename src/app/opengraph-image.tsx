@@ -11,8 +11,8 @@ export default function OpenGraphImage() {
       <div
         style={{
           alignItems: "center",
-          background: "#132b28",
-          color: "#f5f7f3",
+          background: "#030d1d",
+          color: "#f4f7fb",
           display: "flex",
           height: "100%",
           justifyContent: "space-between",
@@ -22,17 +22,16 @@ export default function OpenGraphImage() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 780 }}>
-          <div style={{ alignItems: "center", display: "flex", fontSize: 34, fontWeight: 700, gap: 16 }}>
-            <span style={{ alignItems: "center", background: "#ff735c", display: "flex", height: 52, justifyContent: "center", transform: "rotate(-8deg)", width: 52 }}>L</span>
-            Lynex
+          <div style={{ color: "#dce3ec", display: "flex", fontSize: 30, fontWeight: 400, letterSpacing: "13px" }}>
+            LYNEX
           </div>
           <div style={{ display: "flex", fontSize: 68, fontWeight: 700, letterSpacing: "-4px", lineHeight: 1.04, marginTop: 72 }}>
-            Webs y sistemas hechos para tu negocio<span style={{ color: "#ff735c" }}>.</span>
+            Webs y sistemas hechos para tu negocio<span style={{ color: "#4c8dff" }}>.</span>
           </div>
           <div style={{ color: "#aac0ba", fontSize: 25, marginTop: 30 }}>Asunción, Paraguay · Precio y plazo por escrito.</div>
         </div>
-        <div style={{ background: "#d4f36a", borderRadius: 999, height: 280, opacity: 0.95, position: "absolute", right: -100, top: -95, width: 280 }} />
-        <div style={{ border: "2px solid #ff735c", borderRadius: 999, bottom: -190, height: 430, position: "absolute", right: 55, width: 430 }} />
+        <div style={{ background: "#72e6ff", borderRadius: 999, height: 280, opacity: 0.9, position: "absolute", right: -100, top: -95, width: 280 }} />
+        <div style={{ border: "2px solid #4c8dff", borderRadius: 999, bottom: -190, height: 430, position: "absolute", right: 55, width: 430 }} />
       </div>
     ),
     size,

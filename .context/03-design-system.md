@@ -7,14 +7,14 @@ de PostCSS fueron retirados porque no se utilizaban.
 
 | Variable | Valor | Función |
 |---|---|---|
-| `--ink` | `#14211f` | texto principal y botones oscuros |
-| `--muted` | `#65716d` | texto secundario |
-| `--paper` | `#f5f7f3` | fondo general |
-| `--line` | `#d9e0da` | bordes y separadores |
-| `--lime` | `#d4f36a` | CTA claro, estados y sombra del hero |
-| `--coral` | `#ff735c` | énfasis, flechas y foco |
-| `--teal` | `#0c6b62` | sección de contacto y dashboard |
-| `--deep` | `#132b28` | bandas oscuras y footer |
+| `--ink` | `#0b1424` | texto principal y botones oscuros |
+| `--muted` | `#607087` | texto secundario |
+| `--paper` | `#f4f7fb` | fondo general |
+| `--line` | `#d8e0eb` | bordes y separadores |
+| `--lime` | `#72e6ff` | CTA claro, estados y sombra del hero |
+| `--coral` | `#3977f6` | énfasis, flechas y foco |
+| `--teal` | `#112b4a` | sección de contacto y dashboard |
+| `--deep` | `#030d1d` | bandas oscuras y footer |
 
 Los colores se duplican donde CSS no está disponible: `layout.tsx`, `manifest.ts`,
 `opengraph-image.tsx`, `apple-icon.tsx` y `public/icon.svg`. Un cambio de paleta debe revisar
@@ -25,7 +25,7 @@ todos esos archivos.
 - `--font-body`: DM Sans.
 - `--font-display`: Space Grotesk.
 - Titulares con tracking negativo y `clamp()`; geometría recta y casi sin radios.
-- La sombra lima del dashboard es la firma visual principal.
+- El azul nocturno, el acabado plateado y la sombra cian del dashboard forman la firma visual provisional.
 - El orden del CSS acompaña la página: base → hero → trust → ofertas → problemas → proceso →
   garantías → nosotros → FAQ → contacto → footer → legales/error → estilos añadidos.
 
@@ -37,6 +37,13 @@ todos esos archivos.
 - `.commitment-grid`: garantías en dos columnas.
 - `.contact-place`: señal local bajo los medios de contacto.
 - `.static-contact`: tarjeta de contacto directo usada por GitHub Pages.
+
+## Marca provisional
+
+- `public/lynex-wordmark.svg`: pieza horizontal completa para el hero y usos externos.
+- `src/components/brand-wordmark.tsx`: vector compacto reutilizado en cabecera, pie y privacidad.
+- La `E` de tres barras y el acabado plateado siguen la referencia entregada. No debe presentarse como logo definitivo.
+- Las animaciones de entrada nunca reducen la opacidad: la portada debe ser visible desde el primer fotograma.
 
 ## Responsive y accesibilidad
 

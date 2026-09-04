@@ -19,14 +19,14 @@ formulario; en GitHub Pages se ofrece un CTA directo por correo.
 
 La landing cuenta una sola historia con dos ofertas, en este orden:
 
-1. **Hero** — problema central, ubicación y CTA; el panel está rotulado como demo.
+1. **Hero** — problema central, ubicación, CTA y wordmark provisional; el panel está rotulado como demo.
 2. **Trust strip** — precio cerrado, entregas quincenales y propiedad del código.
 3. **Servicios** (`#servicios`) — web profesional y sistema operativo a medida.
 4. **Problemas** (`#problemas`) — tres síntomas reconocibles por el cliente.
 5. **Proceso** (`#proceso`) — cuatro pasos desde conversación hasta publicación.
 6. **Garantías** (`#garantias`) — compromisos comerciales sin inventar casos de éxito.
 7. **Nosotros** (`#nosotros`) — equipo pequeño, comunicación directa y criterio honesto.
-8. **FAQ** — precio, plazos, propiedad, cambios, hitos y primera versión pequeña.
+8. **FAQ** (`#preguntas`) — precio, plazos, propiedad, cambios, hitos y primera versión pequeña.
 9. **Contacto** (`#contacto`) — formulario o correo, WhatsApp opcional y ubicación.
 
 ## Idioma y honestidad comercial

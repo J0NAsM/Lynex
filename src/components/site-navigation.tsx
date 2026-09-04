@@ -8,6 +8,7 @@ const links = [
   ["#proceso", "Proceso"],
   ["#garantias", "Garantías"],
   ["#nosotros", "Nosotros"],
+  ["#preguntas", "Preguntas"],
 ];
 
 export function SiteNavigation() {

@@ -38,6 +38,8 @@ jobs:
         run: mv src/app/api/contact/route.ts src/app/api/contact/route.ts.disabled
       - name: Construir sitio web
         run: npm run build
+      - name: Verificar el índice publicado
+        run: npm run verify:pages
       - name: Subir sitio generado
         uses: actions/upload-pages-artifact@v4
         with:

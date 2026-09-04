@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,7 +14,8 @@ export default function PrivacyPage() {
     <main className="legal-page">
       <div className="legal-wrap">
         <Link className="brand" href="/" aria-label="Lynex, volver al inicio">
-          <span className="brand-mark" aria-hidden="true">L</span><span>Lynex</span>
+          <BrandWordmark gradientId="lynex-silver-privacy" />
+          <span className="sr-only">Lynex</span>
         </Link>
         <p className="eyebrow">Privacidad</p>
         <h1>Política de privacidad</h1>

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
 import { SiteNavigation } from "@/components/site-navigation";
@@ -53,7 +55,8 @@ export default function Home() {
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Lynex, inicio">
-          <span className="brand-mark" aria-hidden="true">L</span><span>Lynex</span>
+          <BrandWordmark gradientId="lynex-silver-header" />
+          <span className="sr-only">Lynex</span>
         </a>
         <SiteNavigation />
       </header>
@@ -75,13 +78,25 @@ export default function Home() {
             <div className="hero-note"><span aria-hidden="true">✦</span> Primera conversación de 30 minutos, sin compromiso</div>
           </div>
 
-          <div className="hero-visual reveal-delay" aria-label="Panel de control ilustrativo de una solución empresarial" role="img">
-            <div className="visual-top">
-              <span className="window-dots" aria-hidden="true"><i /><i /><i /></span>
-              <span className="visual-label">LYNEX / DEMO OPERATIVA</span>
-              <span className="visual-status"><b /> Activo</span>
-            </div>
-            <div className="visual-content">
+          <div className="hero-visual reveal-delay">
+            <Image
+              className="hero-wordmark-image"
+              src={`${site.basePath}/lynex-wordmark.svg`}
+              alt="Lynex"
+              width="1600"
+              height="533"
+              priority
+            />
+            <div
+              className="visual-content"
+              aria-label="Panel de control ilustrativo de una solución empresarial"
+              role="img"
+            >
+              <div className="visual-top">
+                <span className="window-dots" aria-hidden="true"><i /><i /><i /></span>
+                <span className="visual-label">DEMO OPERATIVA</span>
+                <span className="visual-status"><b /> Activo</span>
+              </div>
               <div className="visual-heading">
                 <div><span className="small-label">Resumen operativo</span><strong>Todo en orden<span>.</span></strong></div>
                 <span className="date-pill">Este mes⌄</span>
@@ -201,7 +216,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section-wrap faq-section" aria-labelledby="faq-title">
+        <section className="section-wrap faq-section" id="preguntas" aria-labelledby="faq-title">
           <div className="section-intro">
             <div><p className="eyebrow">Preguntas frecuentes</p><h2 id="faq-title">Lo que querés saber <em>antes de empezar.</em></h2></div>
             <p>Una primera conversación no te compromete a nada. Solo sirve para entender si podemos ayudarte.</p>
@@ -228,10 +243,15 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="section-wrap footer-inner">
-          <a className="brand" href="#inicio" aria-label="Lynex, volver al inicio"><span className="brand-mark" aria-hidden="true">L</span><span>Lynex</span></a>
+          <a className="brand" href="#inicio" aria-label="Lynex, volver al inicio">
+            <BrandWordmark gradientId="lynex-silver-footer" />
+            <span className="sr-only">Lynex</span>
+          </a>
           <span>Webs y sistemas a medida. {site.city}, {site.region}.</span>
           <div>
             <a href="#servicios">Servicios</a>
+            <a href="#proceso">Proceso</a>
+            <a href="#preguntas">Preguntas</a>
             <a href="#contacto">Contacto</a>
             {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
             <Link href="/privacidad">Privacidad</Link>
