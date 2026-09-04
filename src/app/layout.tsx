@@ -22,7 +22,7 @@ const socialImageUrl = `${site.url}/opengraph-image${staticImageExtension}`;
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `Lynex | Soluciones web y sistemas SaaS en ${site.city}`,
+    default: `Lynex | Sistemas por suscripción mensual en ${site.city}`,
     template: "%s | Lynex",
   },
   description: site.description,
@@ -32,18 +32,18 @@ export const metadata: Metadata = {
   manifest: `${site.url}/manifest.webmanifest`,
   appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
-    title: "Lynex | Soluciones web y sistemas SaaS",
-    description: `Soluciones web y sistemas SaaS para empresas de ${site.region}.`,
+    title: "Lynex | Sistemas por suscripción mensual",
+    description: `Acceso mensual a sistemas Lynex y servicios web para empresas de ${site.region}.`,
     url: site.url,
     siteName: site.name,
     locale: site.locale,
     type: "website",
-    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Lynex, soluciones web y sistemas SaaS" }],
+    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Lynex, sistemas por suscripción mensual" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lynex | Soluciones web y sistemas SaaS",
-    description: "Software que trabaja como tu negocio.",
+    title: "Lynex | Sistemas por suscripción mensual",
+    description: "Usá los sistemas de Lynex mediante un plan mensual.",
     images: [socialImageUrl],
   },
   robots: { index: true, follow: true },
@@ -90,8 +90,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Sistemas SaaS para empresas",
-            serviceType: "Software como servicio",
+            name: "Suscripción a sistemas Lynex",
+            serviceType: "Acceso mensual a software",
             areaServed: serviceArea,
           },
         },

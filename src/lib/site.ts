@@ -28,7 +28,7 @@ function publicHttpUrl(value: string | undefined) {
 export const site = {
   name: "Lynex",
   description:
-    "Soluciones web y sistemas SaaS para empresas que ya no pueden crecer con planillas y herramientas sueltas.",
+    "Sistemas Lynex por suscripción mensual y servicios web administrados para empresas.",
   email: configuredEmail || "martinezlynex@gmail.com",
   url: (configuredUrl || "https://lynex.dev").replace(/\/$/, ""),
 
@@ -51,7 +51,7 @@ export const site = {
 
 export const whatsappLink = site.whatsapp
   ? `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-      "Hola, quiero consultar por una solución SaaS.",
+      "Hola, quiero consultar por uno de los sistemas de Lynex.",
     )}`
   : "";
 
@@ -60,8 +60,8 @@ export const phoneLink = site.phone
   : "";
 
 /**
- * Las dos ofertas SaaS del negocio. El precio mensual puede configurarse para
- * cada plan; mientras no exista una cifra pública se comunica como variable.
+ * Las dos ofertas por suscripción del negocio. El precio mensual puede
+ * configurarse para cada plan; sin una cifra pública se comunica como variable.
  */
 export const offers = [
   {
@@ -75,23 +75,23 @@ export const offers = [
       "Hosting, seguridad y actualizaciones",
       "Formulario, correo y WhatsApp integrados",
     ],
-    monthlyPrice: configuredWebPrice || "Según alcance y servicio",
+    monthlyPrice: configuredWebPrice || "Según el servicio contratado",
     time: "Activación inicial en 2 a 4 semanas",
     cta: "Quiero conocer mi plan",
   },
   {
     id: "sistema",
-    eyebrow: "Cuando la planilla ya no da",
-    title: "Software SaaS para tu operación",
-    text: "Una solución administrada alrededor de cómo ya trabajan: pedidos, stock, cobranzas y reportes. Accedés al servicio mediante un plan adaptado a tu operación.",
+    eyebrow: "Productos Lynex",
+    title: "Usá el sistema que tu empresa necesita",
+    text: "Lynex desarrolla y administra sus propios sistemas. Contratás el acceso al producto y al plan que mejor encaje con tu operación, pagando una suscripción mensual.",
     includes: [
-      "Empezamos con un diagnóstico corto del proceso",
-      "Configuración inicial y mejoras por etapas",
-      "Operación, mantenimiento y soporte continuo",
-      "Plan mensual según usuarios, funciones e integraciones",
+      "Acceso al sistema incluido en la suscripción",
+      "Configuración inicial para tu empresa",
+      "Actualizaciones, mantenimiento y soporte",
+      "Planes según usuarios, funciones y nivel de servicio",
     ],
-    monthlyPrice: configuredSystemPrice || "Según alcance y uso",
-    time: "Primera versión en 4 a 8 semanas",
-    cta: "Quiero definir mi plan",
+    monthlyPrice: configuredSystemPrice || "Según el sistema y el plan",
+    time: "Activación según sistema y configuración",
+    cta: "Quiero conocer los sistemas",
   },
 ] as const;

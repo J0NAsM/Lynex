@@ -13,26 +13,26 @@ const symptoms = [
 ] as const;
 
 const steps = [
-  ["01", "Conversamos", "Media hora para entender qué necesitás. Si vemos que no somos la solución correcta, te lo decimos y te orientamos igual."],
-  ["02", "Definimos tu plan", "Funciones, precio mensual y fecha de activación quedan claros antes de empezar."],
-  ["03", "Configuramos por etapas", "Ves avances frecuentes y validás que la solución responda a tu operación."],
-  ["04", "Activamos y acompañamos", "Ponemos el servicio en marcha, capacitamos a tu equipo y seguimos mejorándolo con vos."],
+  ["01", "Conocemos tu necesidad", "Media hora para entender cómo trabajás y qué problema querés resolver."],
+  ["02", "Te mostramos la opción adecuada", "Elegís el sistema o servicio Lynex y el plan que corresponde a tu operación."],
+  ["03", "Preparamos la activación", "Configuramos usuarios, opciones disponibles y datos iniciales según el servicio contratado."],
+  ["04", "Activamos y acompañamos", "Tu equipo empieza a usarlo con capacitación, soporte y actualizaciones continuas."],
 ] as const;
 
 const commitments = [
   ["Plan y precio mensual claros", "La propuesta detalla qué incluye el servicio, cuánto cuesta por mes y qué puede modificar ese valor."],
-  ["Puesta en marcha por etapas", "Ves el avance real y validás cada parte importante antes de activar el servicio completo."],
-  ["Operación administrada", "Lynex se ocupa del hosting, mantenimiento y continuidad técnica para que tu equipo pueda usar la solución."],
-  ["Acompañamiento continuo", "El soporte y las mejoras se gestionan dentro del plan contratado, con condiciones conocidas de antemano."],
+  ["Activación acompañada", "Preparamos el servicio, ayudamos con la puesta en marcha y capacitamos a las personas que van a usarlo."],
+  ["Operación administrada", "Lynex se ocupa del hosting, mantenimiento y continuidad técnica de sus productos."],
+  ["Evolución continua", "El plan incluye el soporte y las actualizaciones correspondientes al sistema contratado."],
 ] as const;
 
 const faqs = [
-  ["¿Cuánto cuesta?", "Trabajamos con planes mensuales. El valor depende del alcance, la cantidad de usuarios, las integraciones y el nivel de servicio. Después de la primera conversación recibís una propuesta clara antes de activar nada."],
-  ["¿Cuánto tarda la activación?", "Un sitio web puede estar activo entre 2 y 4 semanas. Una primera versión de un sistema SaaS suele tomar entre 4 y 8 semanas desde el arranque."],
-  ["¿Cómo funciona la suscripción?", "Contratás un plan que incluye el acceso a la solución y los servicios detallados en la propuesta. Lynex administra la operación, el mantenimiento y las actualizaciones correspondientes."],
-  ["¿Qué pasa si necesito cambios después?", "Revisamos la necesidad y la incorporamos al servicio cuando entra en el plan. Si modifica el alcance, te informamos primero cómo cambia el precio mensual."],
-  ["¿Qué pasa si necesito más usuarios o funciones?", "Ajustamos el plan a la nueva necesidad. El cambio de funciones, capacidad o soporte se acuerda antes de modificar el precio."],
-  ["¿Puedo empezar por algo chico?", "Sí, y suele ser lo mejor. Activamos primero la parte que más duele y después revisamos juntos qué necesita la siguiente etapa."],
+  ["¿Cuánto cuesta?", "Cada cliente paga una suscripción mensual por usar el sistema o servicio elegido. El precio depende del producto, el plan, la cantidad de usuarios y el nivel de soporte."],
+  ["¿Me construyen un sistema exclusivo?", "No. Contratás el acceso a uno de los sistemas desarrollados y administrados por Lynex. Configuramos las opciones disponibles para que puedas empezar a usarlo en tu empresa."],
+  ["¿Cómo funciona la suscripción?", "Mientras tu plan esté activo, podés usar el sistema contratado y recibís el mantenimiento, las actualizaciones y el soporte incluidos en ese plan."],
+  ["¿Cuánto tarda la activación?", "Depende del sistema, la configuración, la carga inicial de datos y la capacitación necesaria. La propuesta indica el plazo antes de contratar."],
+  ["¿Qué pasa si necesito más usuarios o funciones?", "Podés cambiar a un plan que incluya lo que necesitás. Te informamos el nuevo precio mensual antes de hacer el cambio."],
+  ["¿Puedo empezar por algo chico?", "Sí. Podés comenzar con el sistema y el plan más adecuados para la necesidad actual, y cambiar de plan cuando haga falta."],
 ] as const;
 
 function Arrow() {
@@ -66,7 +66,7 @@ export default function Home() {
           <div className="hero-copy reveal">
             <p className="eyebrow"><span className="eyebrow-dot" /> {site.city}, {site.region}</p>
             <h1 id="hero-title">Tu negocio creció. Tus <em>herramientas</em> no.</h1>
-            <p className="hero-text">Activamos la web y el sistema SaaS que tu empresa necesita. Sin plantillas genéricas, con acompañamiento continuo y un plan mensual acorde a tu operación.</p>
+            <p className="hero-text">Elegí el sistema Lynex que necesita tu empresa y usalo mediante una suscripción mensual. Nosotros nos ocupamos de mantenerlo, actualizarlo y acompañar a tu equipo.</p>
             <div className="hero-actions">
               <a className="button button-dark" href="#servicios">Ver qué hacemos <Arrow /></a>
               {whatsappLink ? (
@@ -125,14 +125,14 @@ export default function Home() {
         <section className="trust-strip" aria-label="Lo que incluye el servicio de Lynex">
           <div className="section-wrap trust-inner">
             <span>Lo que incluye el servicio</span>
-            <div><span>Plan según tu operación</span><span>Mejoras continuas</span><span>Soporte de Lynex</span></div>
+            <div><span>Sistemas Lynex</span><span>Suscripción mensual</span><span>Soporte continuo</span></div>
           </div>
         </section>
 
         <section className="section-wrap section-block" id="servicios" aria-labelledby="offers-title">
           <div className="section-intro">
             <div><p className="eyebrow">Dos formas de empezar</p><h2 id="offers-title">Elegí por dónde te <em>duele</em> más.</h2></div>
-            <p>Podés empezar por la web y avanzar hacia un sistema cuando la operación lo necesite. No hace falta decidirlo todo hoy.</p>
+            <p>Podés contratar una presencia web administrada o el acceso a uno de nuestros sistemas. No necesitás encargar un desarrollo desde cero.</p>
           </div>
           <div className="offer-grid">
             {offers.map((offer) => (
@@ -176,8 +176,8 @@ export default function Home() {
 
         <section className="section-wrap section-block process-section" id="proceso" aria-labelledby="process-title">
           <div className="section-intro">
-            <div><p className="eyebrow">Cómo trabajamos</p><h2 id="process-title">Un servicio claro desde el <em>inicio.</em></h2></div>
-            <p>Sabés qué incluye tu plan, cuánto cuesta por mes y qué viene después de la activación.</p>
+            <div><p className="eyebrow">Cómo funciona</p><h2 id="process-title">Del sistema adecuado a tu equipo, <em>sin vueltas.</em></h2></div>
+            <p>Elegís un producto Lynex, contratás el plan y pagás mensualmente mientras lo usás.</p>
           </div>
           <ol className="process-grid process-grid-four">
             {steps.map(([number, title, text]) => (
@@ -203,14 +203,14 @@ export default function Home() {
         <section className="section-wrap section-block why-section" id="nosotros" aria-labelledby="about-title">
           <div className="why-copy">
             <p className="eyebrow">Por qué Lynex</p>
-            <h2 id="about-title">Hablás con quien <em>construye.</em></h2>
-            <p>Somos un equipo chico en {site.city}. No vas a explicar tu problema tres veces ni a esperar que un intermediario te traduzca. La misma persona que entiende tu negocio configura y mejora tu solución.</p>
+            <h2 id="about-title">Hablás con el equipo del <em>producto.</em></h2>
+            <p>Somos un equipo chico en {site.city}. Conocemos los sistemas que ofrecemos y te ayudamos a elegir, activar y aprovechar el que mejor responda a tu necesidad.</p>
             <a className="text-link" href="#contacto">Escribinos <Arrow /></a>
           </div>
           <div className="why-list">
-            <div><span>01</span><strong>Hecho para tu negocio</strong><p>No adaptás tu forma de trabajar a un producto. El producto se adapta a vos.</p></div>
-            <div><span>02</span><strong>Te decimos que no</strong><p>Si lo que necesitás se resuelve con una herramienta que ya existe, te lo decimos aunque no contrates nuestro servicio.</p></div>
-            <div><span>03</span><strong>Una base para crecer</strong><p>Construimos soluciones claras y mantenibles, preparadas para la siguiente etapa.</p></div>
+            <div><span>01</span><strong>El plan adecuado</strong><p>Te mostramos qué sistema y qué nivel de servicio corresponden a tu situación actual.</p></div>
+            <div><span>02</span><strong>Recomendación honesta</strong><p>Si ninguno de nuestros productos resuelve bien tu necesidad, te lo decimos con claridad.</p></div>
+            <div><span>03</span><strong>Producto en evolución</strong><p>Los sistemas reciben mantenimiento y actualizaciones continuas mientras los clientes los usan.</p></div>
           </div>
         </section>
 
@@ -248,7 +248,7 @@ export default function Home() {
             <BrandWordmark gradientId="lynex-silver-footer" />
             <span className="sr-only">Lynex</span>
           </a>
-          <span>Soluciones web y sistemas SaaS. {site.city}, {site.region}.</span>
+          <span>Sistemas Lynex por suscripción mensual. {site.city}, {site.region}.</span>
           <div>
             <a href="#servicios">Servicios</a>
             <a href="#proceso">Proceso</a>

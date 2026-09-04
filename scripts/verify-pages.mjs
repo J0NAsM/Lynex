@@ -41,9 +41,10 @@ const requiredFragments = [
   "martinezlynex@gmail.com",
   "https://wa.me/595986914726",
   "tel:+595986914726",
-  "Software SaaS para tu operación",
+  "Lynex desarrolla y administra sus propios sistemas",
+  "pagando una suscripción mensual",
   "Plan mensual",
-  "Según alcance y uso",
+  "Según el sistema y el plan",
 ];
 
 for (const fragment of requiredFragments) {
@@ -57,6 +58,9 @@ const forbiddenFragments = [
   "El código es tuyo",
   "¿De quién es el código?",
   "se transfiere todo",
+  "Software SaaS para tu operación",
+  "sistema SaaS que tu empresa necesita",
+  "Primera versión en 4 a 8 semanas",
 ];
 
 for (const fragment of forbiddenFragments) {

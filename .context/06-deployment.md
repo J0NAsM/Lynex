@@ -72,8 +72,9 @@ las imágenes dinámicas para que Pages responda con el tipo de contenido correc
 Después del build, `scripts/verify-pages.mjs` valida que `out/index.html` tenga un
 tamaño consistente con la portada completa, que incluya todas las secciones y enlaces,
 que use recursos bajo `/Lynex` y que existan privacidad, 404 y el wordmark. El artefacto
-no se publica si alguna comprobación falla. También exige la propuesta SaaS y rechaza
-afirmaciones obsoletas sobre entrega o propiedad del código.
+no se publica si alguna comprobación falla. También exige que la propuesta explique el
+acceso mensual a productos Lynex y rechaza afirmaciones obsoletas sobre desarrollo exclusivo,
+entrega o propiedad del código.
 
 ## Vercel
 

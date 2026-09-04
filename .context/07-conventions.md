@@ -3,14 +3,17 @@
 ## Contenido y tono
 
 - Escribí en español de Paraguay y con voseo: `podés`, `contanos`, `elegí`.
-- Lynex vende dos entradas SaaS: sitios web administrados y sistemas para la operación.
+- Lynex vende dos entradas: sitios web administrados y acceso a sus propios sistemas.
 - La narrativa parte del problema operativo y termina en una conversación, no en
   una lista de tecnologías.
-- Todo se comercializa como SaaS. El cliente contrata acceso, operación, mantenimiento
-  y mejoras mediante un plan; el precio mensual varía según alcance, usuarios,
-  integraciones y nivel de servicio.
+- Lynex desarrolla y administra productos propios. El cliente no encarga un SaaS nuevo:
+  contrata el derecho de usar uno de los sistemas Lynex mediante una suscripción mensual.
+  El precio varía según el sistema, el plan, los usuarios y el nivel de servicio.
 - Lynex conserva la propiedad de sus soluciones. No uses la propiedad ni la entrega
   del código como argumento comercial y no prometas repositorios o transferencias.
+- No describas los sistemas como desarrollos exclusivos, personalizados o construidos
+  alrededor de cada cliente. Se pueden configurar las opciones disponibles durante la
+  activación, sin prometer desarrollo a medida.
 - No inventes clientes, testimonios, métricas ni casos. Mientras no existan, se
   muestran proceso, garantías y una interfaz marcada como `DEMO OPERATIVA`.
 - Los precios, enlaces y canales opcionales se muestran solo cuando tienen datos

@@ -1,6 +1,6 @@
 # Lynex
 
-Sitio comercial de las soluciones SaaS de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, identidad visual provisional, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
+Sitio comercial de los sistemas propios de Lynex, ofrecidos a clientes mediante suscripción mensual. Está construido con Next.js, React y TypeScript e incluye landing responsive, identidad visual provisional, SEO técnico, imagen social, política de privacidad y contacto según el hosting.
 
 **Sitio publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
 

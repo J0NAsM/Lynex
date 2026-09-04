@@ -15,8 +15,9 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 ## Implementado
 
 - Portada comercial completa con una narrativa única para vender webs y sistemas.
-- Modelo comercial comunicado íntegramente como SaaS, con planes mensuales variables
-  y servicio administrado por Lynex.
+- Modelo comercial corregido: Lynex desarrolla y administra sus propios sistemas; los
+  clientes pagan una suscripción mensual por usar el producto y plan elegidos. No se
+  ofrece construir un SaaS exclusivo para cada cliente.
 - Wordmark provisional plateado sobre azul oscuro integrado en hero, cabecera, pie, metadata e imagen social.
 - Paleta visual alineada con la referencia de marca y contenido visible desde el primer fotograma.
 - Copy localizado para Paraguay y consistente en voseo.

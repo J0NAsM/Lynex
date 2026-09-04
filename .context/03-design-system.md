@@ -31,7 +31,7 @@ todos esos archivos.
 
 ## Componentes comerciales nuevos
 
-- `.offer-grid` / `.offer-card`: dos ofertas SaaS con plan mensual variable y plazo de activación.
+- `.offer-grid` / `.offer-card`: servicio web y acceso a sistemas Lynex, ambos con plan mensual variable.
 - `.symptoms-layout` / `.symptom-list`: banda oscura de problemas.
 - `.process-grid-four`: cuatro pasos en escritorio.
 - `.commitment-grid`: garantías en dos columnas.
