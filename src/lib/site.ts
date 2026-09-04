@@ -22,17 +22,17 @@ function publicHttpUrl(value: string | undefined) {
  * Datos del negocio. Fuente unica: si un dato aparece en la web, el correo,
  * LinkedIn o WhatsApp, sale de aqui.
  *
- * Los datos opcionales se configuran con variables de entorno. La interfaz los
- * oculta cuando no existen, en lugar de inventar información comercial.
+ * Los datos públicos se pueden reemplazar con variables de entorno. Los
+ * precios y enlaces comerciales opcionales se ocultan cuando no existen.
  */
 export const site = {
   name: "Lynex",
   description:
     "Construimos webs y sistemas a medida para empresas que ya no pueden crecer con planillas y herramientas sueltas.",
-  email: configuredEmail || "hola@lynex.dev",
+  email: configuredEmail || "martinezlynex@gmail.com",
   url: (configuredUrl || "https://lynex.dev").replace(/\/$/, ""),
 
-  city: "Asunción",
+  city: "Carapeguá",
   region: "Paraguay",
   locale: "es_PY",
   basePath: (() => {
@@ -44,8 +44,8 @@ export const site = {
   })(),
   staticHosting,
 
-  whatsapp: configuredWhatsapp || "",
-  phone: configuredPhone || "",
+  whatsapp: configuredWhatsapp || "595986914726",
+  phone: configuredPhone || "+595 986 914 726",
   linkedin: publicHttpUrl(configuredLinkedin),
 } as const;
 
@@ -53,6 +53,10 @@ export const whatsappLink = site.whatsapp
   ? `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
       "Hola, quiero consultar por un proyecto.",
     )}`
+  : "";
+
+export const phoneLink = site.phone
+  ? `tel:+${site.phone.replace(/\D/g, "")}`
   : "";
 
 /**

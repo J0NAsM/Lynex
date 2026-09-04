@@ -20,7 +20,9 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 - Copy localizado para Paraguay y consistente en voseo.
 - Secciones de problemas, dos ofertas, proceso, garantías, preguntas frecuentes y
   contacto.
-- Configuración opcional por entorno para WhatsApp, teléfono, LinkedIn y precios.
+- Contacto público configurado: `martinezlynex@gmail.com`, llamada y WhatsApp al
+  `+595 986 914 726`; LinkedIn y precios siguen siendo opcionales.
+- Ubicación comercial configurada en Carapeguá, Paraguay.
 - Metadata local, `Organization` + catálogo de `Service`, `FAQPage`, Open Graph
   actualizado, Apple icon, sitemap y manifest `es-PY`.
 - Formulario con validación, honeypot, control temporal, rate limit, restricción de
@@ -56,10 +58,10 @@ envío real exitoso porque no hay credenciales Resend locales.
 1. GitHub Pages ya funciona como hosting público. Si se quiere usar `lynex.dev`,
    apuntar el DNS y configurarlo como dominio personalizado; seguía en parking en la
    última revisión.
-2. Configurar el correo de `lynex.dev` y verificar SPF/DKIM/remitente en Resend.
+2. Verificar SPF/DKIM y un remitente de dominio en Resend si se activa el formulario web.
 3. Para recuperar el formulario web completo, desplegar también en un hosting con
    runtime Next.js, cargar los secretos de Resend y probar un contacto real.
-4. Completar, si existen, WhatsApp, teléfono, LinkedIn y precios reales.
+4. Completar, si existen, LinkedIn y precios reales.
 5. Reemplazar progresivamente garantías por casos, testimonios y resultados reales
    cuando Lynex los tenga.
 6. Probar la imagen Docker en un entorno con Docker disponible.

@@ -2,7 +2,7 @@
 
 ## Qué es
 
-**Lynex** es un estudio de Asunción que vende dos servicios relacionados:
+**Lynex** es un estudio de Carapeguá que vende dos servicios relacionados:
 
 1. sitios web profesionales como puerta de entrada;
 2. sistemas internos a medida cuando la operación ya no escala con planillas y herramientas sueltas.

@@ -10,9 +10,9 @@ La página apunta a búsquedas e intención comercial de Paraguay:
 
 - idioma HTML: `es-PY`;
 - locale de Open Graph: `es_PY`;
-- título por defecto: `Lynex | Webs y sistemas a medida en Asunción`;
+- título por defecto: `Lynex | Webs y sistemas a medida en Carapeguá`;
 - propuesta: sitios web profesionales y sistemas a medida para empresas;
-- área de servicio declarada: Paraguay, con domicilio comercial en Asunción.
+- área de servicio declarada: Paraguay, con domicilio comercial en Carapeguá.
 
 No agregues ciudades, reseñas, clientes, premios o métricas que Lynex todavía no
 pueda demostrar.

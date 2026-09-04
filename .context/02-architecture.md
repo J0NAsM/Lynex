@@ -83,5 +83,6 @@ ContactForm → POST /api/contact → origen/rate limit/antispam/validación
             → API de Resend → CONTACT_TO_EMAIL
 ```
 
-Flujo en Pages: `ContactForm → mailto:hola@lynex.dev`. No se envía ningún secreto ni
-se intenta simular un backend desde el navegador.
+Flujo en Pages: `ContactForm → mailto:martinezlynex@gmail.com | wa.me/595986914726`.
+La llamada usa `tel:+595986914726`. No se envía ningún secreto ni se intenta simular
+un backend desde el navegador.

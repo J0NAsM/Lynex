@@ -21,7 +21,9 @@ jobs:
       GITHUB_PAGES: "true"
       NEXT_PUBLIC_STATIC_HOSTING: "true"
       NEXT_PUBLIC_SITE_URL: https://j0nasm.github.io/Lynex
-      NEXT_PUBLIC_CONTACT_EMAIL: hola@lynex.dev
+      NEXT_PUBLIC_CONTACT_EMAIL: martinezlynex@gmail.com
+      NEXT_PUBLIC_WHATSAPP_NUMBER: "595986914726"
+      NEXT_PUBLIC_CONTACT_PHONE: "+595 986 914 726"
     steps:
       - name: Descargar código
         uses: actions/checkout@v6

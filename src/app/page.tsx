@@ -4,7 +4,7 @@ import { BrandWordmark } from "@/components/brand-wordmark";
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
 import { SiteNavigation } from "@/components/site-navigation";
-import { offers, site, whatsappLink } from "@/lib/site";
+import { offers, phoneLink, site, whatsappLink } from "@/lib/site";
 
 const symptoms = [
   ["01", "No aparecés cuando te buscan", "Alguien escucha tu nombre, te busca en Google y no encuentra nada serio. Esa venta se pierde antes de empezar."],
@@ -231,6 +231,9 @@ export default function Home() {
               <h2 id="contact-title">Una conversación de 30 minutos, sin <em>compromiso.</em></h2>
               <p>Contanos qué necesitás. Si vemos que no somos la solución correcta, te lo decimos y te orientamos igual.</p>
               <div className="contact-detail"><span aria-hidden="true">✦</span><a href={`mailto:${site.email}`}>{site.email}</a></div>
+              {phoneLink && (
+                <div className="contact-detail"><span aria-hidden="true">✆</span><a href={phoneLink}>Llamar al {site.phone}</a></div>
+              )}
               {whatsappLink && (
                 <div className="contact-detail"><span aria-hidden="true">✆</span><a href={whatsappLink} target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp</a></div>
               )}
@@ -253,6 +256,8 @@ export default function Home() {
             <a href="#proceso">Proceso</a>
             <a href="#preguntas">Preguntas</a>
             <a href="#contacto">Contacto</a>
+            {phoneLink && <a href={phoneLink}>Llamar</a>}
+            {whatsappLink && <a href={whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
             {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
             <Link href="/privacidad">Privacidad</Link>
           </div>

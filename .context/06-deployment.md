@@ -15,8 +15,8 @@ Cambiar una requiere volver a construir y desplegar.
 |---|---:|---|
 | `NEXT_PUBLIC_SITE_URL` | sí | URL canónica, schema, robots y sitemap |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | sí | email visible y destino de enlaces `mailto:` |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | no | número en dígitos para generar `wa.me` |
-| `NEXT_PUBLIC_CONTACT_PHONE` | no | teléfono visible y schema local |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | sí en producción | número en dígitos para generar `wa.me` |
+| `NEXT_PUBLIC_CONTACT_PHONE` | sí en producción | teléfono visible, enlace de llamada y schema local |
 | `NEXT_PUBLIC_LINKEDIN_URL` | no | enlace del pie de página |
 | `NEXT_PUBLIC_WEB_PRICE_FROM` | no | precio inicial visible de sitios web |
 | `NEXT_PUBLIC_SYSTEM_PRICE_FROM` | no | precio inicial visible de sistemas |
@@ -58,6 +58,8 @@ El build usa:
 - `NEXT_PUBLIC_STATIC_HOSTING=true`: sustituye el formulario por contacto directo;
 - `NEXT_PUBLIC_SITE_URL=https://j0nasm.github.io/Lynex`: canonicales y assets con
   el subdirectorio correcto.
+- El workflow también fija `martinezlynex@gmail.com` y `+595 986 914 726` para
+  correo, llamada y WhatsApp.
 
 Solo los Route Handlers `GET` pueden exportarse. Por eso el workflow renombra
 temporalmente `src/app/api/contact/route.ts` dentro del runner. El archivo fuente no
@@ -89,25 +91,26 @@ variables públicas están declaradas como argumentos del build. Ejemplo mínimo
 ```bash
 docker build \
   --build-arg NEXT_PUBLIC_SITE_URL=https://lynex.dev \
-  --build-arg NEXT_PUBLIC_CONTACT_EMAIL=hola@lynex.dev \
+  --build-arg NEXT_PUBLIC_CONTACT_EMAIL=martinezlynex@gmail.com \
+  --build-arg NEXT_PUBLIC_WHATSAPP_NUMBER=595986914726 \
+  --build-arg "NEXT_PUBLIC_CONTACT_PHONE=+595 986 914 726" \
   -t lynex .
 
 docker run --rm -p 3000:3000 \
   -e RESEND_API_KEY=re_xxx \
-  -e CONTACT_TO_EMAIL=hola@lynex.dev \
+  -e CONTACT_TO_EMAIL=martinezlynex@gmail.com \
   -e "CONTACT_FROM_EMAIL=Lynex <contacto@dominio-verificado.com>" \
   lynex
 ```
 
-Agregá `--build-arg` para WhatsApp, teléfono, LinkedIn o precios si se publican.
+Agregá `--build-arg` para LinkedIn o precios si se publican.
 
 ## Pendientes para el dominio definitivo
 
 - El sitio ya está publicado en GitHub Pages. `lynex.dev` estaba resolviendo a una
   página de parking al revisar el 3 de septiembre de 2026; hay que apuntar DNS al
   hosting definitivo si se usará como dominio personalizado.
-- El dominio no tenía MX visible en esa revisión. Configurá el proveedor de correo
-  antes de depender de `hola@lynex.dev`.
+- El contacto público usa `martinezlynex@gmail.com`; no depende del correo del dominio.
 - Verificá el dominio remitente en Resend y publicá sus registros SPF/DKIM.
 - Hacé un envío real del formulario desde el dominio final.
 - La imagen Docker no se probó localmente porque Docker CLI no estaba instalado;

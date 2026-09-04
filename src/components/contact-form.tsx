@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { site } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -28,17 +28,29 @@ export function ContactForm() {
     return (
       <div className="contact-form static-contact">
         <p className="eyebrow">Contacto directo</p>
-        <h3>Contanos tu idea por correo.</h3>
+        <h3>Contanos tu idea.</h3>
         <p>
-          Abrí tu aplicación de correo y escribinos qué necesitás. Te respondemos para
+          Elegí correo o WhatsApp y contanos qué necesitás. Te respondemos para
           coordinar una primera conversación.
         </p>
-        <a
-          className="button button-dark"
-          href={`mailto:${site.email}?subject=${subject}`}
-        >
-          Escribir a {site.email} <span aria-hidden="true">↗</span>
-        </a>
+        <div className="static-contact-actions">
+          <a
+            className="button button-dark"
+            href={`mailto:${site.email}?subject=${subject}`}
+          >
+            Escribir por correo <span aria-hidden="true">↗</span>
+          </a>
+          {whatsappLink && (
+            <a
+              className="button button-outline"
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Consultar por WhatsApp <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
         <small>No compartimos tu dirección ni la usamos para marketing.</small>
       </div>
     );

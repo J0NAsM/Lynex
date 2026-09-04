@@ -37,6 +37,10 @@ const requiredFragments = [
   '/Lynex/lynex-wordmark.svg',
   '/Lynex/privacidad/',
   '/Lynex/_next/',
+  "Carapeguá",
+  "martinezlynex@gmail.com",
+  "https://wa.me/595986914726",
+  "tel:+595986914726",
 ];
 
 for (const fragment of requiredFragments) {
