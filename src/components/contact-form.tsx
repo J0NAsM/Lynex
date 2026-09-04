@@ -22,6 +22,28 @@ export function ContactForm() {
     if (state === "success") successHeading.current?.focus();
   }, [state]);
 
+  if (site.staticHosting) {
+    const subject = encodeURIComponent("Consulta desde la web de Lynex");
+
+    return (
+      <div className="contact-form static-contact">
+        <p className="eyebrow">Contacto directo</p>
+        <h3>Contanos tu idea por correo.</h3>
+        <p>
+          Abrí tu aplicación de correo y escribinos qué necesitás. Te respondemos para
+          coordinar una primera conversación.
+        </p>
+        <a
+          className="button button-dark"
+          href={`mailto:${site.email}?subject=${subject}`}
+        >
+          Escribir a {site.email} <span aria-hidden="true">↗</span>
+        </a>
+        <small>No compartimos tu dirección ni la usamos para marketing.</small>
+      </div>
+    );
+  }
+
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;

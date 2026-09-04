@@ -26,6 +26,7 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 - Menú móvil accesible, cierre por clic externo, Escape, navegación y resize.
 - Páginas de error, error global y 404 coherentes con la marca.
 - Build standalone, Docker multi-stage, headers de seguridad y CI.
+- Exportación estática con `basePath` y despliegue automático en GitHub Pages.
 
 ## Validaciones realizadas
 
@@ -41,16 +42,20 @@ En este estado pasaron:
   origen cruzado 403 y configuración Resend ausente 503;
 - revisión visual de portada completa en desktop y móvil, y de la imagen Open
   Graph.
+- build estático de Pages y comprobación del HTML: assets bajo `/Lynex`, privacidad
+  correcta, contacto por correo y ausencia de `/api/contact`.
 
 El 200 silencioso del envío rápido es intencional para no ayudar a bots. Falta un
 envío real exitoso porque no hay credenciales Resend locales.
 
 ## Pendientes que requieren datos o servicios externos
 
-1. Elegir hosting, desplegar y apuntar DNS; `lynex.dev` seguía en parking en la
+1. GitHub Pages ya funciona como hosting público. Si se quiere usar `lynex.dev`,
+   apuntar el DNS y configurarlo como dominio personalizado; seguía en parking en la
    última revisión.
 2. Configurar el correo de `lynex.dev` y verificar SPF/DKIM/remitente en Resend.
-3. Cargar secretos de Resend y probar la recepción de un contacto real.
+3. Para recuperar el formulario web completo, desplegar también en un hosting con
+   runtime Next.js, cargar los secretos de Resend y probar un contacto real.
 4. Completar, si existen, WhatsApp, teléfono, LinkedIn y precios reales.
 5. Reemplazar progresivamente garantías por casos, testimonios y resultados reales
    cuando Lynex los tenga.
@@ -59,5 +64,5 @@ envío real exitoso porque no hay credenciales Resend locales.
    infraestructura de múltiples instancias lo justifican.
 8. Verificar el workflow de GitHub después de cada push a `main`.
 
-No hay un bloqueo técnico local para generar el sitio. La publicación efectiva y
-el envío de emails dependen de las decisiones y credenciales anteriores.
+No hay un bloqueo técnico para la web pública en Pages. El dominio personalizado y
+el envío mediante formulario dependen de DNS, hosting con servidor y credenciales.

@@ -46,6 +46,26 @@ npm run check      # lint + typecheck + build, igual que CI
 npm run start      # servidor standalone ya construido
 ```
 
+## GitHub Pages (publicación activa)
+
+`.github/workflows/pages.yml` se ejecuta con cada push a `main` y publica
+`https://j0nasm.github.io/Lynex/` mediante las acciones oficiales de Pages.
+
+El build usa:
+
+- `GITHUB_PAGES=true`: cambia Next.js de `standalone` a `output: "export"`, activa
+  `basePath: "/Lynex"` y genera `out/`;
+- `NEXT_PUBLIC_STATIC_HOSTING=true`: sustituye el formulario por contacto directo;
+- `NEXT_PUBLIC_SITE_URL=https://j0nasm.github.io/Lynex`: canonicales y assets con
+  el subdirectorio correcto.
+
+Solo los Route Handlers `GET` pueden exportarse. Por eso el workflow renombra
+temporalmente `src/app/api/contact/route.ts` dentro del runner. El archivo fuente no
+se elimina del repositorio y continúa disponible para despliegues con servidor.
+
+`scripts/prepare-standalone.mjs` detecta este modo, verifica `out/` y crea
+`.nojekyll` para que GitHub no ignore `_next`.
+
 ## Vercel
 
 1. Importar este repositorio y mantener la raíz en `Lynex` si el proveedor parte
@@ -75,10 +95,11 @@ docker run --rm -p 3000:3000 \
 
 Agregá `--build-arg` para WhatsApp, teléfono, LinkedIn o precios si se publican.
 
-## Bloqueos externos antes de publicar
+## Pendientes para el dominio definitivo
 
-- `lynex.dev` estaba resolviendo a una página de parking al revisar el 3 de
-  septiembre de 2026; hay que apuntar DNS al hosting definitivo.
+- El sitio ya está publicado en GitHub Pages. `lynex.dev` estaba resolviendo a una
+  página de parking al revisar el 3 de septiembre de 2026; hay que apuntar DNS al
+  hosting definitivo si se usará como dominio personalizado.
 - El dominio no tenía MX visible en esa revisión. Configurá el proveedor de correo
   antes de depender de `hola@lynex.dev`.
 - Verificá el dominio remitente en Resend y publicá sus registros SPF/DKIM.

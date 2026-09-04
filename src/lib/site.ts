@@ -5,6 +5,7 @@ const configuredPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE?.trim();
 const configuredLinkedin = process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim();
 const configuredWebPrice = process.env.NEXT_PUBLIC_WEB_PRICE_FROM?.trim();
 const configuredSystemPrice = process.env.NEXT_PUBLIC_SYSTEM_PRICE_FROM?.trim();
+const staticHosting = process.env.NEXT_PUBLIC_STATIC_HOSTING === "true";
 
 function publicHttpUrl(value: string | undefined) {
   if (!value) return "";
@@ -34,6 +35,14 @@ export const site = {
   city: "Asunción",
   region: "Paraguay",
   locale: "es_PY",
+  basePath: (() => {
+    try {
+      return new URL((configuredUrl || "https://lynex.dev").replace(/\/$/, "")).pathname.replace(/\/$/, "");
+    } catch {
+      return "";
+    }
+  })(),
+  staticHosting,
 
   whatsapp: configuredWhatsapp || "",
   phone: configuredPhone || "",

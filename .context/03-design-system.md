@@ -36,6 +36,7 @@ todos esos archivos.
 - `.process-grid-four`: cuatro pasos en escritorio.
 - `.commitment-grid`: garantías en dos columnas.
 - `.contact-place`: señal local bajo los medios de contacto.
+- `.static-contact`: tarjeta de contacto directo usada por GitHub Pages.
 
 ## Responsive y accesibilidad
 

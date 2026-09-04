@@ -3,9 +3,18 @@
 La funcionalidad une `src/components/contact-form.tsx` con
 `src/app/api/contact/route.ts`.
 
+Hay dos modos de despliegue:
+
+- servidor Next.js/Vercel/Docker: formulario completo y envío mediante Resend;
+- GitHub Pages: tarjeta `mailto:` porque el hosting es estático y no ejecuta rutas
+  `POST`.
+
 ## Cliente
 
 Estados: `idle → submitting → success | error`.
+
+Si `NEXT_PUBLIC_STATIC_HOSTING=true`, el componente devuelve antes una tarjeta de
+correo y no incluye ninguna referencia a `/api/contact` en el HTML generado.
 
 - Envía `{ name, email, message, website, elapsed }` como JSON.
 - `website` es un honeypot invisible; `elapsed` mide milisegundos desde la hidratación.

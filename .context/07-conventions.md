@@ -36,6 +36,8 @@
 ## Configuración
 
 - Toda variable `NEXT_PUBLIC_*` se resuelve en el build.
+- `NEXT_PUBLIC_STATIC_HOSTING` es una excepción interna del workflow de Pages; no
+  debe activarse en Vercel ni Docker.
 - Si agregás una variable pública, actualizá también `.env.example`, `README.md`,
   `Dockerfile` y `.context/06-deployment.md`.
 - Si agregás una ruta indexable, actualizá sitemap, metadata y esta documentación.
@@ -48,9 +50,10 @@ npm run check
 git diff --check
 ```
 
-Después probá como mínimo `/`, `/privacidad`, los assets dinámicos, una ruta 404 y
-los estados 400/403/503 del endpoint de contacto. Un envío 200 real solo se puede
-validar con Resend y un remitente configurados.
+Después probá como mínimo `/`, `/privacidad`, los assets dinámicos y una ruta 404.
+En modo servidor, probá también los estados 400/403/503 del contacto. En modo Pages,
+confirmá que el HTML usa `/Lynex/_next/`, enlaza `/Lynex/privacidad/`, muestra el CTA
+de correo y no contiene `/api/contact`. Un envío real solo se valida con Resend.
 
 ## Estructura duplicada del workspace
 

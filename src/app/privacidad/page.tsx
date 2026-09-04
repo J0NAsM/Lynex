@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
-  description: "Cómo tratamos los datos enviados a través del formulario de contacto de Lynex.",
+  description: "Cómo tratamos los datos enviados mediante los canales de contacto de Lynex.",
   alternates: { canonical: "/privacidad" },
 };
 
@@ -17,15 +17,15 @@ export default function PrivacyPage() {
         </Link>
         <p className="eyebrow">Privacidad</p>
         <h1>Política de privacidad</h1>
-        <p className="legal-updated">Última actualización: 3 de septiembre de 2026.</p>
+        <p className="legal-updated">Última actualización: 4 de septiembre de 2026.</p>
 
         <section>
           <h2>Quién trata tus datos</h2>
-          <p>Lynex es responsable de los datos que enviás mediante este sitio. Podés contactarnos en <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+          <p>Lynex es responsable de los datos que enviás mediante nuestros canales de contacto. Podés escribirnos en <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
         </section>
         <section>
           <h2>Qué datos recopilamos y para qué</h2>
-          <p>Cuando usás el formulario recibimos tu nombre, correo electrónico y el contenido de tu consulta. Los usamos exclusivamente para responderte, evaluar tu solicitud y continuar la conversación comercial que hayas iniciado.</p>
+          <p>Cuando nos escribís recibimos tu nombre, correo electrónico y el contenido de tu consulta. Los usamos exclusivamente para responderte, evaluar tu solicitud y continuar la conversación comercial que hayas iniciado.</p>
         </section>
         <section>
           <h2>Conservación y proveedores</h2>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2>Tus opciones</h2>
-          <p>Podés pedir acceso, corrección o eliminación de tus datos, o retirar tu consentimiento, escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>. No usamos el formulario para suscribirte a comunicaciones de marketing.</p>
+          <p>Podés pedir acceso, corrección o eliminación de tus datos, o retirar tu consentimiento, escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>. No usamos tus datos para suscribirte a comunicaciones de marketing.</p>
         </section>
         <section>
           <h2>Cookies</h2>

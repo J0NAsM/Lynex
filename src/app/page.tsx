@@ -1,11 +1,8 @@
+import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
 import { SiteNavigation } from "@/components/site-navigation";
 import { offers, site, whatsappLink } from "@/lib/site";
-
-// La página es estática, así que el año del pie quedaría congelado en el build.
-// Regenerarla a diario mantiene el copyright correcto sin volver a desplegar.
-export const revalidate = 86400;
 
 const symptoms = [
   ["01", "No aparecés cuando te buscan", "Alguien escucha tu nombre, te busca en Google y no encuentra nada serio. Esa venta se pierde antes de empezar."],
@@ -237,7 +234,7 @@ export default function Home() {
             <a href="#servicios">Servicios</a>
             <a href="#contacto">Contacto</a>
             {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-            <a href="/privacidad">Privacidad</a>
+            <Link href="/privacidad">Privacidad</Link>
           </div>
           <small>© {new Date().getFullYear()} Lynex. Todos los derechos reservados.</small>
         </div>

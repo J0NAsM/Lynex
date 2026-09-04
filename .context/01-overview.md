@@ -8,12 +8,14 @@
 2. sistemas internos a medida cuando la operación ya no escala con planillas y herramientas sueltas.
 
 Este repositorio contiene su sitio comercial. No es un SaaS: no tiene autenticación, usuarios
-ni base de datos. La única operación de servidor propia es el envío del formulario de contacto.
+ni base de datos. El repositorio incluye una ruta de servidor para enviar el formulario cuando
+el hosting soporta Node.js; GitHub Pages publica una variante estática con contacto por correo.
 
 ## Objetivo y narrativa
 
 El objetivo es convertir una visita en una conversación de 30 minutos. Si se configura
-WhatsApp, aparece como acceso directo; siempre quedan disponibles formulario y correo.
+WhatsApp, aparece como acceso directo. En un hosting con servidor queda disponible el
+formulario; en GitHub Pages se ofrece un CTA directo por correo.
 
 La landing cuenta una sola historia con dos ofertas, en este orden:
 
@@ -25,7 +27,7 @@ La landing cuenta una sola historia con dos ofertas, en este orden:
 6. **Garantías** (`#garantias`) — compromisos comerciales sin inventar casos de éxito.
 7. **Nosotros** (`#nosotros`) — equipo pequeño, comunicación directa y criterio honesto.
 8. **FAQ** — precio, plazos, propiedad, cambios, hitos y primera versión pequeña.
-9. **Contacto** (`#contacto`) — formulario, correo, WhatsApp opcional y ubicación.
+9. **Contacto** (`#contacto`) — formulario o correo, WhatsApp opcional y ubicación.
 
 ## Idioma y honestidad comercial
 

@@ -4,7 +4,7 @@
 
 | Pieza | Elección | Nota |
 |---|---|---|
-| Framework | Next.js 16.3.4, App Router | salida `standalone`, home con ISR diario |
+| Framework | Next.js 16.3.4, App Router | salida `standalone` o exportación para Pages |
 | UI | React 19.2.8 | Server Components por defecto |
 | Lenguaje | TypeScript 5, `strict` | target ES2022, alias `@/*` |
 | Estilos | CSS plano | sin Tailwind ni librería de componentes |
@@ -41,18 +41,23 @@ src/
 ```
 
 Fuera de `src/`: `Dockerfile`, `.nvmrc`, `.env.example`, workflow de CI y
-`scripts/prepare-standalone.mjs`.
+`scripts/prepare-standalone.mjs`. `.github/workflows/pages.yml` construye y publica
+la variante estática.
 
 ## Rutas y renderizado
 
 | Ruta | Tipo |
 |---|---|
-| `/` | prerenderizada, revalidación cada 24 horas |
+| `/` | prerenderizada en cada build |
 | `/privacidad` | estática |
 | `/api/contact` | dinámica, solo `POST` |
 | `/opengraph-image`, `/apple-icon` | imágenes generadas |
 | `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` | metadata generada |
 | cualquier otra | 404 personalizada |
+
+En GitHub Pages se exportan todas las rutas estáticas bajo `/Lynex`. El workflow
+desactiva temporalmente `/api/contact` dentro del runner porque un host estático no
+puede ejecutar `POST`.
 
 ## Frontera servidor/cliente
 
@@ -60,7 +65,8 @@ Fuera de `src/`: `Dockerfile`, `.nvmrc`, `.env.example`, workflow de CI y
 
 - `SiteNavigation`: menú, Escape, clic exterior, resize y bloqueo temporal de scroll.
 - `FaqList`: pregunta abierta y relaciones `aria-controls`.
-- `ContactForm`: validación nativa, tiempo de llenado, envío y foco posterior al éxito.
+- `ContactForm`: formulario completo en un servidor; CTA `mailto:` en la exportación
+  estática.
 
 No conviertas la landing completa a cliente para añadir una interacción pequeña.
 
@@ -70,9 +76,12 @@ No conviertas la landing completa a cliente para añadir una interacción peque�
 Permissions Policy a todas las rutas. La CSP permite solo recursos propios. Si se incorpora
 analítica, vídeo, calendario, mapa o fuente externa, hay que ampliar conscientemente la CSP.
 
-Flujo con estado real:
+Flujo con servidor:
 
 ```text
 ContactForm → POST /api/contact → origen/rate limit/antispam/validación
             → API de Resend → CONTACT_TO_EMAIL
 ```
+
+Flujo en Pages: `ContactForm → mailto:hola@lynex.dev`. No se envía ningún secreto ni
+se intenta simular un backend desde el navegador.

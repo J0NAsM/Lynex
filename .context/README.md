@@ -12,7 +12,7 @@ Pensada tanto para personas nuevas como para agentes de IA que trabajen sobre el
 | [03-design-system.md](03-design-system.md) | Colores, tipografías, layout y convenciones de CSS |
 | [04-contact-flow.md](04-contact-flow.md) | Formulario de contacto de punta a punta (validación, antispam, Resend) |
 | [05-seo-metadata.md](05-seo-metadata.md) | Metadata, Open Graph, robots, sitemap, manifest, JSON-LD |
-| [06-deployment.md](06-deployment.md) | Variables de entorno, build, Docker, Vercel, CI |
+| [06-deployment.md](06-deployment.md) | GitHub Pages, variables, build, Docker, Vercel y CI |
 | [07-conventions.md](07-conventions.md) | Cómo escribir código aquí + trampas conocidas |
 | [08-state.md](08-state.md) | Estado actual, validaciones y pendientes externos |
 

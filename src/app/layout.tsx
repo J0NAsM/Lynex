@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   alternates: { canonical: "/" },
-  icons: { icon: "/icon.svg", apple: "/apple-icon" },
-  manifest: "/manifest.webmanifest",
+  icons: { icon: `${site.url}/icon.svg`, apple: `${site.url}/apple-icon` },
+  manifest: `${site.url}/manifest.webmanifest`,
   appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
     title: "Lynex | Webs y sistemas a medida",
@@ -34,13 +34,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: site.locale,
     type: "website",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
+    images: [{ url: `${site.url}/opengraph-image`, width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lynex | Webs y sistemas a medida",
     description: "Software que trabaja como tu negocio.",
-    images: ["/opengraph-image"],
+    images: [`${site.url}/opengraph-image`],
   },
   robots: { index: true, follow: true },
 };

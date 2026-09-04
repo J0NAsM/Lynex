@@ -1,6 +1,8 @@
 # Lynex
 
-Sitio comercial de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, SEO técnico, imagen social generada, política de privacidad y formulario de contacto con entrega mediante Resend.
+Sitio comercial de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
+
+**Sitio publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
 
 ## Desarrollo local
 
@@ -37,6 +39,12 @@ También podés completar datos comerciales opcionales. Si quedan vacíos, el si
 
 Sin las tres variables de correo, el sitio compila y funciona, pero el formulario responde con un aviso de indisponibilidad y ofrece el enlace de email directo. Nunca expongas `RESEND_API_KEY` con el prefijo `NEXT_PUBLIC_`.
 
+## Publicación automática en GitHub Pages
+
+Cada push a `main` ejecuta `.github/workflows/pages.yml`, genera una exportación estática con el prefijo `/Lynex` y la publica en GitHub Pages. Como Pages no ejecuta Node.js ni rutas `POST`, esta versión muestra un contacto directo por `mailto:` y no intenta llamar a `/api/contact`.
+
+El workflow define internamente `GITHUB_PAGES=true` y `NEXT_PUBLIC_STATIC_HOSTING=true`, desactiva la ruta del servidor únicamente dentro del runner y sube la carpeta `out`. No hace falta commitear archivos generados.
+
 ## Publicar en Vercel
 
 1. Importá este repositorio en Vercel.
@@ -66,6 +74,6 @@ También podés probar la compilación standalone sin Docker con `npm run build`
 ## Comprobaciones posteriores
 
 - Visitá `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` y `/opengraph-image`.
-- Probá navegación, FAQ y formulario tanto en móvil como en escritorio.
+- Probá navegación, FAQ y el medio de contacto correspondiente tanto en móvil como en escritorio.
 - Confirmá que la URL canónica y la vista previa social usan el dominio final.
 - Revisá que el correo no llegue a spam y configurá SPF/DKIM según indique tu proveedor.
