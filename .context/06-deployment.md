@@ -64,7 +64,8 @@ temporalmente `src/app/api/contact/route.ts` dentro del runner. El archivo fuent
 se elimina del repositorio y continúa disponible para despliegues con servidor.
 
 `scripts/prepare-standalone.mjs` detecta este modo, verifica `out/` y crea
-`.nojekyll` para que GitHub no ignore `_next`.
+`.nojekyll` para que GitHub no ignore `_next`. También crea las copias `.png` de
+las imágenes dinámicas para que Pages responda con el tipo de contenido correcto.
 
 ## Vercel
 

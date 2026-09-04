@@ -11,6 +11,13 @@ if (process.env.GITHUB_PAGES === "true") {
     throw new Error("No se encontró la exportación estática de Next.js.");
   }
 
+  // Las rutas de imágenes generadas salen sin extensión. Pages las serviría
+  // como octet-stream, así que exponemos también nombres con MIME de PNG.
+  for (const name of ["apple-icon", "opengraph-image"]) {
+    const source = join(exported, name);
+    if (existsSync(source)) cpSync(source, `${source}.png`);
+  }
+
   // Evita que GitHub Pages procese la carpeta _next con Jekyll.
   writeFileSync(join(exported, ".nojekyll"), "");
   process.exit(0);

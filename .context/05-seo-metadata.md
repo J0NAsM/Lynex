@@ -57,6 +57,10 @@ modelar el proveedor y los servicios por separado.
 - `src/app/icon.svg`: favicon vectorial.
 - `src/app/apple-icon.tsx`: icono PNG dinámico de 180 × 180 para Apple.
 
+En GitHub Pages, el postbuild copia las dos rutas generadas a nombres `.png` y la
+metadata usa esas URLs. Esto evita que el host estático las entregue como
+`application/octet-stream`.
+
 Las imágenes dinámicas usan `ImageResponse`/Satori. Sus contenedores deben
 declarar `display: flex`; Satori no interpreta todo CSS del navegador.
 

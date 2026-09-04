@@ -15,6 +15,10 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
 });
 
+const staticImageExtension = site.staticHosting ? ".png" : "";
+const appleIconUrl = `${site.url}/apple-icon${staticImageExtension}`;
+const socialImageUrl = `${site.url}/opengraph-image${staticImageExtension}`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -24,7 +28,7 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   alternates: { canonical: "/" },
-  icons: { icon: `${site.url}/icon.svg`, apple: `${site.url}/apple-icon` },
+  icons: { icon: `${site.url}/icon.svg`, apple: appleIconUrl },
   manifest: `${site.url}/manifest.webmanifest`,
   appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
@@ -34,13 +38,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: site.locale,
     type: "website",
-    images: [{ url: `${site.url}/opengraph-image`, width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
+    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lynex | Webs y sistemas a medida",
     description: "Software que trabaja como tu negocio.",
-    images: [`${site.url}/opengraph-image`],
+    images: [socialImageUrl],
   },
   robots: { index: true, follow: true },
 };
