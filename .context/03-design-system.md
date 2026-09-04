@@ -31,7 +31,7 @@ todos esos archivos.
 
 ## Componentes comerciales nuevos
 
-- `.offer-grid` / `.offer-card`: dos ofertas con lista, precio opcional y plazo.
+- `.offer-grid` / `.offer-card`: dos ofertas SaaS con plan mensual variable y plazo de activación.
 - `.symptoms-layout` / `.symptom-list`: banda oscura de problemas.
 - `.process-grid-four`: cuatro pasos en escritorio.
 - `.commitment-grid`: garantías en dos columnas.

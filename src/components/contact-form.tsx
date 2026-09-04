@@ -99,7 +99,7 @@ export function ContactForm() {
       <div className="contact-form form-success" role="status" aria-live="polite">
         <span aria-hidden="true">✓</span>
         <h3 ref={successHeading} tabIndex={-1}>Mensaje enviado.</h3>
-        <p>Gracias por escribirnos. Te contactamos para conocer mejor tu proyecto.</p>
+        <p>Gracias por escribirnos. Te contactamos para conocer mejor lo que necesitás.</p>
         <button
           type="button"
           className="text-link"
@@ -148,7 +148,7 @@ export function ContactForm() {
           rows={5}
           minLength={20}
           maxLength={3000}
-          placeholder="Contanos brevemente tu proyecto o el problema que querés resolver..."
+          placeholder="Contanos brevemente qué necesitás o el problema que querés resolver..."
         />
       </label>
       <label className="form-honeypot" aria-hidden="true">

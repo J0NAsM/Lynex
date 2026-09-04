@@ -4,12 +4,13 @@
 
 **Lynex** es un estudio de Carapeguá que vende dos servicios relacionados:
 
-1. sitios web profesionales como puerta de entrada;
-2. sistemas internos a medida cuando la operación ya no escala con planillas y herramientas sueltas.
+1. sitios web administrados como servicio;
+2. sistemas SaaS adaptados a la operación cuando las planillas y herramientas sueltas ya no alcanzan.
 
-Este repositorio contiene su sitio comercial. No es un SaaS: no tiene autenticación, usuarios
-ni base de datos. El repositorio incluye una ruta de servidor para enviar el formulario cuando
-el hosting soporta Node.js; GitHub Pages publica una variante estática con contacto por correo.
+La oferta comercial de Lynex funciona siempre bajo un modelo SaaS. Este repositorio contiene
+solo su sitio comercial, por eso no implementa autenticación, usuarios ni la plataforma de los
+clientes. Incluye una ruta de servidor para enviar el formulario cuando el hosting soporta
+Node.js; GitHub Pages publica una variante estática con contacto directo.
 
 ## Objetivo y narrativa
 
@@ -20,13 +21,13 @@ formulario; en GitHub Pages se ofrece un CTA directo por correo.
 La landing cuenta una sola historia con dos ofertas, en este orden:
 
 1. **Hero** — problema central, ubicación, CTA y wordmark provisional; el panel está rotulado como demo.
-2. **Trust strip** — precio cerrado, entregas quincenales y propiedad del código.
-3. **Servicios** (`#servicios`) — web profesional y sistema operativo a medida.
+2. **Trust strip** — plan según la operación, mejoras continuas y soporte.
+3. **Servicios** (`#servicios`) — presencia web administrada y sistema SaaS operativo.
 4. **Problemas** (`#problemas`) — tres síntomas reconocibles por el cliente.
 5. **Proceso** (`#proceso`) — cuatro pasos desde conversación hasta publicación.
 6. **Garantías** (`#garantias`) — compromisos comerciales sin inventar casos de éxito.
 7. **Nosotros** (`#nosotros`) — equipo pequeño, comunicación directa y criterio honesto.
-8. **FAQ** (`#preguntas`) — precio, plazos, propiedad, cambios, hitos y primera versión pequeña.
+8. **FAQ** (`#preguntas`) — precio mensual variable, activación, suscripción, cambios y crecimiento del plan.
 9. **Contacto** (`#contacto`) — formulario o correo, WhatsApp opcional y ubicación.
 
 ## Idioma y honestidad comercial
@@ -37,6 +38,8 @@ La landing cuenta una sola historia con dos ofertas, en este orden:
 - Aún no hay casos de clientes publicables. La sección de garantías sustituye temporalmente
   al portfolio, pero no debe confundirse con evidencia comercial.
 - Las garantías, plazos y condiciones publicados deben coincidir con contratos y operación.
+- No se comunica entrega ni propiedad del código al cliente. Se vende acceso y servicio SaaS;
+  Lynex conserva internamente la propiedad de la solución.
 
 ## Dónde vive el contenido
 

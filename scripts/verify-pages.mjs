@@ -41,6 +41,9 @@ const requiredFragments = [
   "martinezlynex@gmail.com",
   "https://wa.me/595986914726",
   "tel:+595986914726",
+  "Software SaaS para tu operación",
+  "Plan mensual",
+  "Según alcance y uso",
 ];
 
 for (const fragment of requiredFragments) {
@@ -49,8 +52,17 @@ for (const fragment of requiredFragments) {
   }
 }
 
-if (index.includes("/api/contact")) {
-  throw new Error("La versión estática no debe intentar enviar datos a /api/contact.");
+const forbiddenFragments = [
+  "/api/contact",
+  "El código es tuyo",
+  "¿De quién es el código?",
+  "se transfiere todo",
+];
+
+for (const fragment of forbiddenFragments) {
+  if (index.includes(fragment)) {
+    throw new Error(`El índice exportado contiene texto o comportamiento obsoleto: ${fragment}`);
+  }
 }
 
 console.log("Exportación de Pages verificada: índice, navegación, marca y rutas completas.");

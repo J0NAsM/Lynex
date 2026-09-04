@@ -18,8 +18,8 @@ Cambiar una requiere volver a construir y desplegar.
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | sí en producción | número en dígitos para generar `wa.me` |
 | `NEXT_PUBLIC_CONTACT_PHONE` | sí en producción | teléfono visible, enlace de llamada y schema local |
 | `NEXT_PUBLIC_LINKEDIN_URL` | no | enlace del pie de página |
-| `NEXT_PUBLIC_WEB_PRICE_FROM` | no | precio inicial visible de sitios web |
-| `NEXT_PUBLIC_SYSTEM_PRICE_FROM` | no | precio inicial visible de sistemas |
+| `NEXT_PUBLIC_WEB_PRICE_FROM` | no | precio mensual visible del plan web |
+| `NEXT_PUBLIC_SYSTEM_PRICE_FROM` | no | precio mensual visible del plan de sistema |
 
 Los campos opcionales se ocultan cuando están vacíos. No uses valores de relleno
 en producción.
@@ -72,7 +72,8 @@ las imágenes dinámicas para que Pages responda con el tipo de contenido correc
 Después del build, `scripts/verify-pages.mjs` valida que `out/index.html` tenga un
 tamaño consistente con la portada completa, que incluya todas las secciones y enlaces,
 que use recursos bajo `/Lynex` y que existan privacidad, 404 y el wordmark. El artefacto
-no se publica si alguna comprobación falla.
+no se publica si alguna comprobación falla. También exige la propuesta SaaS y rechaza
+afirmaciones obsoletas sobre entrega o propiedad del código.
 
 ## Vercel
 

@@ -15,13 +15,15 @@ No confundir con el scaffold hermano `C:\Proyectos\Personal\Lynex\lynex-app`.
 ## Implementado
 
 - Portada comercial completa con una narrativa única para vender webs y sistemas.
+- Modelo comercial comunicado íntegramente como SaaS, con planes mensuales variables
+  y servicio administrado por Lynex.
 - Wordmark provisional plateado sobre azul oscuro integrado en hero, cabecera, pie, metadata e imagen social.
 - Paleta visual alineada con la referencia de marca y contenido visible desde el primer fotograma.
 - Copy localizado para Paraguay y consistente en voseo.
 - Secciones de problemas, dos ofertas, proceso, garantías, preguntas frecuentes y
   contacto.
 - Contacto público configurado: `martinezlynex@gmail.com`, llamada y WhatsApp al
-  `+595 986 914 726`; LinkedIn y precios siguen siendo opcionales.
+  `+595 986 914 726`; LinkedIn y precios mensuales publicados siguen siendo opcionales.
 - Ubicación comercial configurada en Carapeguá, Paraguay.
 - Metadata local, `Organization` + catálogo de `Service`, `FAQPage`, Open Graph
   actualizado, Apple icon, sitemap y manifest `es-PY`.

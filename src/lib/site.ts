@@ -28,7 +28,7 @@ function publicHttpUrl(value: string | undefined) {
 export const site = {
   name: "Lynex",
   description:
-    "Construimos webs y sistemas a medida para empresas que ya no pueden crecer con planillas y herramientas sueltas.",
+    "Soluciones web y sistemas SaaS para empresas que ya no pueden crecer con planillas y herramientas sueltas.",
   email: configuredEmail || "martinezlynex@gmail.com",
   url: (configuredUrl || "https://lynex.dev").replace(/\/$/, ""),
 
@@ -51,7 +51,7 @@ export const site = {
 
 export const whatsappLink = site.whatsapp
   ? `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-      "Hola, quiero consultar por un proyecto.",
+      "Hola, quiero consultar por una solución SaaS.",
     )}`
   : "";
 
@@ -60,38 +60,38 @@ export const phoneLink = site.phone
   : "";
 
 /**
- * Las dos ofertas del negocio. Si no hay un precio mínimo configurado, la
- * tarjeta conserva el plazo y omite el precio sin mostrar placeholders.
+ * Las dos ofertas SaaS del negocio. El precio mensual puede configurarse para
+ * cada plan; mientras no exista una cifra pública se comunica como variable.
  */
 export const offers = [
   {
     id: "web",
     eyebrow: "Punto de partida",
-    title: "Tu presencia web, bien hecha",
-    text: "Un sitio rápido, que se ve bien en el celular y que la gente encuentra en Google. Sin plantillas genéricas ni páginas que tardan en cargar.",
+    title: "Tu presencia web como servicio",
+    text: "Un sitio rápido, administrado por Lynex, que se ve bien en el celular y que la gente encuentra en Google. Se mantiene activo y actualizado dentro de un plan mensual.",
     includes: [
       "Diseño propio, no una plantilla",
       "Optimizado para celular y para Google",
-      "Formulario o WhatsApp que te llega de verdad",
-      "Lo publicamos y te lo dejamos funcionando",
+      "Hosting, seguridad y actualizaciones",
+      "Formulario, correo y WhatsApp integrados",
     ],
-    from: configuredWebPrice || "",
-    time: "2 a 4 semanas",
-    cta: "Quiero mi sitio web",
+    monthlyPrice: configuredWebPrice || "Según alcance y servicio",
+    time: "Activación inicial en 2 a 4 semanas",
+    cta: "Quiero conocer mi plan",
   },
   {
     id: "sistema",
     eyebrow: "Cuando la planilla ya no da",
-    title: "El sistema que tu operación necesita",
-    text: "Software construido alrededor de cómo ya trabajan: pedidos, stock, cobranzas, reportes. No al revés.",
+    title: "Software SaaS para tu operación",
+    text: "Una solución administrada alrededor de cómo ya trabajan: pedidos, stock, cobranzas y reportes. Accedés al servicio mediante un plan adaptado a tu operación.",
     includes: [
       "Empezamos con un diagnóstico corto del proceso",
-      "Entregas cada dos semanas, no una caja negra",
-      "Alcance, precio y fecha por escrito antes de arrancar",
-      "El código y los accesos son tuyos",
+      "Configuración inicial y mejoras por etapas",
+      "Operación, mantenimiento y soporte continuo",
+      "Plan mensual según usuarios, funciones e integraciones",
     ],
-    from: configuredSystemPrice || "",
-    time: "Primera versión útil en 4 a 8 semanas",
-    cta: "Quiero un diagnóstico",
+    monthlyPrice: configuredSystemPrice || "Según alcance y uso",
+    time: "Primera versión en 4 a 8 semanas",
+    cta: "Quiero definir mi plan",
   },
 ] as const;

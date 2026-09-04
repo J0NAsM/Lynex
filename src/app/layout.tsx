@@ -22,7 +22,7 @@ const socialImageUrl = `${site.url}/opengraph-image${staticImageExtension}`;
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `Lynex | Webs y sistemas a medida en ${site.city}`,
+    default: `Lynex | Soluciones web y sistemas SaaS en ${site.city}`,
     template: "%s | Lynex",
   },
   description: site.description,
@@ -32,17 +32,17 @@ export const metadata: Metadata = {
   manifest: `${site.url}/manifest.webmanifest`,
   appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
-    title: "Lynex | Webs y sistemas a medida",
-    description: `Construimos webs y software a medida para empresas de ${site.region}.`,
+    title: "Lynex | Soluciones web y sistemas SaaS",
+    description: `Soluciones web y sistemas SaaS para empresas de ${site.region}.`,
     url: site.url,
     siteName: site.name,
     locale: site.locale,
     type: "website",
-    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Lynex, webs y sistemas a medida" }],
+    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Lynex, soluciones web y sistemas SaaS" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lynex | Webs y sistemas a medida",
+    title: "Lynex | Soluciones web y sistemas SaaS",
     description: "Software que trabaja como tu negocio.",
     images: [socialImageUrl],
   },
@@ -81,8 +81,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Sitios web profesionales",
-            serviceType: "Desarrollo de sitios web",
+            name: "Sitios web administrados",
+            serviceType: "Sitios web como servicio",
             areaServed: serviceArea,
           },
         },
@@ -90,8 +90,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Sistemas a medida",
-            serviceType: "Desarrollo de software a medida",
+            name: "Sistemas SaaS para empresas",
+            serviceType: "Software como servicio",
             areaServed: serviceArea,
           },
         },

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
 export const dynamic = "force-static";
-export const alt = "Lynex, webs y sistemas a medida en Paraguay";
+export const alt = "Lynex, soluciones web y sistemas SaaS en Paraguay";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,9 +27,9 @@ export default function OpenGraphImage() {
             LYNEX
           </div>
           <div style={{ display: "flex", fontSize: 68, fontWeight: 700, letterSpacing: "-4px", lineHeight: 1.04, marginTop: 72 }}>
-            Webs y sistemas hechos para tu negocio<span style={{ color: "#4c8dff" }}>.</span>
+            Soluciones SaaS para tu negocio<span style={{ color: "#4c8dff" }}>.</span>
           </div>
-          <div style={{ color: "#aac0ba", display: "flex", fontSize: 25, marginTop: 30 }}>{site.city}, {site.region} · Precio y plazo por escrito.</div>
+          <div style={{ color: "#aac0ba", display: "flex", fontSize: 25, marginTop: 30 }}>{site.city}, {site.region} · Planes según cada empresa.</div>
         </div>
         <div style={{ background: "#72e6ff", borderRadius: 999, height: 280, opacity: 0.9, position: "absolute", right: -100, top: -95, width: 280 }} />
         <div style={{ border: "2px solid #4c8dff", borderRadius: 999, bottom: -190, height: 430, position: "absolute", right: 55, width: 430 }} />

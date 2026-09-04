@@ -1,6 +1,6 @@
 # Lynex
 
-Sitio comercial de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, identidad visual provisional, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
+Sitio comercial de las soluciones SaaS de Lynex, construido con Next.js, React y TypeScript. Incluye landing responsive, identidad visual provisional, SEO técnico, imagen social generada, política de privacidad y contacto por correo o formulario con Resend según el hosting.
 
 **Sitio publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
 
@@ -35,7 +35,7 @@ Copiá `.env.example` como `.env.local` y configurá:
 El contacto público actual está precargado en `.env.example` y en el despliegue de Pages. También podés completar estos datos comerciales opcionales; si quedan vacíos, el sitio los oculta sin mostrar placeholders:
 
 - `NEXT_PUBLIC_LINKEDIN_URL`: URL completa del perfil de empresa.
-- `NEXT_PUBLIC_WEB_PRICE_FROM` y `NEXT_PUBLIC_SYSTEM_PRICE_FROM`: precios mínimos visibles, incluyendo moneda.
+- `NEXT_PUBLIC_WEB_PRICE_FROM` y `NEXT_PUBLIC_SYSTEM_PRICE_FROM`: precios mensuales visibles, incluyendo moneda y período. Si faltan, la web indica que varían según alcance y uso.
 
 Sin las tres variables de correo, el sitio compila y funciona, pero el formulario responde con un aviso de indisponibilidad y ofrece el enlace de email directo. Nunca expongas `RESEND_API_KEY` con el prefijo `NEXT_PUBLIC_`.
 
