@@ -38,7 +38,9 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
       - name: Preparar versión estática
-        run: find src/app/api -name route.ts -exec sh -c 'mv "$1" "$1.disabled"' _ {} \;
+        run: |
+          find src/app/api -name route.ts -exec sh -c 'mv "$1" "$1.disabled"' _ {} \;
+          if [ -d src/app/admin ]; then mv src/app/admin /tmp/lynex-admin-routes; fi
       - name: Construir sitio web
         run: npm run build
       - name: Verificar el índice publicado

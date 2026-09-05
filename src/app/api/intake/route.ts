@@ -1,14 +1,13 @@
 import { createHmac, randomBytes } from "node:crypto";
-import { after, NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   classifyIntake,
   publicSummary,
   sanitizeAnswers,
   validateAnswers,
 } from "@/lib/intake-analysis";
-import { isRateLimited, saveIntake } from "@/lib/server/intake-db";
-import type { IntakeFile } from "@/lib/server/intake-db";
-import { processIntakeOutbox } from "@/lib/server/intake-worker";
+import { isRateLimited, saveIntake } from "@/lib/server/intake-store";
+import type { IntakeFile } from "@/lib/server/intake-store";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -58,7 +57,7 @@ function json(request: NextRequest, body: object, status = 200) {
 
 function sourceHash(request: NextRequest) {
   const source = firstValue(request.headers.get("x-forwarded-for")) || firstValue(request.headers.get("x-real-ip")) || "anonymous";
-  const secret = process.env.RATE_LIMIT_SECRET || process.env.RESEND_API_KEY || "lynex-development";
+  const secret = process.env.RATE_LIMIT_SECRET || process.env.ADMIN_SESSION_SECRET || "lynex-development";
   return createHmac("sha256", secret).update(source).digest("hex");
 }
 
@@ -135,7 +134,6 @@ export async function POST(request: NextRequest) {
     const id = newRequestId();
     const classification = classifyIntake(answers);
     await saveIntake({ id, answers, classification, files, sourceHash: hash });
-    after(async () => { await processIntakeOutbox(1, id); });
     return json(request, { ok: true, id, summary: publicSummary(answers, classification) }, 201);
   } catch (error) {
     console.error("Could not persist intake request", error instanceof Error ? error.message : "unknown error");

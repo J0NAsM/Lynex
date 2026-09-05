@@ -13,6 +13,7 @@ const links = [
 
 export function SiteNavigation() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,6 +48,31 @@ export function SiteNavigation() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (typeof IntersectionObserver !== "function") return;
+
+    const sections = links
+      .map(([href]) => document.querySelector<HTMLElement>(href))
+      .filter((section): section is HTMLElement => section !== null);
+
+    if (sections.length === 0) return;
+
+    // Franja angosta al medio de la pantalla: la sección que la cruza es la
+    // que la persona está mirando y la que se marca en el menú.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+
+    for (const section of sections) observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="nav-shell" ref={containerRef}>
       <button
@@ -67,7 +93,12 @@ export function SiteNavigation() {
         aria-label="Navegación principal"
       >
         {links.map(([href, label]) => (
-          <a href={href} onClick={() => setOpen(false)} key={href}>
+          <a
+            href={href}
+            onClick={() => setOpen(false)}
+            key={href}
+            aria-current={activeSection === href ? "true" : undefined}
+          >
             {label}
           </a>
         ))}

@@ -1,8 +1,8 @@
 # Lynex
 
-Sitio comercial de los sistemas propios de Lynex, ofrecidos a clientes mediante suscripción mensual. Está construido con Next.js, React y TypeScript e incluye landing responsive, identidad visual provisional, SEO técnico, imagen social, política de privacidad y un diagnóstico adaptativo de necesidades.
+Sitio comercial de los sistemas propios de Lynex, ofrecidos mediante suscripción mensual. Está construido con Next.js, React y TypeScript e incluye una portada responsive, un configurador de pedidos y un panel privado para consultar las solicitudes recibidas.
 
-**Sitio publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
+**Sitio estático publicado:** [j0nasm.github.io/Lynex](https://j0nasm.github.io/Lynex/)
 
 ## Desarrollo local
 
@@ -14,7 +14,28 @@ copy .env.example .env.local
 npm run dev
 ```
 
-Abrí `http://localhost:3000`. Para validar exactamente lo que revisa CI:
+Abrí `http://localhost:3000`. El panel privado está en `http://localhost:3000/admin/pedidos`.
+
+## Acceso directo en el escritorio (Windows)
+
+Para levantar el proyecto sin abrir una terminal:
+
+```powershell
+npm run acceso-directo
+```
+
+Eso crea el acceso directo **Lynex** en el escritorio. Al abrirlo, `scripts/iniciar-lynex.ps1`:
+
+- verifica que Node.js 20.9 o superior esté instalado;
+- instala las dependencias si todavía no están;
+- crea `.env.local` a partir de `.env.example` con secretos nuevos y muestra una vez la contraseña del panel;
+- si el puerto 3000 está ocupado por otro programa, busca el siguiente libre;
+- si el sitio ya está corriendo, solo abre el navegador;
+- levanta `next dev` y abre la portada cuando el servidor responde.
+
+La ventana muestra los registros del servidor. Cerrarla o pulsar `Ctrl+C` detiene el sitio.
+
+Para validar el proyecto completo:
 
 ```bash
 npm run check
@@ -24,58 +45,62 @@ npm run check
 
 Copiá `.env.example` como `.env.local` y configurá:
 
-- `NEXT_PUBLIC_SITE_URL`: URL pública final. Se usa en canonical, Open Graph, sitemap y robots.
-- `NEXT_PUBLIC_CONTACT_EMAIL`: dirección que se muestra públicamente y usa el enlace de email alternativo.
+- `NEXT_PUBLIC_SITE_URL`: URL pública final usada en canonical, Open Graph, sitemap y robots.
+- `NEXT_PUBLIC_CONTACT_EMAIL`: correo público de contacto.
 - `NEXT_PUBLIC_WHATSAPP_NUMBER`: número con código de país y solo dígitos.
 - `NEXT_PUBLIC_CONTACT_PHONE`: el mismo número en formato visible e internacional.
-- `NEXT_PUBLIC_INTAKE_API_URL`: URL completa de `/api/intake` cuando la portada está en un hosting estático y el backend vive en otro dominio. En un despliegue Next.js completo se omite.
-- `DATABASE_URL`: conexión PostgreSQL donde se guardan primero las solicitudes, los adjuntos y la bandeja de correos pendientes.
-- `RESEND_API_KEY`: clave de API de Resend.
-- `CONTACT_TO_EMAIL`: dirección que recibirá las consultas.
-- `CONTACT_FROM_EMAIL`: remitente perteneciente a un dominio verificado en Resend, por ejemplo `Lynex <contacto@lynex.dev>`.
-- `CRON_SECRET`: secreto largo usado para proteger `/api/intake/retry`.
-- `RATE_LIMIT_SECRET`: secreto distinto usado para anonimizar la dirección de red antes de aplicar el límite de envíos.
-- `INTAKE_ALLOWED_ORIGINS`: orígenes adicionales permitidos, separados por coma, cuando la web y la API están en dominios distintos.
+- `NEXT_PUBLIC_INTAKE_API_URL`: URL completa de `/api/intake` cuando la portada está en GitHub Pages y el servidor vive en otro dominio. En un despliegue Next.js completo se omite.
+- `INTAKE_DATA_DIR`: carpeta privada donde se guardan los pedidos y adjuntos. El valor predeterminado es `./data`.
+- `ADMIN_PASSWORD`: contraseña del panel `/admin/pedidos`, con un mínimo de 12 caracteres.
+- `ADMIN_SESSION_SECRET`: secreto largo y aleatorio usado para firmar la sesión administrativa.
+- `RATE_LIMIT_SECRET`: secreto distinto usado para anonimizar la dirección de red antes de aplicar límites de envío.
+- `INTAKE_ALLOWED_ORIGINS`: orígenes adicionales permitidos cuando la web y la API usan dominios distintos.
 
-El contacto público actual está precargado en `.env.example` y en el despliegue de Pages. También podés completar estos datos comerciales opcionales; si quedan vacíos, el sitio los oculta sin mostrar placeholders:
+También podés configurar `NEXT_PUBLIC_LINKEDIN_URL`, `NEXT_PUBLIC_WEB_PRICE_FROM` y `NEXT_PUBLIC_SYSTEM_PRICE_FROM`. Si quedan vacíos, el sitio oculta esos datos.
 
-- `NEXT_PUBLIC_LINKEDIN_URL`: URL completa del perfil de empresa.
-- `NEXT_PUBLIC_WEB_PRICE_FROM` y `NEXT_PUBLIC_SYSTEM_PRICE_FROM`: precios mensuales visibles, incluyendo moneda y período. Si faltan, la web indica que varían según alcance y uso.
+Nunca uses el prefijo `NEXT_PUBLIC_` para contraseñas o secretos.
 
-La API crea sus tablas e índices al recibir la primera solicitud. Cada envío se confirma únicamente después de guardarse en PostgreSQL. El correo HTML se procesa después de responder al usuario; si falla, permanece en la bandeja de salida y `/api/intake/retry` lo retoma con espera progresiva. Nunca expongas claves, la conexión de base de datos ni secretos con el prefijo `NEXT_PUBLIC_`.
+## Almacenamiento sin base de datos
 
-## Publicación automática en GitHub Pages
+Cada pedido se guarda dentro de `INTAKE_DATA_DIR/pedidos/<identificador>`:
 
-Cada push a `main` ejecuta `.github/workflows/pages.yml`, genera `out/index.html` con el prefijo `/Lynex` y lo publica en GitHub Pages. La portada enlaza Servicios, Problemas, Proceso, Garantías, Nosotros, Preguntas, Contacto y la política de privacidad. Antes de subirla, el workflow comprueba que el índice, esas secciones, sus enlaces y los recursos de marca realmente existan.
+- `pedido.json` contiene las respuestas, datos de contacto, fecha y clasificación.
+- `archivos/` contiene los documentos adjuntos.
 
-Como Pages no ejecuta Node.js ni rutas `POST`, el formulario necesita un backend independiente. Creá la variable de repositorio `INTAKE_API_URL` con la URL completa de `/api/intake`; el workflow la incorpora como `NEXT_PUBLIC_INTAKE_API_URL`. Si todavía no existe esa variable, el recorrido y el autoguardado funcionan, pero el último paso informa claramente que el envío seguro aún no está conectado y conserva el borrador en el dispositivo.
+La escritura se realiza primero en una carpeta temporal y luego se publica mediante un cambio de nombre atómico. Así no aparece un pedido incompleto en el panel si una escritura falla.
 
-El workflow define internamente `GITHUB_PAGES=true` y `NEXT_PUBLIC_STATIC_HOSTING=true`, desactiva las rutas del servidor únicamente dentro del runner y sube la carpeta `out`. No hace falta commitear archivos generados. La fuente del índice es `src/app/page.tsx`; Next.js produce el `index.html` final durante el build.
+El panel `/admin/pedidos` permite:
 
-## Cómo funciona el diagnóstico
+- Iniciar sesión mediante una contraseña privada.
+- Consultar todos los pedidos, del más reciente al más antiguo.
+- Ver el detalle completo y el análisis automático.
+- Abrir el correo o teléfono del cliente.
+- Descargar los archivos adjuntos de forma protegida.
 
-- Muestra una pregunta principal por pantalla, una barra de progreso y ramas diferentes para una idea definida, una idea general, un proceso por mejorar, el reemplazo de un sistema o una consulta de viabilidad.
-- Guarda el borrador automáticamente en el navegador. Los archivos se eligen al final porque el navegador no los conserva en el autoguardado.
+La cookie administrativa es `HttpOnly`, está firmada y vence después de 12 horas. La página y las descargas vuelven a verificar la sesión en el servidor.
+
+Respaldar los pedidos consiste simplemente en copiar la carpeta configurada en `INTAKE_DATA_DIR`.
+
+## Cómo funciona el pedido guiado
+
+- Presenta una pregunta por pantalla y adapta el recorrido a la necesidad del cliente.
+- Guarda el borrador automáticamente en el navegador del cliente.
 - Admite hasta 5 archivos de 8 MB cada uno y 15 MB en total: PDF, Word, Excel, imágenes y texto.
-- Genera una clasificación interna con tipo, complejidad, módulos probables, plataformas, integraciones, prioridad, nivel de definición y próximos pasos.
-- Guarda solicitud, clasificación, adjuntos y correo pendiente dentro de una única transacción. Solo después responde al usuario y programa el correo.
-- Envía un correo responsive en lenguaje natural, con resumen ejecutivo, todas las secciones relevantes, identificador y hora de Paraguay. La dirección receptora nunca se incluye en el frontend.
+- Valida nuevamente toda la información en el servidor.
+- Genera un identificador y una clasificación interna.
+- Guarda el pedido antes de mostrar la confirmación al cliente.
 
-## Identidad visual provisional
+## GitHub Pages
 
-`public/lynex-wordmark.svg` conserva la pieza horizontal azul oscuro y plateada usada cuando aparece solo el nombre de la empresa. `src/components/brand-wordmark.tsx` contiene la versión compacta y reutilizable de cabecera, pie y páginas internas. Ambas representan un wordmark provisional y pueden sustituirse cuando exista el logo definitivo.
+GitHub Pages solo puede publicar la portada estática: no ejecuta Node.js, no recibe solicitudes y no puede guardar archivos.
 
-## Publicar en Vercel
+Para conservar la portada en Pages, desplegá además esta aplicación como servidor Next.js/Docker y configurá la variable de repositorio `INTAKE_API_URL` con la URL pública de su endpoint `/api/intake`. El panel privado estará en el dominio del servidor, dentro de `/admin/pedidos`.
 
-1. Importá este repositorio en Vercel.
-2. Añadí las variables públicas, `DATABASE_URL`, las tres variables de correo y los dos secretos en **Project Settings → Environment Variables**.
-3. Desplegá. Vercel detectará Next.js automáticamente.
-4. Asociá el dominio y confirmá que `NEXT_PUBLIC_SITE_URL` coincide con la URL canónica; volvé a desplegar si cambiás esa variable.
-5. Enviá un diagnóstico real, confirmá que se guardó en PostgreSQL y revisá la entrega en Resend.
-
-`vercel.json` programa un reintento diario, compatible también con el plan Hobby. En Vercel Pro podés cambiarlo a `*/10 * * * *`. Si el proveedor de hosting no ejecuta esa programación, llamá `GET /api/intake/retry` con `Authorization: Bearer <CRON_SECRET>` desde su programador de tareas cada 10 minutos.
+Si `INTAKE_API_URL` no está configurada, la versión de Pages muestra las opciones directas de correo y WhatsApp. El workflow excluye las rutas privadas durante la exportación estática.
 
 ## Publicar con Docker
+
+El contenedor incluye `/app/data` como volumen. Debe montarse un volumen persistente para conservar los pedidos entre reinicios:
 
 ```bash
 docker build \
@@ -84,24 +109,25 @@ docker build \
   --build-arg NEXT_PUBLIC_WHATSAPP_NUMBER=595986914726 \
   --build-arg "NEXT_PUBLIC_CONTACT_PHONE=+595 986 914 726" \
   -t lynex-web .
+
+docker volume create lynex-data
+
 docker run --rm -p 3000:3000 \
-  -e DATABASE_URL=postgresql://usuario:clave@servidor:5432/lynex \
-  -e RESEND_API_KEY=tu_clave \
-  -e CONTACT_TO_EMAIL=martinezlynex@gmail.com \
-  -e "CONTACT_FROM_EMAIL=Lynex <contacto@lynex.dev>" \
-  -e CRON_SECRET=tu_secreto_de_reintentos \
-  -e RATE_LIMIT_SECRET=tu_secreto_de_limites \
+  -v lynex-data:/app/data \
+  -e ADMIN_PASSWORD=una-contraseña-muy-larga \
+  -e ADMIN_SESSION_SECRET=un-secreto-diferente-muy-largo \
+  -e RATE_LIMIT_SECRET=otro-secreto-muy-largo \
   lynex-web
 ```
 
-El contenedor usa la salida `standalone` de Next.js y se ejecuta como usuario sin privilegios. En producción, colocá HTTPS delante del contenedor y configurá un programador externo para llamar a `/api/intake/retry` cada 10 minutos.
+En producción, colocá HTTPS delante del contenedor. El proceso se ejecuta como usuario sin privilegios y el volumen de datos queda preparado para escritura.
 
-También podés probar la compilación standalone sin Docker con `npm run build` y `npm start`. Definí `PORT` si necesitás un puerto distinto de 3000.
+Los hosts con sistema de archivos efímero, como una función serverless sin volumen persistente, no sirven para este modo de almacenamiento: los pedidos podrían desaparecer al reiniciar o reemplazar la instancia.
 
 ## Comprobaciones posteriores
 
-- Visitá `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest` y `/opengraph-image`.
-- Probá las cinco ramas del diagnóstico, volver/continuar, autoguardado, adjuntos y resumen tanto en móvil como en escritorio.
-- Confirmá que la URL canónica y la vista previa social usan el dominio final.
-- Confirmá en PostgreSQL que una solicitud sigue existiendo aunque Resend esté temporalmente desactivado; luego ejecutá el reintento y verificá el cambio a enviado.
-- Revisá que el correo no llegue a spam y configurá SPF/DKIM según indique tu proveedor.
+- Realizá un pedido de prueba y verificá que aparezca en `/admin/pedidos`.
+- Cerrá sesión y confirmá que el detalle y los adjuntos no sean accesibles.
+- Reiniciá el servidor y comprobá que el pedido siga presente.
+- Probá el recorrido, autoguardado, archivos y panel tanto en móvil como en escritorio.
+- Incluí `INTAKE_DATA_DIR` en las copias de seguridad del servidor.

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BackToTop } from "@/components/back-to-top";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { ContactForm } from "@/components/contact-form";
 import { FaqList } from "@/components/faq-list";
 import { IntroSplash } from "@/components/intro-splash";
-import { SiteNavigation } from "@/components/site-navigation";
+import { SiteHeader } from "@/components/site-header";
 import { offers, phoneLink, site, whatsappLink } from "@/lib/site";
 
 const symptoms = [
@@ -55,13 +56,7 @@ export default function Home() {
     <>
       <IntroSplash />
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
-      <header className="site-header">
-        <a className="brand" href="#inicio" aria-label="Lynex, inicio">
-          <BrandWordmark gradientId="lynex-silver-header" />
-          <span className="sr-only">Lynex</span>
-        </a>
-        <SiteNavigation />
-      </header>
+      <SiteHeader />
 
       <main id="contenido">
         <section className="hero section-wrap" id="inicio" aria-labelledby="hero-title">
@@ -268,6 +263,8 @@ export default function Home() {
           <small>© {new Date().getFullYear()} Lynex. Todos los derechos reservados.</small>
         </div>
       </footer>
+
+      <BackToTop />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchema }} />
     </>

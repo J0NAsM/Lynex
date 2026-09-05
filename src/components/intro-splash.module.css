@@ -6,7 +6,7 @@
   --intro-silver-b: #e7ebef;
   --intro-silver-c: #b9c0c8;
   align-items: center;
-  animation: fallback-dismiss 0.01s linear 6s forwards;
+  animation: fallback-dismiss 0.01s linear 5s forwards;
   background:
     radial-gradient(
       circle at 50% 45%,
@@ -22,7 +22,7 @@
   opacity: 1;
   overflow: hidden;
   position: fixed;
-  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0.85s;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0.6s;
   visibility: visible;
   z-index: 10000;
 }
@@ -45,6 +45,47 @@
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
+}
+
+/* Salida visible para quien quiera entrar al sitio sin esperar la animación. */
+.skip {
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  bottom: clamp(20px, 5vh, 44px);
+  color: #e7ebef;
+  font-size: 12px;
+  font-weight: 600;
+  left: 50%;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  padding: 11px 20px;
+  position: fixed;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  transition: opacity 0.3s, background 0.2s, color 0.2s;
+  z-index: 10001;
+  animation: skip-appear 0.4s linear 0.9s forwards;
+}
+
+.skip:hover,
+.skip:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  opacity: 1;
+}
+
+@keyframes skip-appear {
+  to {
+    opacity: 0.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip {
+    animation: none;
+    opacity: 0.75;
+  }
 }
 
 .viewport {
